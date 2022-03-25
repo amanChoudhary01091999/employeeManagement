@@ -28,9 +28,9 @@ function DialogForm() {
                 aria-label="add"
                 onClick={handleClickOpen}
                 style={{
-                    position: "absolute",
-                    bottom: 50,
-                    right: 50,
+                    position: "fixed",
+                    bottom: "5%",
+                    right: "5%"
                 }}
             >
                 <AddIcon />
