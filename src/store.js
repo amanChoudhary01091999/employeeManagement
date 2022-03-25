@@ -4,6 +4,7 @@ import { dialogReducer, userPostReducer } from "./reducers/userReducer";
 import createSaga from "redux-saga";
 import { loginSaga } from "./sagas/loginSaga";
 import { userGetSaga, userPostSaga } from "./sagas/userSaga";
+import { spawn } from "redux-saga/effects";
 
 const createSagaMiddleware = createSaga();
 const combineReducer = combineReducers({
@@ -11,11 +12,15 @@ const combineReducer = combineReducers({
     dialogReducer,
     userPostReducer,
 });
+function* rootSaga() {
+    yield spawn(loginSaga);
+    yield spawn(userGetSaga);
+    yield spawn(userPostSaga);
+}
 const store = createStore(
     combineReducer,
     applyMiddleware(createSagaMiddleware)
 );
-createSagaMiddleware.run(loginSaga);
-createSagaMiddleware.run(userPostSaga);
+createSagaMiddleware.run(rootSaga);
 
 export default store;
