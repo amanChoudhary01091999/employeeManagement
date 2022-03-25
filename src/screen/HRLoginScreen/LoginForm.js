@@ -3,18 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Button, MenuItem, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import IPAddress from "../../IPAddress";
 import TextInput from "../../Input/TextInput";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { loginRequest } from "../../actions/loginAction";
+import Snackbars from "../../components/Snackbar";
 
 function LoginForm() {
     const formState = useForm();
     const history = useNavigate();
     const [currency, setCurrency] = React.useState("admin");
-    // const [loading, setLoading] = useState(false);
-    // const [Error, setError] = useState("");
     const accessToken = localStorage.getItem("accessToken");
     // useEffect(() => {
     //     if (accessToken !== null) history("/dashboard", { replace: true });
@@ -45,40 +42,12 @@ function LoginForm() {
     const dispatch = useDispatch();
     console.log(loginState);
 
-    // async function LoginApi(LoginApiObj) {
-    //     axios
-    //         .post(`https://jsonplaceholder.typicode.com/users`, { LoginApiObj })
-    //         .then((res) => {
-    //             console.log(res);
-    //             console.log(res.data);
-    //         });
-    // }
-
     const OnSubmit = (data) => {
-        // setLoading(true);
-        // setError("");
         const LoginApiObj = {
             role: ["admin"],
             user_name: data.user_name,
             password: data.password,
         };
-        // LoginApi(LoginApiObj).then(async (response) => {
-        //     if (response !== null) {
-        //         if (response.ok === true) {
-        //             const user = await response.json();
-        //             console.log(user);
-        //             setLoading(false);
-        //             setError("");
-        //             localStorage.setItem("accessToken", user.accessToken);
-        //             history("/dashboard");
-        //         } else {
-        //             const errorObj = await response.json();
-        //             setError(errorObj.message);
-        //             console.log(Error);
-        //             setLoading(false);
-        //         }
-        //     }
-        // });
         dispatch(loginRequest(LoginApiObj));
     };
 
@@ -136,8 +105,16 @@ function LoginForm() {
             >
                 <strong>Log In</strong>
             </LoadingButton>
-            {error && <Alert severity="error">{error}</Alert>}
-            {userInfo && <Alert severity="success">Sucess</Alert>}
+            {error && (
+                <Snackbars value={true} severity={"error"} message={error} />
+            )}
+            {userInfo && (
+                <Snackbars
+                    value={true}
+                    severity={"success"}
+                    message={"Login Success"}
+                />
+            )}
         </Stack>
     );
 }

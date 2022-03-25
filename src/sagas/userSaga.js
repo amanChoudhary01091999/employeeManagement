@@ -1,4 +1,3 @@
-import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
 import {
     USER_GET_REQUEST,
@@ -18,16 +17,16 @@ import {
     userPostRequest,
     closeDialog,
 } from "../actions/userAction";
-import IPAddress from "../IPAddress";
-
-const path = "/api/auth/signin";
-const b = "https://reqres.in/api/users";
-
-const loginRequest = (data) => axios.post(b, data);
+import {
+    userGetData,
+    userPostData,
+    userUpdateData,
+    userDeleteData,
+} from "../Api/userRequest";
 
 function* uesrGetAsync(action) {
     try {
-        const { data } = yield call(loginRequest, action.payload);
+        const { data } = yield call(userGetData, action.payload);
         yield put(userGetSuccess(data));
 
         console.log(data);
@@ -44,7 +43,7 @@ function* uesrGetAsync(action) {
 
 function* uesrPostAsync(action) {
     try {
-        const { data } = yield call(loginRequest, action.payload);
+        const { data } = yield call(userPostData, action.payload);
         yield put(userPostSuccess(data));
         yield put(closeDialog());
         console.log(data);

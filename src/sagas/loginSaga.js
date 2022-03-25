@@ -2,21 +2,15 @@ import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
 import { HR_LOGIN_REQUEST } from "../constants/loginConstant";
 import { loginSuccess, loginFail } from "../actions/loginAction";
-import IPAddress from "../IPAddress";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
-const path = "/api/auth/signin";
-const b = "https://reqres.in/api/users";
-
-const loginRequest = (data) => axios.post(IPAddress + path, data);
+import loginPostRequest from "../Api/loginPostRequest";
 
 function* loginAsync(action) {
     try {
-        const { data } = yield call(loginRequest, action.payload);
+        const { data } = yield call(loginPostRequest, action.payload);
         yield put(loginSuccess(data));
+        //localStorage.setItem('', '')
         console.log(data);
     } catch (error) {
-        //console.log(error.response);
-        //console.log(error.response.data.message);
         yield put(
             loginFail(
                 error.response && error.response.data.message
