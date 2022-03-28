@@ -7,16 +7,25 @@ import TextInput from "../../Input/TextInput";
 import { userPostRequest } from "../../actions/userAction";
 import Snackbars from "../../components/Snackbar";
 
-function AddUserForm() {
+function AddUserForm(props) {
     const formState = useForm();
     const dispatch = useDispatch();
+    const { update } = props;
     const { loading, error, userInfo } = useSelector(
         (state) => state.userPostReducer
     );
-    console.log(userInfo);
+    if (update === "update") {
+    }
     const { handleSubmit } = formState;
     function onClick(data) {
-        dispatch(userPostRequest(data));
+        const addUsersApiObj = {
+            name: data.name,
+            email: data.email,
+            role: ["user"],
+            token: "",
+            mobile_no: data.phoneNumber,
+        };
+        dispatch(userPostRequest(addUsersApiObj));
     }
     const OnSubmit = (data) => onClick(data);
     return (

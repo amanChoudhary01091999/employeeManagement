@@ -18,6 +18,7 @@ import {
     closeDialog,
 } from "../actions/userAction";
 import {
+    passwordGenerator,
     userGetData,
     userPostData,
     userUpdateData,
@@ -43,10 +44,11 @@ function* uesrGetAsync(action) {
 
 function* uesrPostAsync(action) {
     try {
+        const password = yield call(passwordGenerator);
+        action.payload.token = password.data.token;
         const { data } = yield call(userPostData, action.payload);
         yield put(userPostSuccess(data));
         yield put(closeDialog());
-        //console.log(data);
     } catch (error) {
         yield put(
             userPostFail(
@@ -60,7 +62,21 @@ function* uesrPostAsync(action) {
 
 function* uesrUpdateAsync(action) {}
 
-function* uesrDeleteAsync(action) {}
+function* uesrDeleteAsync(action) {
+    try {
+        const { data } = yield call(userDeleteData, action.payload);
+        yield put(userDeleteSuccess(data));
+        console.log("delete");
+    } catch (error) {
+        yield put(
+            userDeleteFail(
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message
+            )
+        );
+    }
+}
 export function* userGetSaga() {
     yield takeLatest(USER_GET_REQUEST, uesrGetAsync);
 }

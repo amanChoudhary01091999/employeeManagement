@@ -39,7 +39,7 @@ function DialogForm() {
                     Add user
                 </DialogTitle> */}
                 <DialogContent>
-                    <AddUserForm />
+                    <AddUserForm update={"update"} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>

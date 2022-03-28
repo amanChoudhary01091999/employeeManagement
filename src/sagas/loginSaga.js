@@ -9,7 +9,6 @@ function* loginAsync(action) {
         const { data } = yield call(loginPostRequest, action.payload);
         yield put(loginSuccess(data));
         //localStorage.setItem('', '')
-        console.log(data);
     } catch (error) {
         yield put(
             loginFail(
