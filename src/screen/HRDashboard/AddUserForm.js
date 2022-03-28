@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import TextInput from "../../Input/TextInput";
 import { userPostRequest } from "../../actions/userAction";
+import Snackbars from "../../components/Snackbar";
 
 function AddUserForm() {
     const formState = useForm();
@@ -12,6 +13,7 @@ function AddUserForm() {
     const { loading, error, userInfo } = useSelector(
         (state) => state.userPostReducer
     );
+    console.log(userInfo);
     const { handleSubmit } = formState;
     function onClick(data) {
         dispatch(userPostRequest(data));
@@ -47,8 +49,16 @@ function AddUserForm() {
             >
                 submit
             </LoadingButton>
-            {error && <Alert severity="error">{error}</Alert>}
-            {userInfo && <Alert severity="success">Sucess</Alert>}
+            {error && (
+                <Snackbars value={true} severity={"error"} message={error} />
+            )}
+            {userInfo && (
+                <Snackbars
+                    value={true}
+                    severity={"success"}
+                    message={"Login Success"}
+                />
+            )}
         </Stack>
     );
 }

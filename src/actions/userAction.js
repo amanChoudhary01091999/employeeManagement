@@ -15,10 +15,9 @@ import {
     CLOSE_DIALOG,
 } from "../constants/userConstant";
 
-export const userGetRequest = (userInfo) => {
+export const userGetRequest = () => {
     return {
         type: USER_GET_REQUEST,
-        payload: userInfo,
     };
 };
 

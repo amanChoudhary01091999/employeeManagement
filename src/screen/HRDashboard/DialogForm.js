@@ -14,7 +14,6 @@ import AddUserForm from "./AddUserForm";
 function DialogForm() {
     const dispatch = useDispatch();
     const { open } = useSelector((state) => state.dialogReducer);
-    console.log(open);
     const handleClickOpen = () => {
         dispatch(openDialog());
     };
@@ -30,7 +29,7 @@ function DialogForm() {
                 style={{
                     position: "fixed",
                     bottom: "5%",
-                    right: "5%"
+                    right: "5%",
                 }}
             >
                 <AddIcon />

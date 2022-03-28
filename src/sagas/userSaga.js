@@ -26,10 +26,10 @@ import {
 
 function* uesrGetAsync(action) {
     try {
-        const { data } = yield call(userGetData, action.payload);
+        const { data } = yield call(userGetData);
         yield put(userGetSuccess(data));
 
-        console.log(data);
+        //console.log(data);
     } catch (error) {
         yield put(
             userGetFail(
@@ -46,7 +46,7 @@ function* uesrPostAsync(action) {
         const { data } = yield call(userPostData, action.payload);
         yield put(userPostSuccess(data));
         yield put(closeDialog());
-        console.log(data);
+        //console.log(data);
     } catch (error) {
         yield put(
             userPostFail(
