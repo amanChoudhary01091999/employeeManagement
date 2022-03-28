@@ -6,11 +6,15 @@ import {
     userGetReducer,
     userDeleteReducer,
     userUpdateReducer,
-} from "./reducers/userReducer";
+    } from "./reducers/userReducer";
+
+import { LoginUserReducer } from "./reducers/loginUserReducer";
+
 import createSaga from "redux-saga";
 import { loginSaga } from "./sagas/loginSaga";
-import { userGetSaga, userPostSaga } from "./sagas/userSaga";
+import { userGetSaga, userPostSaga,userDeleteSaga} from "./sagas/userSaga";
 import { spawn } from "redux-saga/effects";
+import { userloginSaga } from "./sagas/userLoginSaga";
 
 const createSagaMiddleware = createSaga();
 const combineReducer = combineReducers({
@@ -20,11 +24,15 @@ const combineReducer = combineReducers({
     userGetReducer,
     userDeleteReducer,
     userUpdateReducer,
+    userDeleteReducer,
+    LoginUserReducer,
 });
 function* rootSaga() {
     yield spawn(loginSaga);
     yield spawn(userGetSaga);
     yield spawn(userPostSaga);
+    yield spawn(userloginSaga);
+    yield spawn(userDeleteSaga);
 }
 const store = createStore(
     combineReducer,
