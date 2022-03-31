@@ -1,5 +1,4 @@
 import axios from "axios";
-import IPAddress from "../IPAddress";
 
 const path = "/api/auth/signin";
 const b = "https://reqres.in/api/users";

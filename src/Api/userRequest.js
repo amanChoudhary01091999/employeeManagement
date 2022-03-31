@@ -1,6 +1,5 @@
 import axios from "axios";
-import IPAddress from "../IPAddress";
-
+const IPAddress = `${process.env.REACT_APP_API_URL}`;
 const userGetPath = "/api/auth/getalluser/user";
 const userPostPath = "/api/auth/signup";
 const userDeletePath = "/api/auth/delete/";
