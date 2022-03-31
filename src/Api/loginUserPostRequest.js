@@ -1,6 +1,6 @@
-import axios from "axios";
-import IPAddress from "../IPAddress";
-
+import { executeAPI } from "./MainAPI";
 const path = "/api/auth/user-registration";
-const UserLoginRequestURL= (data) => axios.post(IPAddress+path, data);
-export default UserLoginRequestURL;
+const api=executeAPI("POST",path)
+
+const UserLoginRequestURL =api
+export default  UserLoginRequestURL ;

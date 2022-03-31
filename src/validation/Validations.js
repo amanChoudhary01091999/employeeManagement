@@ -5,7 +5,7 @@ function Validation() {
         validationAddress: {
             required: {
                 value: true,
-                message: "required",
+                message: "this field is required",
             },
             minLength: {
                 value: 3,
@@ -15,13 +15,13 @@ function Validation() {
         validationDegree: {
             required: {
                 value: true,
-                message: "required",
+                message: "this field is required",
             },
         },
         validationTextInput: {
             required: {
                 value: true,
-                message: "required",
+                message: "this field is required",
             },
             minLength: {
                 value: 3,
@@ -35,7 +35,7 @@ function Validation() {
         validationAreaInput: {
             required: {
                 value: true,
-                message: "required",
+                message: "this field is required",
             },
             minLength: {
                 value: 3,
@@ -49,7 +49,7 @@ function Validation() {
         validationPhone: {
             required: {
                 value: true,
-                message: "required",
+                message: "this field is required",
             },
             pattern: {
                 value: new RegExp(/^[0-9\b]+$/),
@@ -67,24 +67,26 @@ function Validation() {
         validationEmail: {
             required: {
                 value: true,
-                message: "required",
+                message: "this field is required",
             },
             pattern: {
                 value: new RegExp(
-                    '/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/'
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 ),
-                message: "Email is not valid",
+                message: "Email is not valid", 
             },
         },
         validationDrivingLicence: {
             pattern: {
-                value: "^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$",
+                value: new RegExp(
+                    /^(([A-Z]{2}[0-9]{2})()|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/),
                 message: "Please enter valid licence number",
             },
         },
         validationPassport: {
             pattern: {
-                value: "^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$",
+
+                value: new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$"),
                 message: "Please enter valid passport number ",
             },
         },

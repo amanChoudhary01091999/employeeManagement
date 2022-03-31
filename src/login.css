@@ -1,0 +1,53 @@
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    /* background: ;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);  */
+    /* background: rgb(0,36,13);
+    background: linear-gradient(90deg, rgba(0,36,13,1) 0%, rgba(9,121,84,1) 35%, rgba(0,212,255,1) 100%);
+     */
+     /* background: rgb(247,252,249);
+background: linear-gradient(90deg, rgba(247,252,249,1) 0%, rgba(8,252,172,1) 35%, rgba(0,212,255,1) 100%); */
+/* background: rgb(137,204,164);
+background: linear-gradient(90deg, rgba(137,204,164,1) 0%, rgba(8,252,172,1) 35%, rgba(0,212,255,1) 100%); */
+background: rgb(207,233,217);
+background: linear-gradient(90deg, rgba(207,233,217,1) 0%, rgba(87,232,184,1) 40%, rgba(0,212,255,1) 100%);
+  }
+  
+  @media (min-width: 768px) {
+    .gradient-form {
+      height: 100vh !important;
+    }
+  }
+  @media (min-width: 769px) {
+    .gradient-custom-2 {
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+    }
+  }
+  .header
+  {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      text-align: center;
+      font-size: medium;
+      font-weight: 700;
+  }
+
+  .extraHead
+  {
+      font-family: Merriweather;
+      font-weight: 400;
+      color: black;
+      size: 30;
+  }
+
+  .extraHead2
+  {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 100;
+    color: black;
+    size: 8;
+    /* font-style: italic; */
+
+  }
