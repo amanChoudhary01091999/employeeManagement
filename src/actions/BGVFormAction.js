@@ -1,13 +1,10 @@
-import {
-    BGV_REQUEST,
-    BGV_SUCCESS,
-    BGV_FAIL,
-} from "../constants/bgvConstants";
+import { BGV_REQUEST, BGV_SUCCESS, BGV_FAIL } from "../constants/bgvConstants";
 
-export const BGVRequest = (loginUserInfo) => {
+export const BGVRequest = (loginUserInfo, navigate) => {
     return {
         type: BGV_REQUEST,
         payload: loginUserInfo,
+        navigate: navigate,
     };
 };
 

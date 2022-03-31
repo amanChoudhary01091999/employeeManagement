@@ -1,22 +1,18 @@
-import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
-//import { USER_LOGIN_REQUEST } from "../constants/userLoginConstant";
 import { RCAF_REQUEST } from "../constants/refCheckConstants";
-
-//import { UserLoginSuccess,UserLoginFail,UserLoginRequest} from "../actions/userLoginAction";
-import { RCAFRequest,RCAFSuccess,RCAFFail } from "../actions/refCheckAction";
-//import UserLoginRequestURL from "../Api/loginUserPostRequest";
+import { RCAFSuccess, RCAFFail } from "../actions/refCheckAction";
 import RCAFPostUrl from "../Api/rcfPostRequest";
+import { useNavigate } from "react-router-dom";
 
-function* RCAFAsync(action) { 
+function* RCAFAsync(action) {
     try {
         const { data } = yield call(RCAFPostUrl, action.payload);
         yield put(RCAFSuccess(data));
-        //localStorage.setItem('accessToken', data.accessToken)
-        console.log(data);
+        const navigate = action.navigate;
+        navigate("/codeOfConduct-form");
     } catch (error) {
         yield put(
-           RCAFFail(
+            RCAFFail(
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message

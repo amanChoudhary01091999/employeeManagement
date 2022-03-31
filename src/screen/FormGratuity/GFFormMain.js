@@ -1,10 +1,10 @@
 import { LoadingButton } from "@mui/lab";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { GFFormRequest } from "../../actions/GFFormAction";
 import Snackbars from "../../components/Snackbar";
-
 
 import GFAcknowledgement from "./GFAcknowledgement";
 import GFCertificateEmployer from "./GFCertificateEmployer";
@@ -21,7 +21,7 @@ function GFFormMain() {
     const GFState = useSelector((state) => state.GFFormReducer);
     const { loading, error, userInfo } = GFState;
     const dispatch = useDispatch();
-    //let history = useHistory();
+    const naviagte = useNavigate();
 
     const onSubmit = (data) => {
         const GFobjectAPI = {
@@ -75,45 +75,46 @@ function GFFormMain() {
             acknowledgement_date: data.acknowledgement_date,
             signature_of_the_employee: data.signature_of_the_employee[0].name,
         };
-        dispatch(GFFormRequest(GFobjectAPI))
-
-       
+        dispatch(GFFormRequest(GFobjectAPI, naviagte));
     };
     return (
         <>
-        <GratuityAppBar/>
-        <div style={{backgroundColor: "#F3F3F3"}}>
-        <div className="container py-4" >
-            
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <GFFormNomination formState={formState} />
-                <GFFormNominee formState={formState} />
-                <GFFormStatement formState={formState} />
-                <GFFormDeclaration formState={formState} />
-                <GFCertificateEmployer formState={formState} />
-                <GFAcknowledgement formState={formState} />
+            <GratuityAppBar />
+            <div style={{ backgroundColor: "#F3F3F3" }}>
+                <div className="container py-4">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <GFFormNomination formState={formState} />
+                        <GFFormNominee formState={formState} />
+                        <GFFormStatement formState={formState} />
+                        <GFFormDeclaration formState={formState} />
+                        <GFCertificateEmployer formState={formState} />
+                        <GFAcknowledgement formState={formState} />
 
-                <LoadingButton
-                type="submit"
-                variant="contained"
-                size="large"
-                loading={loading}
-            >
-                <strong>Submit Form</strong>
-            </LoadingButton>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
-            {userInfo && (
-                <Snackbars
-                    value={true}
-                    severity={"success"}
-                    message={"Form Submitted"}
-                />
-            )}
-            </form>
-        </div>
-        </div>
+                        <LoadingButton
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            loading={loading}
+                        >
+                            <strong>Submit Form</strong>
+                        </LoadingButton>
+                        {error && (
+                            <Snackbars
+                                value={true}
+                                severity={"error"}
+                                message={error}
+                            />
+                        )}
+                        {userInfo && (
+                            <Snackbars
+                                value={true}
+                                severity={"success"}
+                                message={"Form Submitted"}
+                            />
+                        )}
+                    </form>
+                </div>
+            </div>
         </>
     );
 }

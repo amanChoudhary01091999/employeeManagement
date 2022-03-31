@@ -5,16 +5,17 @@ import RAFCPart3 from "./RAFCPart3";
 import RCAFPart1 from "./RCAFPart1";
 import RCAFPart2 from "./RCAFPart2";
 import RCAFPart4 from "./RCAFPart4";
-import '../BackGroundVerification/index.css'
-import {useSelector,useDispatch} from "react-redux"
+import "../BackGroundVerification/index.css";
+import { useSelector, useDispatch } from "react-redux";
 import { RCAFRequest } from "../../actions/refCheckAction";
 import { LoadingButton } from "@mui/lab";
 import Snackbars from "../../components/Snackbar";
+import { useNavigate } from "react-router-dom";
 
 function RCAFForm() {
     const formState = useForm();
     const { handleSubmit } = formState;
-
+    const navigate = useNavigate();
     const RCFState = useSelector((state) => state.RCAFReducer);
     const { loading, error, userInfo } = RCFState;
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ function RCAFForm() {
                 program: data.programm_1,
                 institute_name: data.institute_name_1,
                 university_name: data.university_name_1,
-                Institute_details : data.institute_address_1,
+                Institute_details: data.institute_address_1,
                 university_details: data.university_address_1,
                 from_date: data.degree_period_to_1,
                 to_date: data.degree_period_from_1,
@@ -55,7 +56,7 @@ function RCAFForm() {
                 program: data.programm_2,
                 institute_name: data.institute_name_2,
                 university_name: data.university_name_2,
-                Institute_details : data.institute_address_2,
+                Institute_details: data.institute_address_2,
                 university_details: data.university_address_2,
                 from_date: data.degree_period_to_2,
                 to_date: data.degree_period_from_2,
@@ -72,7 +73,7 @@ function RCAFForm() {
                 program: data.programm_3,
                 institute_name: data.institute_name_3,
                 university_name: data.university_name_3,
-                Institute_details : data.institute_address_3,
+                Institute_details: data.institute_address_3,
                 university_details: data.university_address_3,
                 from_date: data.degree_period_to_3,
                 to_date: data.degree_period_from_3,
@@ -138,10 +139,7 @@ function RCAFForm() {
             contact_current_employer:
                 data.contact_current_employer === "Yes" ? true : false,
         };
-
-        dispatch( RCAFRequest(RCAFobjectAPI))
-
-      
+        dispatch(RCAFRequest(RCAFobjectAPI, navigate));
     };
 
     return (
@@ -171,23 +169,27 @@ function RCAFForm() {
                     <RCAFPart4 formState={formState} />
                 </div>
                 <LoadingButton
-                type="submit"
-                variant="contained"
-                size="large"
-                loading={loading}
-            >
-                <strong>Submit</strong>
-            </LoadingButton>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
-            {userInfo && (
-                <Snackbars
-                    value={true}
-                    severity={"success"}
-                    message={"Form Submitted"}
-                />
-            )}
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    loading={loading}
+                >
+                    <strong>Submit</strong>
+                </LoadingButton>
+                {error && (
+                    <Snackbars
+                        value={true}
+                        severity={"error"}
+                        message={error}
+                    />
+                )}
+                {userInfo && (
+                    <Snackbars
+                        value={true}
+                        severity={"success"}
+                        message={"Form Submitted"}
+                    />
+                )}
             </form>
         </div>
     );

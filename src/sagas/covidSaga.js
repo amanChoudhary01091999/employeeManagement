@@ -1,22 +1,18 @@
-import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
-//import { USER_LOGIN_REQUEST } from "../constants/userLoginConstant";
 import { COVID_REQUEST } from "../constants/covidConstants";
-
-//import { UserLoginSuccess,UserLoginFail,UserLoginRequest} from "../actions/userLoginAction";
-import { COVIDRequest,COVIDSuccess,COVIDFail } from "../actions/CovidAction";
-//import UserLoginRequestURL from "../Api/loginUserPostRequest";
+import { COVIDSuccess, COVIDFail } from "../actions/CovidAction";
+import { useNavigate } from "react-router-dom";
 import CovidPostUrl from "../Api/covidRequest";
 
-function* COVIDAsync(action) { 
+function* COVIDAsync(action) {
     try {
         const { data } = yield call(CovidPostUrl, action.payload);
         yield put(COVIDSuccess(data));
-        //localStorage.setItem('accessToken', data.accessToken)
-        console.log(data);
+        const navigate = action.navigate;
+        navigate("/gratuity-form");
     } catch (error) {
         yield put(
-           COVIDFail(
+            COVIDFail(
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message

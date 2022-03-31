@@ -6,6 +6,7 @@ import { requestEPF } from "../../actions/EPFAction";
 import EPFFormDetail from "./EPFFormDetail";
 import EPFUntrackingDeclaration from "./EPFUntrackingDeclaration";
 import Snackbars from "../../components/Snackbar";
+import { useNavigate } from "react-router-dom";
 
 function EPFFormMain() {
     const formState = useForm();
@@ -14,6 +15,7 @@ function EPFFormMain() {
     const { loading, error, userInfo } = useSelector(
         (state) => state.reducerEPF
     );
+    const navigate = useNavigate();
     const onSubmit = (data) => {
         const EPFobjectAPI = {
             id: 1,
@@ -75,7 +77,7 @@ function EPFFormMain() {
         //         //console.log(data);
         //     }
         // );
-        dispatch(requestEPF(EPFobjectAPI));
+        dispatch(requestEPF(EPFobjectAPI, navigate));
     };
     return (
         <div className="container py-4">

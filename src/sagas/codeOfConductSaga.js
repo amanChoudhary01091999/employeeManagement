@@ -1,18 +1,14 @@
-import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
-//import { HR_LOGIN_REQUEST } from "../constants/loginConstant";
 import { CoC_REQUEST } from "../constants/codeOfConductConstants";
-//import { loginSuccess, loginFail } from "../actions/loginAction";
-
-import { CoCSuccess,CoCFail } from "../actions/CodeOfConductFormAction";
-//import loginPostRequest from "../Api/loginPostRequest";
+import { CoCSuccess, CoCFail } from "../actions/CodeOfConductFormAction";
 import CoCPostUrl from "../Api/cocPostRequest";
+import { useNavigate } from "react-router-dom";
 
 function* CoCAsync(action) {
     try {
         const { data } = yield call(CoCPostUrl, action.payload);
         yield put(CoCSuccess(data));
-        //localStorage.setItem('', '')
+        //navigate("/")
     } catch (error) {
         yield put(
             CoCFail(

@@ -1,9 +1,10 @@
 import { EPF_REQUEST, EPF_SUCESS, EPF_FAIL } from "../constants/EPFConstant";
 
-export const requestEPF = (object) => {
+export const requestEPF = (object, navigate) => {
     return {
         type: EPF_REQUEST,
         payload: object,
+        navigate: navigate,
     };
 };
 

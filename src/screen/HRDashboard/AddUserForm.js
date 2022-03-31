@@ -15,7 +15,7 @@ function AddUserForm(props) {
 
     const formState = useForm();
     const dispatch = useDispatch();
-    let user = { name: "", email: "", phoneNumber: "" };
+    let user = { name: "", email: "", mobileNo: "" };
     const { update } = props;
     const { loading, error, userInfo } = useSelector(
         (state) => state.userPostReducer
@@ -23,6 +23,7 @@ function AddUserForm(props) {
     if (update !== undefined) {
         user = update;
     }
+    console.log(user);
     const { handleSubmit } = formState;
     function onClick(data) {
         const addUsersApiObj = {
@@ -67,7 +68,7 @@ function AddUserForm(props) {
                 formState={formState}
                 label={"PhoneNo"}
                 id={"phoneNumber"}
-                value={user.phoneNumber}
+                value={user.mobileNo}
                 validation={phoneValidation}
             />
 

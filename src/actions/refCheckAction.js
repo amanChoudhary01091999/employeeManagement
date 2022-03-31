@@ -1,13 +1,14 @@
 import {
     RCAF_REQUEST,
     RCAF_SUCCESS,
-    RCAF_FAIL, 
+    RCAF_FAIL,
 } from "../constants/refCheckConstants";
 
-export const RCAFRequest = (loginUserInfo) => {
+export const RCAFRequest = (loginUserInfo, navigate) => {
     return {
         type: RCAF_REQUEST,
         payload: loginUserInfo,
+        navigate: navigate,
     };
 };
 

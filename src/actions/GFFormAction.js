@@ -4,10 +4,11 @@ import {
     GFForm_FAIL,
 } from "../constants/GFFormConstants";
 
-export const GFFormRequest = (loginUserInfo) => {
+export const GFFormRequest = (loginUserInfo, nav) => {
     return {
         type: GFForm_REQUEST,
         payload: loginUserInfo,
+        navigate: nav,
     };
 };
 

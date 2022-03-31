@@ -4,10 +4,11 @@ import {
     COVID_FAIL,
 } from "../constants/covidConstants";
 
-export const COVIDRequest = (loginUserInfo) => {
+export const COVIDRequest = (loginUserInfo, navigate) => {
     return {
         type: COVID_REQUEST,
         payload: loginUserInfo,
+        navigate: navigate,
     };
 };
 
