@@ -1,15 +1,17 @@
+import { Box } from '@mui/material'
 import React from 'react'
 import DatePicker from '../../InputFiles/DatePicker'
 import Validation from '../../validation/Validations'
 
 
-function GFAcknowledgement(props) {
+function GFAcknowledgement(props) { 
 
     const validation = Validation().validationDegree
     return (
         <div>
-            <h6 className="text-center mt-5 mb-3">Acknowledgement by the Employee</h6>
-            <p className="text-center">Received the duplicate copy of nomination in Form 'F' filed by me and duly certified by the employer.</p>
+            <Box sx={{ bgcolor: '#cfe8fc', height: '8vh',fontSize:'4vh',fontFamily: 'Muller',textAlign:'center'}}>Acknowledgement by the Employee</Box>
+            {/* <h6 className="text-center mt-5 mb-3"></h6> */}
+            <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Received the duplicate copy of nomination in Form 'F' filed by me and duly certified by the employer.</h5>
             <div className="row">
                 <div className="col-6">
                     <DatePicker
@@ -30,6 +32,8 @@ function GFAcknowledgement(props) {
                         placeholder={""} />
                 </div>
             </div>
+            <br/>
+            <hr/>
         </div>
     )
 }
