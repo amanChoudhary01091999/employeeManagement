@@ -55,7 +55,7 @@ function UserLogin() {
     const OnSubmit = (data) => {
         const LoginApiObj = {
             //id:GetUserId(window.location.href),
-            id:12,
+            id:1,
             password: data.token,
             };
         dispatch(UserLoginRequest(LoginApiObj))

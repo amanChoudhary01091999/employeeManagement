@@ -6,6 +6,7 @@ import CovidForm from "./screen/COVIDForm/CovidFrom";
 import GFFormMain from "./screen/FormGratuity/GFFormMain";
 import HRDashBoardMain from "./screen/HRDashboard/HRDashBoardMain";
 import HRLoginPageMain from "./screen/HRLoginScreen/HRLoginPageMain";
+import RCAFForm from "./screen/RefCheckAuthForm/RCAFForm";
 import UserLogin from "./screen/UserAuthentication/UserLogin";
 
 function Routers() {
@@ -19,6 +20,8 @@ function Routers() {
                 <Route exact path="/codeOfConduct-form" element={<CodeOfConduct/>} />
                 <Route exact path="/covid-form" element={<CovidForm/>} />
                 <Route exact path="/gratuity-form" element={<GFFormMain/>} />
+                <Route exact path="/refcheck-form" element={<RCAFForm/>} />
+               
             </Routes>
         </BrowserRouter>
     );

@@ -12,6 +12,7 @@ import GFFormDeclaration from "./GFFormDeclaration";
 import GFFormNomination from "./GFFormNomination";
 import GFFormNominee from "./GFFormNominee";
 import GFFormStatement from "./GFFormStatement";
+import GratuityAppBar from "./GratuityAppBar";
 
 function GFFormMain() {
     const formState = useForm();
@@ -79,7 +80,11 @@ function GFFormMain() {
        
     };
     return (
-        <div className="container py-4">
+        <>
+        <GratuityAppBar/>
+        <div style={{backgroundColor: "#F3F3F3"}}>
+        <div className="container py-4" >
+            
             <form onSubmit={handleSubmit(onSubmit)}>
                 <GFFormNomination formState={formState} />
                 <GFFormNominee formState={formState} />
@@ -94,7 +99,7 @@ function GFFormMain() {
                 size="large"
                 loading={loading}
             >
-                <strong>Log In</strong>
+                <strong>Submit Form</strong>
             </LoadingButton>
             {error && (
                 <Snackbars value={true} severity={"error"} message={error} />
@@ -103,11 +108,13 @@ function GFFormMain() {
                 <Snackbars
                     value={true}
                     severity={"success"}
-                    message={"Login Success"}
+                    message={"Form Submitted"}
                 />
             )}
             </form>
         </div>
+        </div>
+        </>
     );
 }
 

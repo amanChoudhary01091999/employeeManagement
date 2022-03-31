@@ -22,11 +22,21 @@ import { COVIDSaga } from "./sagas/covidSaga";
 
 import { GFFormReducer } from "./reducers/GFFormReducer";
 import { GFFormSaga } from "./sagas/GFFormSaga";
+
+
+import { RCAFReducer } from "./reducers/rcfCheckReducer";
+import { rcfSaga } from "./sagas/rcfSaga";
+
+
+
+
+
 import createSaga from "redux-saga";
 import { loginSaga } from "./sagas/loginSaga";
 import { userGetSaga, userPostSaga,userDeleteSaga} from "./sagas/userSaga";
 import { spawn } from "redux-saga/effects";
 import { userloginSaga } from "./sagas/userLoginSaga";
+
 
 const createSagaMiddleware = createSaga();
 const combineReducer = combineReducers({
@@ -40,7 +50,8 @@ const combineReducer = combineReducers({
     BGVReducer,
     CoCReducer,
     COVIDReducer,
-    GFFormReducer
+    GFFormReducer,
+    RCAFReducer
     
     
 });
@@ -54,6 +65,7 @@ function* rootSaga() {
     yield spawn(CoCSaga)
     yield spawn(COVIDSaga)
     yield spawn(GFFormSaga)
+    yield spawn(rcfSaga)
 }
 const store = createStore(
     combineReducer,

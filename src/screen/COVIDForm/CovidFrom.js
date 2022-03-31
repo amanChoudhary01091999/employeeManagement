@@ -87,27 +87,33 @@ const CovidForm = (props) => {
         <CovidFormAppBar/>
         <div style={{ backgroundColor: "#F3F3F3", padding: 30 }}>
         
+      <Box >
       
-      {/* <Box sx={{ bgcolor: '#cfe8fc', height: '10vh',fontSize:'5vh',fontFamily: 'Muller',textAlign:'center'}}>Confirmation & Acceptance</Box> */}
-      <Box sx={{ bgcolor: '#cfe8fc',}}><p style={{fontFamily:"muller", textAlign:'center' ,fontSize:"3vh",marginTop:"2vh",padding:'0px 10px'}}>This guideline document is subject to revision and change from time to time
+      <Box ><p style={{fontFamily:"muller", textAlign:'center' ,fontSize:"3vh",marginTop:"2vh",padding:'0px 10px'}}>This guideline document is subject to revision and change from time to time
           considering the circumstances /
           government directives and such changes shall be intimated to all employees in writing</p></Box>
                     <hr/>
       {/* <p>This form is required to be filled by employees of Senrysa who are attending office for work.</p><hr/> */}
 
-      <Box sx={{ bgcolor: '#cfe8fc',}}><p style={{fontFamily:"muller" ,fontSize:"3vh",marginTop:"2vh",textAlign:'center',padding:'0px 10px'}}>This form is required to be filled by employees of Senrysa who are attending office for work.
+      <Box ><p style={{fontFamily:"muller" ,fontSize:"3vh",marginTop:"2vh",textAlign:'center',padding:'0px 10px'}}>This form is required to be filled by employees of Senrysa who are attending office for work.
           </p></Box>
                     <hr/>
-      {/* <p>Please note that this form is for your safety. Your conscious participation and honest declaration in this
-          questionnaire is very important to ensure us take precautionary measures at workplace.</p><hr/><br/> */}
 
+    <Box ><p style={{fontFamily:"muller" ,fontSize:"3vh",marginTop:"2vh",textAlign:'center',padding:'0px 10px'}}>Please note that this form is for your safety. Your conscious participation and honest declaration in this
+          questionnaire is very important to ensure us take precautionary measures at workplace.
+          </p></Box>
+                    <hr/>
+                    </Box>
+      
+
+                    <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'4vh',fontFamily: 'Muller',textAlign:'center'}}>PERSONAL DETAILS</Box>
           
       <div className="table-responsive">
           <table className="table table-border table-hover">
              
               <tbody>
                   <tr>
-                      <td>Name –</td>
+                      <td className="text-center " style={{ fontFamily: 'Muller' }}>Name –</td>
                       
 
                       <td  >
@@ -115,7 +121,7 @@ const CovidForm = (props) => {
                       <TextAreaInput
                         formState={formState}
                         name={'firstName'}
-                        label={""}
+                        label={"Enter Your Name"}
                         validation={validation}
                         placeholder={""} />
                     
@@ -126,29 +132,29 @@ const CovidForm = (props) => {
                    
                       
                       
-                      <td>Employee ID </td>
+                      <td className="text-center " style={{ fontFamily: 'Muller' }}>Employee ID </td>
                       <td>
                       <TextAreaInput
                         formState={formState}
                         name={'empId'}
-                        label={""}
+                        label={"Enter your employee id"}
                         validation={validation}
                         placeholder={""} />
                            </td>
                   </tr>
                   <tr>
-                      <td>Phone –</td>
+                      <td className="text-center " style={{ fontFamily: 'Muller' }}>Phone –</td>
                       <td>
                       <TextAreaInput
                         formState={formState}
                         name={'phoneNumber'}
-                        label={""}
+                        label={"Enter your phone number"}
                         validation={validationPh}
                         placeholder={""} />
                       
                       </td>
 
-                      <td>DoB-</td>
+                      <td className="text-center " style={{ fontFamily: 'Muller' }}>DoB-</td>
                       <DatePicker
                         formState={formState}
                         name={'dateOfBirth'}
@@ -164,15 +170,17 @@ const CovidForm = (props) => {
           </table>
       </div>
       <div>
+          <br/>
           <p>
-              <div className="personalDetailsCov">
-               Do you have any symptoms from the below given list in the last 15 days –
+              <div>
+               {/* Do you have any symptoms from the below given list in the last 15 days – */}
+               <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3vh',fontFamily: 'Muller',textAlign:'center'}}> Do you have any symptoms from the below given list in the last 15 days –</Box>
               </div>
           </p>
           <ul style={{listStyleType: "none"}}>
               <li>
               <div className="contactEmp">
-                  <p>a. Dry Cough –</p>
+                  <p className="text-center " style={{ fontFamily: 'Muller' }}>a. Dry Cough –</p>
                   <div style={{display: "flex",justifyContent: "spaceAround"}}>
                   <InputRadioGroup
                                 formState={formState}
@@ -189,7 +197,7 @@ const CovidForm = (props) => {
               </li>
              <li>
                   <div className="contactEmp">
-                      <p> b. Sore Throat –</p>
+                      <p className="text-center " style={{ fontFamily: 'Muller' }}> b. Sore Throat –</p>
                       <div style={{display: "flex",justifyContent: "spaceAround"}}>
                       <InputRadioGroup
                                 formState={formState}
@@ -204,7 +212,7 @@ const CovidForm = (props) => {
               
             <li>
                   <div className="contactEmp">
-                      <p>c. Breathing problem -</p>
+                      <p className="text-center " style={{ fontFamily: 'Muller' }}>c. Breathing problem -</p>
                       <div style={{display: "flex",justifyContent: "spaceAround"}}>
                       <InputRadioGroup
                                 formState={formState}
@@ -217,7 +225,7 @@ const CovidForm = (props) => {
               </li>
                   <li>
                   <div className="contactEmp">
-                      <p> d. Fever </p>
+                      <p className="text-center " style={{ fontFamily: 'Muller' }}> d. Fever </p>
                       <div style={{display: "flex",justifyContent: "spaceAround"}}>
                       <InputRadioGroup
                                 formState={formState}
@@ -245,14 +253,10 @@ const CovidForm = (props) => {
                           
                       </div>
           </div> */}
-
+ <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Did you get in contact with a Covid+ person in last 15 days in your knowledge-</Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
             
-           < td className=" personalDetailsCov">Did you get in contact with a Covid+ person in last 15 days  in your
-                  knowledge</td>
-           </tr>
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
@@ -278,27 +282,12 @@ const CovidForm = (props) => {
             
             </table>
             </div>
-           {/* <div style={{display: "flex",justifyContent: "spaceAround"}}>
-              <p>
-                  3. Have you had contact with any person who had Covid in past 15 days in his/her family in your
-                  knowledge -  </p>
-                  <div style={{display: "flex",justifyContent: "spaceAround"}}>
-                  <InputRadioGroup
-                                formState={formState}
-                                name={"conCovidFam"}
-                                labelGroup={null}
-                                label={['Yes', 'No']}/>
-                          
-                      </div>
-          </div> */}
+        
 
+            <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Did you get in contact with a Covid+ person in last 15 days in your knowledge</Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
             
-           < td className=" personalDetailsCov">Did you get in contact with a Covid+ person in last 15 days  in your
-                  knowledge </td>
-           </tr>
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
@@ -326,7 +315,7 @@ const CovidForm = (props) => {
             </div>
 
           { contactedCovidFam==="Yes" || contactedCovid ==="Yes"?
-        <div> <p style={{fontWeight: 500}}>If yes, please specify the date for the same</p>
+        <div> <p className="text-center " style={{ fontFamily: 'Muller',fontSize:"20px",fontWeight:"700" }}>If yes, please specify the date for the same</p>
 
 
 <DatePicker
@@ -354,16 +343,15 @@ const CovidForm = (props) => {
                          
                       </div> */}
 
+
+<Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Do you have any chronic respiratory disease</Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
-                < td className=" personalDetailsCov"> Do you have any chronic respiratory disease</td>
-           </tr>
-
+            
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
-                        <div className='center'>
+ <div className='center'>
                             <InputRadioGroup
                                 formState={formState}
                                 name={"respirtoryDisease"}
@@ -378,33 +366,15 @@ const CovidForm = (props) => {
 
 
 
-
-{/*           
-           <div style={{display: "flex",justifyContent: "spaceAround"}}>
-              <p>
-                  5.Do you have any chronic heart disease -  </p>
-                  <div style={{display: "flex",justifyContent: "spaceAround"}}>
-                  <InputRadioGroup
-                                formState={formState}
-                                name={"Heart Disease"}
-                                labelGroup={null}
-                                label={['Yes', 'No']}/>
-                          
-                      </div>
-                      
-                      </div> */}
-
-
+                {/* < td className=" personalDetailsCov"> </td> */}
+                <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Do you have any chronic Heart disease</Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
-                < td className=" personalDetailsCov"> Do you have any chronic Heart disease</td>
-           </tr>
-
+            
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
-                        <div className='center'>
+ <div className='center'>
                             <InputRadioGroup
                                 formState={formState}
                                 name={"heartDisease"}
@@ -434,16 +404,17 @@ const CovidForm = (props) => {
                       </div>
           </div> */}
 
+
+                {/* < td className=" personalDetailsCov"> Do you have diabetes</td> */}
+                <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Do you have Diabetes</Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
-                < td className=" personalDetailsCov"> Do you have diabetes</td>
-           </tr>
-
+            
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
-                        <div className='center'>
+ <div className='center'>
+       
                             <InputRadioGroup
                                 formState={formState}
                                 name={"diabetes"}
@@ -474,17 +445,14 @@ const CovidForm = (props) => {
 
 
 
-
+<Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Do you have any other medical conditions</Box>
 <div className="table-responsive">
-          <table className="table ">
-            <tr>
-                < td className=" personalDetailsCov"> Do you have any other medical conditions</td>
-           </tr>
-
+          <table className="table table-bordered table-hover">
+            
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
-                        <div className='center'>
+ <div className='center'>
                             <InputRadioGroup
                                 formState={formState}
                                 name={"medicalConditions"}
@@ -511,17 +479,14 @@ const CovidForm = (props) => {
           </div> */}
 
 
-
+<Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> Did you get yourself vaccinated</Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
-                < td className=" personalDetailsCov"> Did you get yourself vacinated ? </td>
-           </tr>
-
+            
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
-                        <div className='center'>
+ <div className='center'>
                             <InputRadioGroup
                                 formState={formState}
                                 name={"vaccinated"}
@@ -569,7 +534,7 @@ const CovidForm = (props) => {
                           <td>  <TextAreaInput
                         formState={formState}
                         name={"vaccineName"}
-                        label={""}
+                        label={"Vaccine Name"}
                         validation={validation}
                         placeholder={""} /></td>
   
@@ -603,17 +568,22 @@ const CovidForm = (props) => {
 
 
 
+
+           
+                {/* < td className=" personalDetailsCov"> I confirm that the locality in which I am staying is a non-containment zone. I further confirm that I */}
+              {/* shall intimate the HRD in case my locality is newly identified as a containment zone. </td> */}
+           
+
+           
+<Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}>I confirm that the locality in which I am staying is a non-containment zone.  </Box>
 <div className="table-responsive">
           <table className="table table-bordered table-hover">
-            <tr>
-                < td className=" personalDetailsCov"> I confirm that the locality in which I am staying is a non-containment zone. I further confirm that I
-              shall intimate the HRD in case my locality is newly identified as a containment zone. </td>
-           </tr>
-
+            
           <tr>
             <td>
                <div className='btnSubmitcontainer'>
-                        <div className='center'>
+ <div className='center'>
+
                             <InputRadioGroup
                                 formState={formState}
                                 name={"containmentZoneDetail"}
@@ -635,12 +605,12 @@ const CovidForm = (props) => {
                   
                   <tbody>
                       <tr>
-                          <td>My mode of travel to work everyday is </td>
+                          <td className="text-center " style={{ fontFamily: 'Muller' }}>My mode of travel to work everyday is </td>
                           <td>
                           <TextAreaInput
                         formState={formState}
                         name={"travelMode"}
-                        label={""}
+                        label={"Mode of travel"}
                         validation={validation}
                         placeholder={""} />
                           </td>
@@ -648,19 +618,21 @@ const CovidForm = (props) => {
                   </tbody>
               </table>
           </div>
+          <Box sx={{ bgcolor: '#cfe8fc', height: '5vh',fontSize:'3.5vh',fontFamily: 'Muller',textAlign:'center'}}> CONFIRMATION</Box>
           <div className="table-responsive">
               <table className="table table-border table-hover">
+
                  
                   <tbody>
                       <tr>
-                          <td>Name </td>
+                          <td className="text-center " style={{ fontFamily: 'Muller' }}>Name </td>
                           <td>  <TextAreaInput
                         formState={formState}
                         name={"confirmNameUser"}
-                        label={""}
+                        label={"Full Name"}
                         validation={validation}
                         placeholder={""} /> </td>
-                          <td>Signature </td>
+                          <td className="text-center " style={{ fontFamily: 'Muller' }}>Signature </td>
                           <td>
                           <DatePicker
                         formState={formState}
@@ -671,7 +643,7 @@ const CovidForm = (props) => {
                         placeholder={""} />
                        
                                </td>
-                          <td>Date </td>
+                          <td className="text-center " style={{ fontFamily: 'Muller' }}>Date </td>
                           <td>
                           <DatePicker
                         formState={formState}
@@ -687,70 +659,8 @@ const CovidForm = (props) => {
                   </tbody>
               </table>
           </div>
-      </div> 
-
-      
+      </div>
      
-
-      <div className="footer">
-  
-          <div className="movement">
-  
-              <h4>Join our movement</h4>
-  
-              <h5>#HEALTHYCOMMERCE</h5>
-  
-              <p>NDHGO offers a level playing field for traditional retailers to compete with organised online
-  
-                  aggregators by providing them state of the art technology to address the current market needs,
-  
-                  without any cost.</p>
-  
-              <h2>download the ndhgo app now</h2>
-  
-          </div>
-          <div className="app_body">
-  
-              <div className="app">
-  
-                  <img src="https://ndhbucket.s3.ap-south-1.amazonaws.com/ndhgo-mailer/images/barcode.png"
-                      alt="barcode" width="130px" style={{borderRadius: 5}}/>
-  
-                  <a href="https://play.google.com/store/apps/details?name=com.nextdoorhub" target="blank">
-  
-                      <img src="https://ndhbucket.s3.ap-south-1.amazonaws.com/ndhgo-mailer/images/play-store.png"
-                          alt="play store" width="120"/>
-  
-                  </a>
-  
-              </div>
-              <div className="app">
-  
-                  <img src="https://ndhbucket.s3.ap-south-1.amazonaws.com/ndhgo-mailer/images/barcode.png"
-                      alt="barcode" width="130px" style={{borderRadius: 5}}/>
-  
-                  <a href="https://apps.apple.com/in/app/ndhgo/id1438955605" target="blank">
-  
-                      <img src="https://ndhbucket.s3.ap-south-1.amazonaws.com/ndhgo-mailer/images/app-store.png"
-                          alt="app store" width="120"/>
-  
-                  </a>
-  
-              </div>
-  
-          </div>
-  
-      </div>
-      <div className="footer_bottum">
-  
-          <h6><a href="tel:+91-33-66212222"><i className="fas fa-phone-alt"></i>+91-33-66212222</a></h6>
-  
-          <h6><a title="ndhgo Official Site" href="https://www.ndhgo.com/" target="blank"><i
-                      className="fas fa-globe"></i>www.ndhgo.com</a></h6>
-  
-          <h6><a href="mailto:mail@ndhgo.com"><i className="fas fa-envelope-open-text"></i>mail@ndhgo.com</a></h6>
-  
-      </div>
       <br/>
       <LoadingButton
                 type="submit"
@@ -758,7 +668,7 @@ const CovidForm = (props) => {
                 size="large"
                 loading={loading}
             >
-                <strong>Log In</strong>
+                <strong>Submit</strong>
             </LoadingButton>
             {error && (
                 <Snackbars value={true} severity={"error"} message={error} />
@@ -767,7 +677,7 @@ const CovidForm = (props) => {
                 <Snackbars
                     value={true}
                     severity={"success"}
-                    message={"Login Success"}
+                    message={"Form Submitted"}
                 />
             )}
 
