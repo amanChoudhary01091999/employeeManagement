@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import React from 'react'
 import DatePicker from '../../InputFiles/DatePicker'
 import TextAreaInput from '../../InputFiles/TextAreaInput'
@@ -10,10 +11,11 @@ function GFCertificateEmployer(props) {
 
     return (
         <div>
-            <h6 className="text-center mt-5 mb-3">Certificate by the Employer</h6>
-            <p className="text-center">Certified that the particulars of the above nomination have been verified and recorded in this establishment.</p>
-            <div className="row">
-                <div className="col-6">
+            {/* <h6 className="text-center mt-5 mb-3">Certificate by the Employer</h6> */}
+            <Box sx={{ bgcolor: '#cfe8fc', height: '8vh',fontSize:'4vh',fontFamily: 'Muller',textAlign:'center'}}>Certificate by the Employer</Box><br/>
+            <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Certified that the particulars of the above nomination have been verified and recorded in this establishment.</h5>
+            
+                <div >
                     <TextAreaInput
                         formState={props.formState}
                         name={'employer_reference_no'}
@@ -21,7 +23,11 @@ function GFCertificateEmployer(props) {
                         validation={validation}
                         placeholder={""} />
                 </div>
-                <div className="col-6">
+                <br/>
+                <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Signature of the employer/Officer authorised Designation</h5>
+
+                <div >
+                    
                     <DatePicker
                         formState={props.formState}
                         name={'signature_of_the_employer'}
@@ -30,7 +36,10 @@ function GFCertificateEmployer(props) {
                         validation={validation}
                         placeholder={""} />
                 </div>
-                <div className="col-6 mt-3">
+                <br/>
+                <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Date Of Establishment</h5>
+                
+                <div>
                     <DatePicker
                         formState={props.formState}
                         name={'certificate_date'}
@@ -39,7 +48,9 @@ function GFCertificateEmployer(props) {
                         validation={validation}
                         placeholder={""} />
                 </div>
-                <div className="col-6 mt-3">
+                <br/>
+                <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Name Of Establishment</h5>
+                <div >
                     <div>
                         <TextAreaInput
                             formState={props.formState}
@@ -48,6 +59,8 @@ function GFCertificateEmployer(props) {
                             validation={validation}
                             placeholder={""} />
                     </div>
+                    <br/>
+                    <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Address Of Establishment</h5>
                     <div >
                         <TextAreaInput
                             formState={props.formState}
@@ -56,6 +69,8 @@ function GFCertificateEmployer(props) {
                             validation={validation}
                             placeholder={""} />
                     </div>
+                    <br/>
+                    <h5 style={{fontFamily: 'Muller',textAlign:"center"}}>Proof Of Establishment</h5>
                     <div>
                         <DatePicker
                             formState={props.formState}
@@ -65,8 +80,9 @@ function GFCertificateEmployer(props) {
                             validation={validation}
                             placeholder={""} />
                     </div>
+                    <br/>
                 </div>
-            </div>
+            
         </div>
     )
 }
