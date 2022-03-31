@@ -1,31 +1,27 @@
-import { TextField } from '@mui/material'
-import React from 'react'
+import { TextField } from "@mui/material";
+import React from "react";
 
 function InputForm(props) {
-
-    const { formState, label, name, validation } = props
-    const { register,  formState: { errors } } = formState
-    return ( 
-  
-           
-            <TextField
-                label={label}
-                type="text"
-                id={name}
-                //variant="outlined"
-                {...register(`${name}`, validation)}
-                error={errors[name] !== undefined}
-                helperText={errors[name]?.message}
-
-            />
-           
-          
-    )
+    const { formState, label, name, validation } = props;
+    const {
+        register,
+        formState: { errors },
+    } = formState;
+    return (
+        <TextField
+            label={label}
+            type="text"
+            id={name}
+            fullWidth
+            size="small"
+            //variant="outlined"
+            {...register(`${name}`, validation)}
+            error={errors[name] !== undefined}
+            helperText={errors[name]?.message}
+        />
+    );
 }
-export default InputForm
-
-
-
+export default InputForm;
 
 // import { TextField } from "@mui/material";
 // import React from "react";

@@ -1,20 +1,22 @@
-import React from 'react'
+import { FormControlLabel, Radio } from "@mui/material";
+import React from "react";
 
 function InputRadio(props) {
-
-    const { formState, label, name, validation } = props
-    const { register, formState: { errors } } = formState
-    return ( 
+    const { formState, label, name, validation } = props;
+    const {
+        register,
+        formState: { errors },
+    } = formState;
+    return (
         <div class="form-check form-check-inline">
-            <input
-                class="form-check-input"
-                type="radio"
+            <FormControlLabel
                 value={label}
+                control={<Radio size="small" color="success" />}
+                label={label}
                 {...register(`${name}`, validation)}
             />
-            <label class="form-check-label" htmlFor="male">{label}</label>
         </div>
-    )
+    );
 }
 
-export default InputRadio
+export default InputRadio;

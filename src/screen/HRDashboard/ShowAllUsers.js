@@ -128,7 +128,7 @@ export default function ShowAllUsers() {
     const { loading, userInfo, error } = useSelector(
         (state) => state.userGetReducer
     );
-    const rows = userInfo === undefined ? [] : userInfo;
+    const rows = userInfo ? userInfo : [];
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const useStyles = makeStyles({

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
 import { HR_LOGIN_REQUEST } from "../constants/loginConstant";
 import { loginSuccess, loginFail } from "../actions/loginAction";
