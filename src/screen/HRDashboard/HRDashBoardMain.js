@@ -1,7 +1,6 @@
 import { Alert, Button, Snackbar } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import LoginAppBar from "../HRLoginScreen/LoginAppBar";
 import DashBoardAppBar from "./DashBoardAppBar";
 import DialogForm from "./DialogForm";
 import ShowAllUsers from "./ShowAllUsers";
@@ -39,8 +38,8 @@ function HRDashBoardMain() {
                     This is a success message!
                 </Alert>
             </Snackbar>
-            
-            <DashBoardAppBar/>
+
+            <DashBoardAppBar />
             <ShowAllUsers />
             <DialogForm />
         </div>

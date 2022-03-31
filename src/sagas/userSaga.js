@@ -14,7 +14,6 @@ import {
     userUpdateFail,
     userDeleteSuccess,
     userDeleteFail,
-    userPostRequest,
     closeDialog,
 } from "../actions/userAction";
 import {
@@ -25,12 +24,10 @@ import {
     userDeleteData,
 } from "../Api/userRequest";
 
-function* uesrGetAsync(action) {
+function* uesrGetAsync() {
     try {
         const { data } = yield call(userGetData);
         yield put(userGetSuccess(data));
-
-        //console.log(data);
     } catch (error) {
         yield put(
             userGetFail(
@@ -60,7 +57,21 @@ function* uesrPostAsync(action) {
     }
 }
 
-function* uesrUpdateAsync(action) {}
+function* uesrUpdateAsync(action) {
+    try {
+        const { data } = yield call(userUpdateData, action.payload);
+        yield put(userUpdateSuccess(data));
+        yield put(closeDialog());
+    } catch (error) {
+        yield put(
+            userUpdateFail(
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message
+            )
+        );
+    }
+}
 
 function* uesrDeleteAsync(action) {
     try {

@@ -24,6 +24,7 @@ import { LoadingButton } from "@mui/lab";
 import SampleUser from "./SampleUser";
 import { useDispatch, useSelector } from "react-redux";
 import { userGetRequest } from "../../actions/userAction";
+import Snackbars from "../../components/Snackbar";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -261,6 +262,9 @@ export default function ShowAllUsers() {
                     </TableFooter>
                 </Table>
             </TableContainer>
+            {error && (
+                <Snackbars value={true} severity={"error"} message={error} />
+            )}
         </div>
     );
 }

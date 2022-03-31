@@ -18,7 +18,7 @@ import {
 export const dialogReducer = (state = { open: false }, action) => {
     switch (action.type) {
         case OPEN_DIALOG:
-            return { open: true };
+            return { open: true, user: action.payload };
         case CLOSE_DIALOG:
             return { open: false };
         default:

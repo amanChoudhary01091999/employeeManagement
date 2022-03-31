@@ -11,7 +11,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { userDeleteRequest } from "../../actions/userAction";
+import { openDialog, userDeleteRequest } from "../../actions/userAction";
 
 function SampleUser(props) {
     const { row } = props;
@@ -22,6 +22,9 @@ function SampleUser(props) {
     );
     const onDelete = (id) => {
         if (window.confirm("Are You Sure")) dispatch(userDeleteRequest(id));
+    };
+    const onUpdate = (row) => {
+        dispatch(openDialog(row));
     };
     return (
         <TableRow key={row.name}>
@@ -35,7 +38,7 @@ function SampleUser(props) {
                 {row.mobileNo}
             </TableCell>
             <TableCell colSpan={2} align="center">
-                <IconButton color="primary">
+                <IconButton color="primary" onClick={() => onUpdate(row)}>
                     <Edit />
                 </IconButton>
             </TableCell>

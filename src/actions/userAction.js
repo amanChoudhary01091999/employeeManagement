@@ -98,9 +98,10 @@ export const userDeleteFail = (message) => {
     };
 };
 
-export const openDialog = () => {
+export const openDialog = (user) => {
     return {
         type: OPEN_DIALOG,
+        payload: user,
     };
 };
 

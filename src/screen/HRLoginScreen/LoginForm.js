@@ -7,16 +7,30 @@ import TextInput from "../../Input/TextInput";
 import { useSelector, useDispatch } from "react-redux";
 import { loginRequest } from "../../actions/loginAction";
 import Snackbars from "../../components/Snackbar";
+import Validation from "../../validation/Validations";
+
+const currencies = [
+    {
+        value: "admin",
+        label: "HR",
+    },
+    {
+        value: "adminm",
+        label: "Moderator",
+    },
+];
 
 function LoginForm() {
     const formState = useForm();
     const history = useNavigate();
-    const [currency, setCurrency] = React.useState("admin");
+    const [currency, setCurrency] = React.useState("");
     const accessToken = localStorage.getItem("accessToken");
+    const validation = Validation().validationDegree;
     // useEffect(() => {
     //     if (accessToken !== null) history("/dashboard", { replace: true });
     // });
     const handleChange = (event) => {
+        console.log(event.target.value);
         setCurrency(event.target.value);
     };
 
@@ -25,17 +39,6 @@ function LoginForm() {
         handleSubmit,
         formState: { errors },
     } = formState;
-
-    const currencies = [
-        {
-            value: "admin",
-            label: "HR",
-        },
-        {
-            value: "adminm",
-            label: "Moderator",
-        },
-    ];
 
     const loginState = useSelector((state) => state.loginReducer);
     const { loading, error, userInfo } = loginState;
@@ -68,6 +71,7 @@ function LoginForm() {
                 formState={formState}
                 label={"username"}
                 id={"user_name"}
+                validation={validation}
             />
 
             <TextField
@@ -95,6 +99,7 @@ function LoginForm() {
                 formState={formState}
                 label={"Password"}
                 id={"password"}
+                validation={validation}
             />
 
             <LoadingButton

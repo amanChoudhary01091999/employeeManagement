@@ -13,7 +13,7 @@ import AddUserForm from "./AddUserForm";
 
 function DialogForm() {
     const dispatch = useDispatch();
-    const { open } = useSelector((state) => state.dialogReducer);
+    const { open, user } = useSelector((state) => state.dialogReducer);
     const handleClickOpen = () => {
         dispatch(openDialog());
     };
@@ -39,7 +39,7 @@ function DialogForm() {
                     Add user
                 </DialogTitle> */}
                 <DialogContent>
-                    <AddUserForm update={"update"} />
+                    <AddUserForm update={user} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
