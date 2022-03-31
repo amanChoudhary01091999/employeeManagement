@@ -1,0 +1,217 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  @media(max-width:500px){
+    .main .container-fluid{
+      padding: 0px;
+    }
+  }
+  section{
+    margin-bottom: 50px;
+  }
+  .table td, .table th {
+    padding: 10px !important;
+    vertical-align: middle !important;
+    border-top: 1px solid #dee2e6;
+  }
+  .personalDetails{
+    border-right: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    padding: 10px;
+    background: aliceblue;
+    font-size: 20px;
+    font-family: 'Arvo';
+    font-weight: 700;
+    width: "100%";
+    text-align: center;
+  }
+  h2.headname {
+    text-align: center;
+  }
+  p.subheadname {
+    text-align: center;
+  }
+  .contactEmp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    margin-bottom: 50px;
+  }
+  .contactEmp p{
+    margin-bottom: 0 !important;
+  }
+  
+  
+  /* covid */
+  .form_header {
+  
+    display: flex;
+  
+    justify-content: space-between;
+  
+  }
+  
+  .company_info h1 {
+  
+    font-size: 1em
+  
+  }
+  
+  
+  
+  .company_info p {
+  
+    color: #b8b8b8;
+  
+    font-size: 0.9em;
+  
+  }
+  
+  .footer {
+  
+    display: flex;
+  
+    justify-content: space-between;
+  
+    color: #18b4cb;
+  
+    padding-top: 25px;
+  
+    border-top: 1px solid #ccc;
+  
+  }
+  .footer_bottum h6 a {
+  
+    text-decoration: none;
+  
+    display: flex;
+  
+    gap: 9px;
+  
+    align-items: center;
+  
+    color: #6a6a6a;
+  
+  }
+  
+  
+  
+  .footer_bottum {
+  
+    display: flex;
+  
+    margin-top: 40px;
+  
+    justify-content: space-around;
+  
+  }
+  .movement {
+  
+    width: 50%;
+  
+    text-align: center;
+  
+  }
+  
+  
+  
+  .movement h5 {
+  
+    color: green;
+  
+  }
+  
+  
+  
+  .movement h2 {
+  
+    text-transform: uppercase;
+  
+    margin-top: 20px;
+  
+  }
+  
+  
+  
+  .app {
+  
+    display: flex;
+  
+    flex-direction: column;
+  
+    justify-content: center;
+  
+    align-items: center;
+  
+  }
+  
+  
+  
+  .app_body {
+  
+    display: flex;
+  
+    gap: 30px;
+  
+  }
+  
+  
+  
+  .movement h4 {
+  
+    font-size: 0.9em;
+  
+  }
+  
+  .btnSubmitcontainer { 
+    
+    padding: 5px;
+    position: relative;
+    height: 4vh;
+    font-size: large;
+   
+  }
+  .btnSubmitcontainers { 
+    
+    padding: 5px;
+    position: relative;
+    margin-top: 25px;
+    font-size: large;
+   
+  }
+  
+  .center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .personalDetailsCov{
+    border-right: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    
+
+    padding: 10px;
+    background: aliceblue;
+    font-size: 20px;
+    font-family: 'Arvo';
+    font-weight: 200;
+    
+    text-align: center;
+  }
+
+
+
+  .mainTable
+  {
+    border: 1px solid black;
+  }
