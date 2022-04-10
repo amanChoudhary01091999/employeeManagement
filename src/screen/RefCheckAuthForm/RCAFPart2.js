@@ -3,6 +3,7 @@ import DatePicker from '../../InputFiles/DatePicker'
 import TextAreaInput from '../../InputFiles/TextAreaInput'
 import Validation from '../../validation/Validations'
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
+import { Box } from '@mui/material';
 
 function RCAFPart2(props) {
 
@@ -14,7 +15,17 @@ function RCAFPart2(props) {
     return (
         <div>
             <hr className='my-5'></hr>
-            <h4 style={{ backgroundColor: 'aliceblue' }} className='mb-4 p-3'>#Education Degree {number}</h4>
+            <Box
+                                    sx={{
+                                        bgcolor: "#cfe8fc",
+                                        height: "10vh",
+                                        fontSize: "5vh",
+                                        fontFamily: "Muller",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                   EDUCATION DEGREE ({number})
+                                </Box>
 
             <table className="table table-bordered align-middle mt-4">
                 <tbody>
@@ -23,12 +34,12 @@ function RCAFPart2(props) {
                         <td colSpan="2">
                             <div className="row align-center">
                                 <div className="col-3 align-self-center">
-                                    <p className="mb-0">Degree Earned ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Degree Earned ({number}):</p>
                                 </div>
                                 <div className="col-9">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Title"}
                                         name={`degree_earned_${number}`}
                                         validation={validationDegree} />
                                 </div>
@@ -39,12 +50,12 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Institute Name ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Institute Name ({number}):</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Name of the Institute"}
                                         name={`institute_name_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -53,12 +64,12 @@ function RCAFPart2(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">University Name ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>University Name ({number}):</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"University Name"}
                                         name={`university_name_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -69,12 +80,12 @@ function RCAFPart2(props) {
                         <td colSpan="2">
                             <div className="row align-center">
                                 <div className="col-3 align-self-center">
-                                    <p className="mb-0">Institute Address & Contact Number ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Institute Address & Contact Number ({number}):</p>
                                 </div>
                                 <div className="col-9">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Institute Address"}
                                         name={`institute_address_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -85,12 +96,12 @@ function RCAFPart2(props) {
                         <td colSpan="2">
                             <div className="row align-center">
                                 <div className="col-3 align-self-center">
-                                    <p className="mb-0">University Address ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>University Address ({number}):</p>
                                 </div>
                                 <div className="col-9">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"University Address"}
                                         name={`university_address_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -101,7 +112,7 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">From (month / year) ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>From (month / year) ({number}):</p>
                                 </div>
                                 <div className="col">
                                     <DatePicker
@@ -116,7 +127,7 @@ function RCAFPart2(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">To (month / year) ({number}):</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>To (month / year) ({number}):</p>
                                 </div>
                                 <div className="col">
                                     <DatePicker
@@ -133,7 +144,7 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Graduated ({number})  :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Graduated ({number})  :</p>
                                 </div>
                                 <div className="col">
                                     <InputRadioGroup
@@ -148,7 +159,7 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Programm ({number}) : </p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Programm ({number}) : </p>
                                 </div>
                                 <div className="col">
                                     <InputRadioGroup
@@ -166,12 +177,12 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Type Of Degree ({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Type Of Degree ({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Type of degree"}
                                         name={`type_of_degree_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -180,7 +191,7 @@ function RCAFPart2(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Graduation date (month / year) ({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Graduation date (month / year) ({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <DatePicker
@@ -197,12 +208,12 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Major Subject ({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}} >Major Subject ({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={'Major subject'}
                                         name={`major_subject_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -211,12 +222,12 @@ function RCAFPart2(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Roll No ({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Roll No ({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Roll Number"}
                                         name={`roll_no_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -227,12 +238,12 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Enrolment No ({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Enrolment No ({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Enrollment Number"}
                                         name={`enrolment_no_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -241,12 +252,12 @@ function RCAFPart2(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Hall Ticket No ({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Hall Ticket No ({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"Hall ticket number"}
                                         name={`hall_ticket_no_${number}`}
                                         validation={validationAddress} />
                                 </div>
@@ -257,12 +268,12 @@ function RCAFPart2(props) {
                         <td >
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p className="mb-0">Registration No({number}) :</p>
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Registration No({number}) :</p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={null}
+                                        label={"registration Number"}
                                         name={`registration_no_${number}`}
                                         validation={validationAddress} />
                                 </div>

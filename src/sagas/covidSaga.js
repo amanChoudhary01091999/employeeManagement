@@ -1,8 +1,8 @@
 import { takeLatest, put, call } from "redux-saga/effects";
-import { COVID_REQUEST } from "../constants/covidConstants";
-import { COVIDSuccess, COVIDFail } from "../actions/CovidAction";
+import { COVID_GET_REQUEST, COVID_GET_SUCCESS, COVID_REQUEST } from "../constants/covidConstants";
+import { COVIDSuccess, COVIDFail, COVIDGetSuccess, COVIDGetError } from "../actions/CovidAction";
 import { useNavigate } from "react-router-dom";
-import CovidPostUrl from "../Api/covidRequest";
+import CovidPostUrl, { covidGetData } from "../Api/covidRequest";
 
 function* COVIDAsync(action) {
     try {
@@ -22,4 +22,22 @@ function* COVIDAsync(action) {
 }
 export function* COVIDSaga() {
     yield takeLatest(COVID_REQUEST, COVIDAsync);
+}
+
+
+
+{
+    try{
+    const {data} =yield  call (covidGetData,action.payload)
+    yield put(COVIDGetSuccess(data))
+    }catch(error){
+        yield put(COVIDGetError(error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message))
+    }
+}
+
+export function* COVIDGetSaga()
+{
+    yield takeLatest(COVID_GET_REQUEST,COVIDGetAsync)
 }

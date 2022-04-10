@@ -14,12 +14,12 @@ function RCAFPart1(props) {
                     <td  >
                         <div className="row align-center">
                             <div className="col-3 align-self-center">
-                                <p className="mb-0">Communication Address :</p>
+                                <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginTop:"30px",marginRight:"10px"}}>Communication Address :</p>
                             </div>
                             <div className="col">
                                 <TextAreaInput
                                     formState={props.formState}
-                                    label={null}
+                                    label={"Address"}
                                     name={"communication_address"}
                                     validation={validationAddress} />
                             </div>
@@ -30,12 +30,12 @@ function RCAFPart1(props) {
                     <td  >
                         <div className="row align-center">
                             <div className="col-3 align-self-center">
-                                <p className="mb-0">Postel Address :</p>
+                                <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginTop:"30px",marginRight:"10px"}}>Postel Address :</p>
                             </div>
                             <div className="col">
                                 <TextAreaInput
                                     formState={props.formState}
-                                    label={null}
+                                    label={"Postel Address"}
                                     name={"postel_address"}
                                     validation={validationAddress} />
                             </div>
@@ -46,13 +46,13 @@ function RCAFPart1(props) {
                     <td  >
                         <div className="row align-center">
                             <div className="col-3 align-self-center">
-                                <p className="mb-0">Permanent Address :</p>
+                                <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginTop:"30px",marginRight:"10px"}}>Permanent Address :</p>
                             </div>
                             <div className="col">
                                 <TextAreaInput
                                     className='col'
                                     formState={props.formState}
-                                    label={null}
+                                    label={"Permanent Address"}
                                     name={"permanent_Address"}
                                     validation={validationAddress} />
                             </div>

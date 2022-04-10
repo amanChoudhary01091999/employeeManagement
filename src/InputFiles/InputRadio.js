@@ -2,18 +2,37 @@ import { FormControlLabel, Radio } from "@mui/material";
 import React from "react";
 
 function InputRadio(props) {
-    const { formState, label, name, validation } = props;
+    const { formState, label, name, validation,defaultValue, defaultChecked} = props;
     const {
         register,
         formState: { errors },
     } = formState;
+
+    const [value,setValue]=React.useState(defaultChecked)
+    console.log("I am",defaultChecked)
+//     React.useEffect(()=>{
+
+//         if(defaultChecked)
+//         setValue(defaultChecked);
+// },[defaultChecked])
+    
+  
+
+  
     return (
-        <div class="form-check form-check-inline">
+        <div className="form-check form-check-inline">
             <FormControlLabel
-                value={label}
-                control={<Radio size="small" color="success" />}
+                
+                checked={defaultChecked} 
+                control={<Radio checked={defaultChecked} size="small" color="success" />}
                 label={label}
+                value={label}
+               
+             
+
+               
                 {...register(`${name}`, validation)}
+                
             />
         </div>
     );

@@ -11,6 +11,7 @@ import { RCAFRequest } from "../../actions/refCheckAction";
 import { LoadingButton } from "@mui/lab";
 import Snackbars from "../../components/Snackbar";
 import { useNavigate } from "react-router-dom";
+import RefCheckAppBar from "./RefCheckAppBar";
 
 function RCAFForm() {
     const formState = useForm();
@@ -143,7 +144,11 @@ function RCAFForm() {
     };
 
     return (
+        <>
+        <div  style={{backgroundColor: "#F3F3F3",}}>
+        <RefCheckAppBar/>
         <div className="mx-5">
+            
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <RAFCHeading formState={formState} />
@@ -192,6 +197,8 @@ function RCAFForm() {
                 )}
             </form>
         </div>
+        </div>
+        </>
     );
 }
 

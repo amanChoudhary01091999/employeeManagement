@@ -13,7 +13,7 @@ function RCAFPart4(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-6 align-self-center">
-                                    <p className="mb-0">
+                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
                                         Whether to contact the current employer
                                         :
                                     </p>

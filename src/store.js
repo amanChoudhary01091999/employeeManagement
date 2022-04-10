@@ -9,14 +9,16 @@ import {
 } from "./reducers/userReducer";
 
 import { LoginUserReducer } from "./reducers/loginUserReducer";
-import { BGVReducer } from "./reducers/bgvReducer";
-import { bgvSaga } from "./sagas/bgvSaga";
-import { reducerEPF } from "./reducers/EPFReducer";
-import { CoCReducer } from "./reducers/codeOfConductReducer";
-import { CoCSaga } from "./sagas/codeOfConductSaga";
 
-import { COVIDReducer } from "./reducers/covidReducer";
-import { COVIDSaga } from "./sagas/covidSaga";
+import { BGVReducer,BGVGetReducer } from "./reducers/bgvReducer";
+import { bgvSaga,BGVGetSaga } from "./sagas/bgvSaga";
+
+import { reducerEPF } from "./reducers/EPFReducer";
+import { CoCReducer,cocGetReducer } from "./reducers/codeOfConductReducer";
+import { CoCSaga,CoCGetSaga} from "./sagas/codeOfConductSaga";
+
+import { COVIDReducer,COVIDGetReducer } from "./reducers/covidReducer";
+import { COVIDSaga,COVIDGetSaga} from "./sagas/covidSaga";
 import { EPFSaga } from "./sagas/EPFSaga";
 
 import { GFFormReducer } from "./reducers/GFFormReducer";
@@ -41,9 +43,12 @@ const combineReducer = combineReducers({
     userUpdateReducer,
     LoginUserReducer,
 
-    BGVReducer,
+    BGVReducer,BGVGetReducer,
     CoCReducer,
-    COVIDReducer,
+    cocGetReducer ,
+    
+    
+    COVIDReducer,COVIDGetReducer,
     GFFormReducer,
     reducerEPF,
     RCAFReducer,
@@ -58,9 +63,15 @@ function* rootSaga() {
     yield spawn(bgvSaga);
     yield spawn(CoCSaga);
     yield spawn(COVIDSaga);
+    yield spawn(COVIDGetSaga);
+    
     yield spawn(GFFormSaga);
     yield spawn(EPFSaga);
     yield spawn(rcfSaga);
+    yield spawn(CoCGetSaga);
+    yield spawn(BGVGetSaga);
+
+
 }
 const store = createStore(
     combineReducer,
