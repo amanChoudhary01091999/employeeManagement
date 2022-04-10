@@ -2,6 +2,9 @@ import {
     COVID_REQUEST,
     COVID_SUCCESS,
     COVID_FAIL,
+    COVID_GET_ERROR,
+    COVID_GET_REQUEST,
+    COVID_GET_SUCCESS
 } from "../constants/covidConstants";
 
 export const COVIDRequest = (loginUserInfo, navigate) => {
@@ -25,3 +28,26 @@ export const COVIDFail = (message) => {
         payload: message,
     };
 };
+
+export const COVIDGetRequest=()=>
+{
+    return{
+        type:COVID_GET_REQUEST
+    }
+}
+
+export const COVIDGetSuccess=(userInfo)=>
+{
+    return{
+        type:COVID_GET_SUCCESS,
+        payload:userInfo
+    }
+}
+
+export const COVIDGetError=(message)=>
+{
+    return{
+        type:COVID_GET_ERROR,
+        payload:message
+    }
+}

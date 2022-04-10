@@ -1,67 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import DatePicker from '../../InputFiles/DatePicker';
 import InputForm from '../../InputFiles/InputForm';
 import Validation from '../../validation/Validations'
 import '../BackGroundVerification/index.css'
 import { useSelector,useDispatch } from 'react-redux';
-import { CoCRequest } from '../../actions/CodeOfConductFormAction';
+import { CoCRequest,cocGetRequest} from '../../actions/CodeOfConductFormAction';
 import { LoadingButton } from '@mui/lab';
 import Snackbars from '../../components/Snackbar';
 import CodeOfConductAppBar from './CodeOfConductAppBar';
 import { Box, textAlign } from '@mui/system';
 import TextAreaInput from '../../InputFiles/TextAreaInput';
+import {useNavigate} from "react-router-dom";
+import FilePicker from '../../InputFiles/FileInput';
+import { type } from '@testing-library/user-event/dist/type';
 
-
-
-
-
-
-
-// async function ndhCodeOfConductApi( ndhCodeOfConduct)
-// {
-    
-   
-//     const settings = {
-//         method: 'POST',
-//         headers: {
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//             'accessToken':localStorage.getItem('accessToken')
-//         },
-//         body: JSON.stringify(ndhCodeOfConduct)
-        
-
-//     }
-//     try {
-//         const fetchResponse = await fetch("http://10.1.30.18:9032/ndhgo-code-of-conduct/create", settings);
-//         const data = await fetchResponse.json();
-//         return data;
-//     } catch (e) {
-//         return e;
-//     }    
-
-  
-// }
 
 const CodeOfConduct = (props) => {
-    //let history = useHistory()
-    
-
 
     const formState = useForm();
     const { handleSubmit } = formState
-
-
-    
     const CoCState = useSelector((state) => state.CoCReducer);
     const { loading, error, userInfo } = CoCState;
     const dispatch = useDispatch();
+    const { loadingCOC, userInfoCOC, errorCOC } = useSelector(
+        (state) => state.cocGetReducer
+    );
+
+    useEffect(() => {
+        dispatch(cocGetRequest())
+     },[]);
+    //  const def=(userInfoCOC.date)
+     
+    //  const emp=userInfoCOC.employee_signature
+    //  //const de=userInfoCOC.date
+    //  //let p=de?.format()
+    //  let b=(def?.substring(0,10))
+    //  //let k=b.format()
+    //  console.log(b)
+
+console.log(userInfoCOC.employee_signature)
 
 
     const onSubmit = (data) => {
-        //history.push('/refcheckauth-form')
-        //console.log(data)
+
         const ndhCodeOfConductObj={
             "id":1,
             "date": data.date,
@@ -69,24 +51,19 @@ const CodeOfConduct = (props) => {
             "employee_signature": data.employee_signature[0].name,
             "full_name": data.full_name,
         }
+        console.log("HI",data)
 
         dispatch(CoCRequest(ndhCodeOfConductObj))
 
-          //console.log(ndhCodeOfConductApi(ndhCodeOfConductObj))
-    
-         // console.log(ndhCodeOfConductApi(ndhCodeOfConduct))
-
-         // console.log(props.post(ndhCodeOfConduct))
-
-      
-
-    
-
-
     };
-    const validation = Validation().validationDegree
-
-
+    const validation = Validation().validationDegree 
+   
+    
+    //const b=de.toString()
+    
+    
+  
+    //console.log({userInfoCOC});
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -464,8 +441,7 @@ const CodeOfConduct = (props) => {
                     <hr/>
                     <br/>
                     <div>
-                        {/* <h4>VIII.   ACCOUNTABILITY</h4>
-                        <p> */}
+                        
                          <Box sx={{ bgcolor: '#cfe8fc', height: '10vh',fontSize:'5vh',fontFamily: 'Muller',textAlign:'center'}}>VIII.   ACCOUNTABILITY</Box>
                         <p style={{fontFamily:"roboto", textAlign:'left' ,fontSize:"3vh",marginTop:"2vh"}}>
                             It is a condition of an appointment and/ or employment that all Employees must understand and adhere to the Company’s Code of Conduct and at all times and abides by the standards, requirements and procedures laid down herein. They must:
@@ -480,8 +456,7 @@ const CodeOfConduct = (props) => {
                     </div>
 
                     <div>
-                        {/* <h4>IX. AMENDMENTS</h4>
-                        <p> */}
+                        
                                <Box sx={{ bgcolor: '#cfe8fc', height: '10vh',fontSize:'5vh',fontFamily: 'Muller',textAlign:'center'}}>IX. AMENDMENTS</Box>
                         <p style={{fontFamily:"roboto", textAlign:'left' ,fontSize:"3vh",marginTop:"2vh"}}>
                             The Company reserves the rights to change/ amend / add /delete/ modify this Policy in whole or in part, at any time without assigning any reason whatsoever. The Employees acknowledge that they will not be personally advised of any such change/ amendment / addition /deletion/ modification. The Employees are advised to check for any such change/ amendment / addition /deletion/ modification regularly. The Employees hereby unconditionally agree to all such changes / amendments / additions / deletions / modifications.
@@ -489,8 +464,7 @@ const CodeOfConduct = (props) => {
                     </div>
 
                     <div>
-                        {/* <h4 style={{ backgroundColor: '#D3D3D3' }}>Confirmation & Acceptance</h4>
-                        <p> */}
+                        
                         <Box sx={{ bgcolor: '#cfe8fc', height: '10vh',fontSize:'5vh',fontFamily: 'Muller',textAlign:'center'}}>Confirmation & Acceptance</Box>
                         <p style={{fontFamily:"roboto", textAlign:'left' ,fontSize:"3vh",marginTop:"2vh"}}>
                             I have read & understand the Code of Conduct. I am in complete agreement with all clauses & will ensure to comply & practice them during &after my association with NDHGO and its subsidiaries. I understand that failure to comply with the Code or to respond truthfully will be a basis for disciplinary or other action, up to & including dismissal.
@@ -506,31 +480,36 @@ const CodeOfConduct = (props) => {
                                         <TextAreaInput
                                             formState={formState}
                                             name={"full_name"}
-                                            label={"Full Name"}
+                                            //label={"Full Name"}
                                             validation={validation}
-                                            placeholder={""} />
+                                            placeholder={""}
+                                            defaultValue={userInfoCOC.full_name} 
+                                            />
                                     </td>
                                     </tr>
                                     
                                 <tr>
                                     <td className="text-center " style={{ fontFamily: 'Muller' }}>Signature: </td>
                                     <td>
-                                    <DatePicker
-                                            formState={formState}
-                                            name={'employee_signature'}
-                                            label={""}
-                                            type={'file'}
-                                            validation={validation}
-                                            placeholder={""} /> </td>
+                                        <FilePicker
+                                        type='file'
+                                        formState={formState}
+                                        validation={validation}
+                                        name={'employee_signature'}
+                                        defaultValue={userInfoCOC.employee_signature}/> </td>
+                                    
+                                           
                                     <td className="text-center " style={{ fontFamily: 'Muller' }}>Date: </td>
                                     <td>
                                         <DatePicker
                                             formState={formState}
                                             name={'date'}
                                             label={""}
-                                            type={'date'}
                                             validation={validation}
-                                            placeholder={""} />
+                                            placeholder={""}
+                                            //type={'date'}
+                                            defaultValue={userInfoCOC.date}
+                                            />
 
                                     </td>
                                 </tr>

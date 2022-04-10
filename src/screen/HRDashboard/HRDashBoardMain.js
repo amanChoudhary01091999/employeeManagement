@@ -28,7 +28,7 @@ function HRDashBoardMain() {
                 >
                     This is a success message!
                 </Alert>
-            </Snackbar>
+            </Snackbar> 
 
             <DashBoardAppBar />
             <ShowAllUsers />

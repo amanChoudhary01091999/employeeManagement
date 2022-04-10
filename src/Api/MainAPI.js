@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+
 
 
 
@@ -25,16 +25,17 @@ export const executeAPI=(httpMethod, basePath)=>
         }
       };
         let response = null
+        let url=apiKey+basePath
            switch (httpMethod)
            {
                case "GET":
-                   response=axios.get(apiKey+basePath)
+                   response=axios.get(url)
                    return response
                    break
 
                   
                case "POST":
-                   response=(data)=>axios.post(apiKey+basePath,data,axiosConfig)
+                   response=(data)=>axios.post(url,data,axiosConfig)
                    
                    return response
                    break

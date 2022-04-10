@@ -8,12 +8,13 @@ import Validation from "../../validation/Validations";
 import { useSelector, useDispatch } from "react-redux";
 
 import "../BackGroundVerification/index.css";
-import { COVIDRequest } from "../../actions/CovidAction";
+import { COVIDGetRequest, COVIDRequest } from "../../actions/CovidAction";
 import { LoadingButton } from "@mui/lab";
 import Snackbars from "../../components/Snackbar";
 import CovidFormAppBar from "./CovidFormAppBar";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
+import FilePicker from "../../InputFiles/FileInput";
 
 const CovidForm = (props) => {
     const navigate = useNavigate();
@@ -27,6 +28,14 @@ const CovidForm = (props) => {
     const CovidState = useSelector((state) => state.COVIDReducer);
     const { loading, error, userInfo } = CovidState;
     const dispatch = useDispatch();
+
+    const covidGetState=useSelector((state)=>state.COVIDGetReducer)
+    const{loadingBGV,userInfoBGV,errorBGV}=covidGetState
+
+    useEffect(() => {
+        dispatch(COVIDGetRequest())
+       },[])
+   
 
     const onSubmit = (data) => {
         //history.push("/epf-form")
@@ -813,12 +822,13 @@ const CovidForm = (props) => {
                                             Signature{" "}
                                         </td>
                                         <td>
-                                            <DatePicker
+                                            <FilePicker
                                                 formState={formState}
                                                 name={"confirmSignUser"}
-                                                type={"file"}
+                                                //type={"file"}
                                                 validation={validation}
                                                 placeholder={""}
+                                                defaultValue={null}
                                             />
                                         </td>
                                         <td
