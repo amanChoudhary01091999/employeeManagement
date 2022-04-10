@@ -25,27 +25,39 @@ export const dialogReducer = (state = { open: false }, action) => {
             return state;
     }
 };
+
 export const userGetReducer = (state = {}, action) => {
     switch (action.type) {
         case USER_GET_REQUEST:
-            return { loading: true };
+            return { ...state, loading: true };
         case USER_GET_SUCCESS:
-            return { loading: false, userInfo: action.payload };
+            return { ...state, loading: false, userInfo: action.payload };
         case USER_GET_FAIL:
-            return { loading: false, error: action.payload };
+            return { ...state, loading: false, error: action.payload };
         default:
             return state;
     }
 };
 
-export const userPostReducer = (state = {}, action) => {
+export const userPostReducer = (
+    state = {
+        loading: false,
+        userInfo: null,
+        error: null,
+    },
+    action
+) => {
     switch (action.type) {
         case USER_POST_REQUEST:
-            return { loading: true };
+            return { ...state, loading: true };
         case USER_POST_SUCCESS:
-            return { loading: false, userInfo: action.payload };
+            // console.log(state.userInfo);
+            // const value = state.userInfo;
+            // value.splice(0, 0, action.payload);
+            // console.log(value);
+            return { ...state, loading: false, userInfo: action.payload };
         case USER_POST_FAIL:
-            return { loading: false, error: action.payload };
+            return { ...state, loading: false, error: action.payload };
         default:
             return state;
     }
@@ -64,14 +76,21 @@ export const userUpdateReducer = (state = {}, action) => {
     }
 };
 
-export const userDeleteReducer = (state = {}, action) => {
+export const userDeleteReducer = (
+    state = {
+        loading: false,
+        userInfo: null,
+        error: null,
+    },
+    action
+) => {
     switch (action.type) {
         case USER_DELETE_REQUEST:
-            return { loading: true };
+            return { ...state, loading: true };
         case USER_DELETE_SUCCESS:
-            return { loading: false, userInfo: action.payload };
+            return { ...state, loading: false, userInfo: action.payload };
         case USER_DELETE_FAIL:
-            return { loading: false, error: action.payload };
+            return { ...state, loading: false, error: action.payload };
         default:
             return state;
     }

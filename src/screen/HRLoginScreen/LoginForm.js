@@ -19,18 +19,15 @@ const currencies = [
         label: "Moderator",
     },
 ];
-
+const validation = Validation().validationDegree;
+const validationEmail = Validation().validationEmail;
 function LoginForm() {
     const formState = useForm();
-    const history = useNavigate();
-    const [currency, setCurrency] = React.useState("");
+    const navigate = useNavigate();
+    const [currency, setCurrency] = React.useState("admin");
     const accessToken = localStorage.getItem("accessToken");
-    const validation = Validation().validationDegree;
-    // useEffect(() => {
-    //     if (accessToken !== null) history("/dashboard", { replace: true });
-    // });
+
     const handleChange = (event) => {
-        console.log(event.target.value);
         setCurrency(event.target.value);
     };
 
@@ -43,15 +40,13 @@ function LoginForm() {
     const loginState = useSelector((state) => state.loginReducer);
     const { loading, error, userInfo } = loginState;
     const dispatch = useDispatch();
-    console.log(loginState);
-
     const OnSubmit = (data) => {
         const LoginApiObj = {
             role: ["admin"],
-            user_name: data.user_name,
+            email: data.user_name,
             password: data.password,
         };
-        dispatch(loginRequest(LoginApiObj));
+        dispatch(loginRequest(LoginApiObj, navigate));
     };
 
     return (
@@ -69,9 +64,9 @@ function LoginForm() {
             ></img>
             <TextInput
                 formState={formState}
-                label={"username"}
+                label={"email"}
                 id={"user_name"}
-                validation={validation}
+                validation={validationEmail}
             />
 
             <TextField
@@ -110,16 +105,6 @@ function LoginForm() {
             >
                 <strong>Log In</strong>
             </LoadingButton>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
-            {userInfo && (
-                <Snackbars
-                    value={true}
-                    severity={"success"}
-                    message={"Login Success"}
-                />
-            )}
         </Stack>
     );
 }

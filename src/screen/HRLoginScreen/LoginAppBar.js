@@ -41,7 +41,11 @@ const LoginAppBar = () => {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                        sx={{
+                            mr: 2,
+                            display: { xs: "none", md: "flex" },
+                            fontFamily: "Rubik",
+                        }}
                     >
                         NDHGO
                     </Typography>

@@ -1,21 +1,34 @@
-import { Button, Container, Stack } from "@mui/material";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Delete, Edit } from "@mui/icons-material";
+import { CheckCircle, Delete, Edit } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { openDialog, userDeleteRequest } from "../../actions/userAction";
+import "./dashboard.css";
+import { makeStyles } from "@mui/styles";
+import { Grid, Avatar, Typography, Stack } from "@mui/material";
 
+const useStyle = makeStyles((theme) => ({
+    tableBody: {
+        borderBottom: "none",
+        fontFamily: "Rubik",
+        padding: "8px",
+    },
+    tableName: {
+        fontWeight: "bold",
+    },
+    tableAvatar: {
+        height: "30px",
+        width: "30px",
+        fontFamily: "Rubik",
+        fontSize: "100%",
+        backgroundColor: "#5c6bc0",
+    },
+}));
 function SampleUser(props) {
+    const classes = useStyle();
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     const { userInfo, loading, error } = useSelector(
         (state) => state.userDeleteReducer
@@ -28,23 +41,42 @@ function SampleUser(props) {
     };
     return (
         <TableRow key={row.name}>
-            <TableCell colSpan={2} align="left">
-                {row.name}
+            <TableCell align="left" className={classes.tableBody}>
+                <Grid container alignItems="center">
+                    <Grid item lg={2}>
+                        <Avatar
+                            className={classes.tableAvatar}
+                            alt={row.name}
+                            src="."
+                        />
+                    </Grid>
+                    <Grid item lg={10}>
+                        <Typography>{row.name}</Typography>
+                    </Grid>
+                </Grid>
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
                 {row.email}
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
                 {row.mobileNo}
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
+                {/* <Stack direction={"row"}>
+                    <CheckCircle />
+                    <CheckCircle />
+                    <CheckCircle />
+                    <CheckCircle />
+                </Stack> */}
+            </TableCell>
+            <TableCell align="center" className={classes.tableBody}>
                 <IconButton color="primary" onClick={() => onUpdate(row)}>
                     <Edit />
                 </IconButton>
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
                 <LoadingButton
-                    loading={loading}
+                    loading={false}
                     color="error"
                     onClick={() => onDelete(row.id)}
                 >

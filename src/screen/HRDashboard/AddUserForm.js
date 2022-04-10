@@ -23,7 +23,6 @@ function AddUserForm(props) {
     if (update !== undefined) {
         user = update;
     }
-    console.log(user);
     const { handleSubmit } = formState;
     function onClick(data) {
         const addUsersApiObj = {
@@ -76,20 +75,10 @@ function AddUserForm(props) {
                 type="submit"
                 size="large"
                 loading={loading}
-                variant="outlined"
+                variant="contained"
             >
                 submit
             </LoadingButton>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
-            {userInfo && (
-                <Snackbars
-                    value={true}
-                    severity={"success"}
-                    message={"Login Success"}
-                />
-            )}
         </Stack>
     );
 }

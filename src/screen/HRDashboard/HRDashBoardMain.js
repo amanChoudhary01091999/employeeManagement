@@ -1,12 +1,10 @@
 import { Alert, Button, Snackbar } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import DashBoardAppBar from "./DashBoardAppBar";
 import DialogForm from "./DialogForm";
 import ShowAllUsers from "./ShowAllUsers";
 
 function HRDashBoardMain() {
-    const history = useNavigate();
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -20,15 +18,8 @@ function HRDashBoardMain() {
 
         setOpen(false);
     };
-    const onCli = () => {
-        // const accessToken = localStorage.getItem("accessToken");
-        // if (accessToken !== null) {
-        //     localStorage.removeItem("accessToken");
-        //     history("/", { replace: true });
-        // }
-    };
     return (
-        <div>
+        <div style={{ padding: 30 }}>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
@@ -41,7 +32,6 @@ function HRDashBoardMain() {
 
             <DashBoardAppBar />
             <ShowAllUsers />
-            <DialogForm />
         </div>
     );
 }

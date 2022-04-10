@@ -1,27 +1,25 @@
 import { Alert, Snackbar } from "@mui/material";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeToast } from "../actions/toast.action";
 
-function Snackbars(props) {
-    const { value, severity, message } = props;
-    const [open, setOpen] = React.useState(value);
-    const handleClick = () => {
-        setOpen(true);
-    };
+function Snackbars() {
+    const dispatch = useDispatch();
+    const obj = useSelector((state) => state.toastReducer);
     const handleClose = (event, reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setOpen(false);
+        if (reason === "clickaway") return;
+        dispatch(closeToast("", obj.severity));
     };
+    console.log(obj);
     return (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={obj.open} autoHideDuration={3000} onClose={handleClose}>
             <Alert
                 variant="filled"
                 onClose={handleClose}
-                severity={severity}
+                severity={obj.severity}
                 sx={{ width: "100%" }}
             >
-                {message}
+                {obj.message}
             </Alert>
         </Snackbar>
     );
