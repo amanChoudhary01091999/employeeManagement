@@ -1,24 +1,21 @@
-import axios from "axios";
 import { takeLatest, put, call } from "redux-saga/effects";
 import { USER_LOGIN_REQUEST } from "../constants/userLoginConstant";
-
-import { UserLoginSuccess,UserLoginFail,UserLoginRequest} from "../actions/userLoginAction";
+import { UserLoginSuccess, UserLoginFail } from "../actions/userLoginAction";
 import UserLoginRequestURL from "../Api/loginUserPostRequest";
+import getErrorMessage from "../util/ErrorHandle";
+import { openToast } from "../actions/toast.action";
 
-function* userLoginAsync(action) { 
+function* userLoginAsync(action) {
     try {
         const { data } = yield call(UserLoginRequestURL, action.payload);
         yield put(UserLoginSuccess(data));
-        localStorage.setItem('accessToken', data.accessToken)
+        yield put(openToast("Login Success", "success"));
+        localStorage.setItem("accessToken", data.accessToken);
         console.log(data);
     } catch (error) {
-        yield put(
-            UserLoginFail(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            )
-        );
+        const errorMessage = getErrorMessage(error);
+        yield put(UserLoginFail());
+        yield put(openToast(errorMessage, "error"));
     }
 }
 export function* userloginSaga() {
