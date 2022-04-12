@@ -4,8 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { styled } from "@mui/material/styles";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
@@ -17,14 +16,11 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import TableHead from "@mui/material/TableHead";
-import { Button, CircularProgress } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { Delete, Edit } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
+import { CircularProgress } from "@mui/material";
 import SampleUser from "./SampleUser";
 import { useDispatch, useSelector } from "react-redux";
-import { userGetRequest } from "../../actions/userAction";
-import Snackbars from "../../components/Snackbar";
+import { userGetRequest } from "../../actions/user.action";
+import { makeStyles } from "@mui/styles";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -103,85 +99,72 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-    return { name, calories, fat };
-}
+const useStyle = makeStyles((theme) => ({
+    tableContainer: {
+        borderRadius: 0,
+    },
+    tableHead: {
+        borderBottom: "none",
+        backgroundColor: "#f5f5f5",
+        fontFamily: "Rubik",
+        padding: "10px",
+    },
+    tableBody: {
+        borderBottom: "none",
+        fontFamily: "sans-serif",
+        padding: "8px",
+    },
+    tableName: {
+        fontWeight: "bold",
+    },
+    tableAvatar: {
+        height: "30px",
+        width: "30px",
+        fontFamily: "Rubik",
+        fontSize: "100%",
+        backgroundColor: "#5c6bc0",
+    },
+}));
 
-// const rows = [
-//     createData("Cupcake", 305, 3.7),
-//     createData("Donut", 452, 25.0),
-//     createData("Eclair", 262, 16.0),
-//     createData("Frozen yoghurt", 159, 6.0),
-//     createData("Gingerbread", 356, 16.0),
-//     createData("Honeycomb", 408, 3.2),
-//     createData("Ice cream sandwich", 237, 9.0),
-//     createData("Jelly Bean", 375, 0.0),
-//     createData("KitKat", 518, 26.0),
-//     createData("Lollipop", 392, 0.2),
-//     createData("Marshmallow", 318, 0),
-//     createData("Nougat", 360, 19.0),
-//     createData("Oreo", 437, 18.0),
-// ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+// const rows = [];
+// for (let i = 0; i < 100; i++) {
+//     rows[i] = {
+//         name: "Gautam",
+//         email: "krgautam@gmail.com",
+//         mobileNo: "1234567890",
+//     };
+// }
 
 export default function ShowAllUsers() {
     const dispatch = useDispatch();
+    const classes = useStyle();
     const { loading, userInfo, error } = useSelector(
         (state) => state.userGetReducer
     );
     const rows = userInfo ? userInfo : [];
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const useStyles = makeStyles({
-        customTableContainer: {
-            overflowX: "initial",
-        },
-    });
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
 
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
-        [`&.${tableCellClasses.head}`]: {
-            backgroundColor: theme.palette.common.white,
-            color: theme.palette.common.black,
-        },
-        [`&.${tableCellClasses.body}`]: {
-            fontSize: 14,
-            padding: "2% auto",
-        },
-    }));
-
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        "&:nth-of-type(odd)": {
-            backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        "&:last-child td, &:last-child th": {
-            border: 0,
-        },
-    }));
-    const classes = useStyles();
-
     const postData = useSelector((state) => state.userPostReducer);
     const deleleData = useSelector((state) => state.userDeleteReducer);
     React.useEffect(() => {
-        console.log("effect");
         dispatch(userGetRequest());
     }, [postData.userInfo, deleleData.userInfo]);
 
     return (
         <div>
-            {loading && (
+            {(loading || deleleData.loading) && (
                 <CircularProgress
                     color="inherit"
                     style={{
@@ -193,7 +176,8 @@ export default function ShowAllUsers() {
             )}
             <TableContainer
                 component={Paper}
-                classes={{ root: classes.customTableContainer }}
+                elevation={0}
+                className={classes.tableContainer}
             >
                 <Table
                     sx={{ minWidth: 500 }}
@@ -202,21 +186,50 @@ export default function ShowAllUsers() {
                 >
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="left" colSpan={2}>
-                                <strong>Id</strong>
-                            </StyledTableCell>
-                            <StyledTableCell align="center" colSpan={2}>
-                                <strong>Email</strong>
-                            </StyledTableCell>
-                            <StyledTableCell align="center" colSpan={2}>
-                                <strong>Name</strong>
-                            </StyledTableCell>
-                            <StyledTableCell align="center" colSpan={2}>
-                                <strong>Edit</strong>
-                            </StyledTableCell>
-                            <StyledTableCell align="center" colSpan={2}>
-                                <strong>Delete</strong>
-                            </StyledTableCell>
+                            <TableCell
+                                align="left"
+                                className={classes.tableHead}
+                                sx={{
+                                    borderStartStartRadius: 10,
+                                    borderEndStartRadius: 10,
+                                }}
+                            >
+                                Name
+                            </TableCell>
+                            <TableCell
+                                align="center"
+                                className={classes.tableHead}
+                            >
+                                Email
+                            </TableCell>
+                            <TableCell
+                                align="center"
+                                className={classes.tableHead}
+                            >
+                                Phone No
+                            </TableCell>
+                            <TableCell
+                                align="center"
+                                className={classes.tableHead}
+                            >
+                                status
+                            </TableCell>
+                            <TableCell
+                                align="center"
+                                className={classes.tableHead}
+                            >
+                                Edit
+                            </TableCell>
+                            <TableCell
+                                align="center"
+                                className={classes.tableHead}
+                                sx={{
+                                    borderEndEndRadius: 10,
+                                    borderStartEndRadius: 10,
+                                }}
+                            >
+                                Delete
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -227,7 +240,7 @@ export default function ShowAllUsers() {
                               )
                             : rows
                         ).map((row) => (
-                            <SampleUser key={row.email} row={row} />
+                            <SampleUser key={row.id} row={row} />
                         ))}
                         {emptyRows > 0 && (
                             <TableRow style={{ height: 53 * emptyRows }}>
@@ -262,9 +275,6 @@ export default function ShowAllUsers() {
                     </TableFooter>
                 </Table>
             </TableContainer>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
         </div>
     );
 }

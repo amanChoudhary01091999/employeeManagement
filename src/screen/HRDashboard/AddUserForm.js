@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Alert, Stack } from "@mui/material";
+import React from "react";
+import { Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import TextInput from "../../Input/TextInput";
-import { userPostRequest } from "../../actions/userAction";
-import Snackbars from "../../components/Snackbar";
+import { userPostRequest } from "../../actions/user.action";
 import Validation from "../../validation/Validations";
 
 function AddUserForm(props) {
@@ -17,13 +16,10 @@ function AddUserForm(props) {
     const dispatch = useDispatch();
     let user = { name: "", email: "", mobileNo: "" };
     const { update } = props;
-    const { loading, error, userInfo } = useSelector(
-        (state) => state.userPostReducer
-    );
+    const { loading } = useSelector((state) => state.userPostReducer);
     if (update !== undefined) {
         user = update;
     }
-    console.log(user);
     const { handleSubmit } = formState;
     function onClick(data) {
         const addUsersApiObj = {
@@ -71,25 +67,14 @@ function AddUserForm(props) {
                 value={user.mobileNo}
                 validation={phoneValidation}
             />
-
             <LoadingButton
                 type="submit"
                 size="large"
                 loading={loading}
-                variant="outlined"
+                variant="contained"
             >
                 submit
             </LoadingButton>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
-            {userInfo && (
-                <Snackbars
-                    value={true}
-                    severity={"success"}
-                    message={"Login Success"}
-                />
-            )}
         </Stack>
     );
 }

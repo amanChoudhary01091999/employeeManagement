@@ -2,12 +2,13 @@ import {
     HR_LOGIN_REQUEST,
     HR_LOGIN_SUCCESS,
     HR_LOGIN_FAIL,
-} from "../constants/loginConstant";
+} from "../constants/login.constants";
 
-export const loginRequest = (userInfo) => {
+export const loginRequest = (userInfo, navigate) => {
     return {
         type: HR_LOGIN_REQUEST,
         payload: userInfo,
+        navigate: navigate,
     };
 };
 

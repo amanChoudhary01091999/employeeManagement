@@ -1,14 +1,14 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { openDialog, closeDialog } from "../../actions/userAction";
-import { Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { openDialog, closeDialog } from "../../actions/user.action";
+import { AddSharp } from "@mui/icons-material";
 import AddUserForm from "./AddUserForm";
 
 function DialogForm() {
@@ -22,22 +22,24 @@ function DialogForm() {
     };
     return (
         <div>
-            <Fab
-                color="primary"
-                aria-label="add"
+            <Button
+                variant="contained"
+                disableElevation={true}
                 onClick={handleClickOpen}
-                style={{
-                    position: "fixed",
-                    bottom: "5%",
-                    right: "5%",
-                }}
+                size="large"
+                style={{ backgroundColor: "indigo" }}
             >
-                <AddIcon />
-            </Fab>
+                <AddSharp style={{ marginLeft: "-10px" }} />
+                <Typography
+                    style={{ marginLeft: 5 }}
+                    fontSize="15px"
+                    fontFamily={"Rubik"}
+                >
+                    New User
+                </Typography>
+            </Button>
+
             <Dialog open={open} onClose={handleClose}>
-                {/* <DialogTitle style={{ alignSelf: "center" }}>
-                    Add user
-                </DialogTitle> */}
                 <DialogContent>
                     <AddUserForm update={user} />
                 </DialogContent>

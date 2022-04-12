@@ -1,25 +1,34 @@
-import { Button, Container, Stack } from "@mui/material";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Delete, Edit } from "@mui/icons-material";
+import { CheckCircleOutlined, Delete, Edit } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { openDialog, userDeleteRequest } from "../../actions/userAction";
+import { openDialog, userDeleteRequest } from "../../actions/user.action";
+import { makeStyles } from "@mui/styles";
+import { Avatar, Typography, Stack } from "@mui/material";
 
-function SampleUser(props) {
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
+const useStyle = makeStyles((theme) => ({
+    tableBody: {
+        borderBottom: "none",
+        fontFamily: "Rubik",
+        padding: "8px",
+    },
+    tableName: {
+        fontWeight: "bold",
+    },
+    tableAvatar: {
+        height: "30px",
+        width: "30px",
+        fontFamily: "Rubik",
+        fontSize: "100%",
+        backgroundColor: "#5c6bc0",
+    },
+}));
+function SampleUser({ row }) {
+    const classes = useStyle();
     const dispatch = useDispatch();
-    const { userInfo, loading, error } = useSelector(
-        (state) => state.userDeleteReducer
-    );
+
     const onDelete = (id) => {
         if (window.confirm("Are You Sure")) dispatch(userDeleteRequest(id));
     };
@@ -28,23 +37,52 @@ function SampleUser(props) {
     };
     return (
         <TableRow key={row.name}>
-            <TableCell colSpan={2} align="left">
-                {row.name}
+            <TableCell align="left" className={classes.tableBody}>
+                <Stack
+                    display={"flex"}
+                    direction={"row"}
+                    gap={2}
+                    alignItems={"center"}
+                    textAlign={"center"}
+                >
+                    <Avatar
+                        className={classes.tableAvatar}
+                        alt={row.name}
+                        src="."
+                    />
+                    <Typography textAlign={"center"}>{row.name}</Typography>
+                </Stack>
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
                 {row.email}
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
                 {row.mobileNo}
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
+                <Stack
+                    whiteSpace={"nowrap"}
+                    display="flex"
+                    flexDirection={"row"}
+                    justifyContent={"center"}
+                    gap={1}
+                >
+                    <CheckCircleOutlined color={"success"} />
+                    <CheckCircleOutlined color={"warning"} />
+                    <CheckCircleOutlined />
+                    <CheckCircleOutlined />
+                    <CheckCircleOutlined />
+                    <CheckCircleOutlined />
+                </Stack>
+            </TableCell>
+            <TableCell align="center" className={classes.tableBody}>
                 <IconButton color="primary" onClick={() => onUpdate(row)}>
                     <Edit />
                 </IconButton>
             </TableCell>
-            <TableCell colSpan={2} align="center">
+            <TableCell align="center" className={classes.tableBody}>
                 <LoadingButton
-                    loading={loading}
+                    loading={false}
                     color="error"
                     onClick={() => onDelete(row.id)}
                 >
