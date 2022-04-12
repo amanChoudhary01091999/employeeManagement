@@ -10,21 +10,23 @@ import {
 } from "./reducers/user.reducer";
 
 import { LoginUserReducer } from "./reducers/loginUserReducer";
-import { reducerEPF } from "./reducers/EPFReducer";
+
+import { reducerEPF, EPFGetReducer } from "./reducers/EPFReducer";
 import { BGVReducer, BGVGetReducer } from "./reducers/bgvReducer";
 import { CoCReducer, cocGetReducer } from "./reducers/codeOfConductReducer";
 import { COVIDReducer, COVIDGetReducer } from "./reducers/covidReducer";
-import { GFFormReducer } from "./reducers/GFFormReducer";
-import { RCAFReducer } from "./reducers/rcfCheckReducer";
+import { GFFormReducer, GFGetReducer } from "./reducers/GFFormReducer";
+import { RCAFReducer, RCAFGetReducer } from "./reducers/rcfCheckReducer";
 
 import { userGetSaga, userPostSaga, userDeleteSaga } from "./sagas/user.saga";
 import { loginSaga } from "./sagas/login.saga";
+
 import { bgvSaga, BGVGetSaga } from "./sagas/bgvSaga";
 import { CoCSaga, CoCGetSaga } from "./sagas/codeOfConductSaga";
 import { COVIDSaga, COVIDGetSaga } from "./sagas/covidSaga";
-import { EPFSaga } from "./sagas/EPFSaga";
-import { GFFormSaga } from "./sagas/GFFormSaga";
-import { rcfSaga } from "./sagas/rcfSaga";
+import { EPFSaga, EPFGetSaga } from "./sagas/EPFSaga";
+import { GFFormSaga, GFGetSaga } from "./sagas/GFFormSaga";
+import { rcfSaga, RCAFGetSaga } from "./sagas/rcfSaga";
 import { userloginSaga } from "./sagas/userLoginSaga";
 
 import createSaga from "redux-saga";
@@ -49,8 +51,11 @@ const combineReducer = combineReducers({
     COVIDReducer,
     COVIDGetReducer,
     GFFormReducer,
+    GFGetReducer,
     reducerEPF,
+    EPFGetReducer,
     RCAFReducer,
+    RCAFGetReducer,
 });
 function* rootSaga() {
     yield spawn(loginSaga);
@@ -60,15 +65,22 @@ function* rootSaga() {
     yield spawn(userDeleteSaga);
 
     yield spawn(bgvSaga);
+    yield spawn(BGVGetSaga);
+
     yield spawn(CoCSaga);
+    yield spawn(CoCGetSaga);
+
     yield spawn(COVIDSaga);
     yield spawn(COVIDGetSaga);
 
     yield spawn(GFFormSaga);
+    yield spawn(GFGetSaga);
+
     yield spawn(EPFSaga);
+    yield spawn(EPFGetSaga);
+
     yield spawn(rcfSaga);
-    yield spawn(CoCGetSaga);
-    yield spawn(BGVGetSaga);
+    yield spawn(RCAFGetSaga);
 }
 const store = createStore(
     combineReducer,
