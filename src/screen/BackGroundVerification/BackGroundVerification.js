@@ -32,7 +32,7 @@ const BackgroundVerification = (props) => {
     const{loadingBGV,userInfoBGV,errorBGV}=bgvGetState
 
 
-    useEffect(() => {
+    useEffect(() => { 
      dispatch(BGVGetRequest())
     },[])
 
