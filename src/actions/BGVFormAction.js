@@ -26,7 +26,7 @@ export const BGVFail = (message) => {
 export const BGVGetRequest=()=>
 {
     return{
-        type:BGV_GET_REQUEST
+        type:BGV_GET_REQUEST 
     }
 }
 
@@ -35,7 +35,7 @@ export const BGVGetSuccess=(userInfo)=>
     return{
         type:BGV_GET_SUCCESS,
         payload:userInfo
-    }
+    } 
 }
 
 export const BGVGetError=(message)=>

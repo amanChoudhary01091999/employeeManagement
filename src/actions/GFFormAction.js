@@ -2,6 +2,9 @@ import {
     GFForm_REQUEST,
     GFForm_SUCCESS,
     GFForm_FAIL,
+    GF_GET_ERROR,
+    GF_GET_REQUEST,
+    GF_GET_SUCCESS
 } from "../constants/GFFormConstants";
 
 export const GFFormRequest = (loginUserInfo, nav) => {
@@ -25,3 +28,27 @@ export const GFFormFail = (message) => {
         payload: message,
     };
 };
+
+
+export const GFGetRequest=()=>
+{
+    return{
+        type:GF_GET_REQUEST
+    }
+}
+
+export const GFGetSuccess=(userInfo)=>
+{
+    return{
+        type:GF_GET_SUCCESS,
+        payload:userInfo
+    }
+}
+
+export const GFGetError=(message)=>
+{
+    return{
+        type:GF_GET_ERROR,
+        payload:message
+    }
+}

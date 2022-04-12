@@ -18,7 +18,7 @@ export const BGVReducer = (state = {},action) =>
             return state;
     }
 };
-
+ 
 const initialState={
     loadingBGV:false,
     userInfoBGV:{},

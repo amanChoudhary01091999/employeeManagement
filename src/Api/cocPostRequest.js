@@ -1,10 +1,16 @@
 import { ApiTwoTone } from "@mui/icons-material";
 import axios from "axios";
-import axiosConfig from "../axiosConfig";
 import { executeAPI } from "./MainAPI";
 const path = "/ndhgo-code-of-conduct/create";
 const api = executeAPI("POST", path);
+
 const userGetPath = "ndhgo-code-of-conduct/details-employeeId/101"
+
+
+// const CoCPostUrl= (object) =>
+//     axios.post("https://reqres.in/api/users", object);
+// export default CoCPostUrl;
+
 
 
 const CoCPostUrl = api;

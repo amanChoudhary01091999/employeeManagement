@@ -1,4 +1,4 @@
-import { EPF_REQUEST, EPF_SUCESS, EPF_FAIL } from "../constants/EPFConstant";
+import { EPF_REQUEST, EPF_SUCESS, EPF_FAIL,EPF_GET_ERROR,EPF_GET_REQUEST,EPF_GET_SUCCESS } from "../constants/EPFConstant";
 
 export const requestEPF = (object, navigate) => {
     return {
@@ -21,3 +21,28 @@ export const failEPF = (message) => {
         payload: message,
     };
 };
+
+
+export const EPFGetRequest=()=>
+{
+    return{
+        type:EPF_GET_REQUEST 
+    }
+}
+
+export const EPFGetSuccess=(userInfo)=>
+{
+    return{
+        type:EPF_GET_SUCCESS,
+        payload:userInfo
+    }
+}
+
+export const EPFGetError=(message)=>
+{
+    return{
+        type:EPF_GET_ERROR,
+        payload:message
+    }
+}
+
