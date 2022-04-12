@@ -13,7 +13,7 @@ import {
     USER_DELETE_FAIL,
     OPEN_DIALOG,
     CLOSE_DIALOG,
-} from "../constants/userConstant";
+} from "../constants/user.constant";
 
 export const dialogReducer = (state = { open: false }, action) => {
     switch (action.type) {

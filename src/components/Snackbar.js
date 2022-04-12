@@ -10,7 +10,6 @@ function Snackbars() {
         if (reason === "clickaway") return;
         dispatch(closeToast("", obj.severity));
     };
-    console.log(obj);
     return (
         <Snackbar open={obj.open} autoHideDuration={3000} onClose={handleClose}>
             <Alert

@@ -1,6 +1,6 @@
 import { takeLatest, put, call } from "redux-saga/effects";
-import { HR_LOGIN_REQUEST } from "../constants/loginConstant";
-import { loginSuccess, loginFail } from "../actions/loginAction";
+import { HR_LOGIN_REQUEST } from "../constants/login.constants";
+import { loginSuccess, loginFail } from "../actions/login.action";
 import loginPostRequest from "../Api/loginPostRequest";
 import { openToast } from "../actions/toast.action";
 import getErrorMessage from "../util/ErrorHandle";

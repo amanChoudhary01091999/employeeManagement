@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextInput from "../../Input/TextInput";
 import { useSelector, useDispatch } from "react-redux";
-import { loginRequest } from "../../actions/loginAction";
+import { loginRequest } from "../../actions/login.action";
 import Snackbars from "../../components/Snackbar";
 import Validation from "../../validation/Validations";
 

@@ -10,6 +10,7 @@ import HRDashBoardMain from "./screen/HRDashboard/HRDashBoardMain";
 import HRLoginPageMain from "./screen/HRLoginScreen/HRLoginPageMain";
 import RCAFForm from "./screen/RefCheckAuthForm/RCAFForm";
 import UserLogin from "./screen/UserAuthentication/UserLogin";
+import Form from "./screen/Form/Form";
 
 function Routers() {
     return (
@@ -39,6 +40,7 @@ function Routers() {
                 <Route path="/gratuity-form" element={<GFFormMain />} />
                 <Route path="/refcheck-form" element={<RCAFForm />} />
                 <Route path="/epf-form" element={<EPFFormMain />} />
+                <Route path="/form" element={<Form />} />
                 <Route path="*" element={<p>There's nothing here: 404!</p>} />
             </Routes>
         </BrowserRouter>

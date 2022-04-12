@@ -2,7 +2,7 @@ import {
     HR_LOGIN_REQUEST,
     HR_LOGIN_SUCCESS,
     HR_LOGIN_FAIL,
-} from "../constants/loginConstant";
+} from "../constants/login.constants";
 
 export const loginReducer = (state = {}, action) => {
     switch (action.type) {

@@ -1,16 +1,15 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { openDialog, closeDialog } from "../../actions/userAction";
-import { Fab, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import AddUserForm from "./AddUserForm";
+import { openDialog, closeDialog } from "../../actions/user.action";
 import { AddSharp } from "@mui/icons-material";
+import AddUserForm from "./AddUserForm";
 
 function DialogForm() {
     const dispatch = useDispatch();
@@ -41,9 +40,6 @@ function DialogForm() {
             </Button>
 
             <Dialog open={open} onClose={handleClose}>
-                {/* <DialogTitle style={{ alignSelf: "center" }}>
-                    Add user
-                </DialogTitle> */}
                 <DialogContent>
                     <AddUserForm update={user} />
                 </DialogContent>

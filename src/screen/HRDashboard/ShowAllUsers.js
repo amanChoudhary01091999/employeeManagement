@@ -19,7 +19,7 @@ import TableHead from "@mui/material/TableHead";
 import { CircularProgress } from "@mui/material";
 import SampleUser from "./SampleUser";
 import { useDispatch, useSelector } from "react-redux";
-import { userGetRequest } from "../../actions/userAction";
+import { userGetRequest } from "../../actions/user.action";
 import { makeStyles } from "@mui/styles";
 
 function TablePaginationActions(props) {

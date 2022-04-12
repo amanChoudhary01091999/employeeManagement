@@ -15,6 +15,7 @@ import CovidFormAppBar from "./CovidFormAppBar";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
+import { useEffect } from "react";
 
 const CovidForm = (props) => {
     const navigate = useNavigate();
@@ -29,13 +30,12 @@ const CovidForm = (props) => {
     const { loading, error, userInfo } = CovidState;
     const dispatch = useDispatch();
 
-    const covidGetState=useSelector((state)=>state.COVIDGetReducer)
-    const{loadingBGV,userInfoBGV,errorBGV}=covidGetState
+    const covidGetState = useSelector((state) => state.COVIDGetReducer);
+    const { loadingBGV, userInfoBGV, errorBGV } = covidGetState;
 
     useEffect(() => {
-        dispatch(COVIDGetRequest())
-       },[])
-   
+        dispatch(COVIDGetRequest());
+    }, []);
 
     const onSubmit = (data) => {
         //history.push("/epf-form")

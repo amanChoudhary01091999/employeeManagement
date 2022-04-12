@@ -6,7 +6,7 @@ import {
     USER_POST_REQUEST,
     USER_UPDATE_REQUEST,
     USER_DELETE_REQUEST,
-} from "../constants/userConstant";
+} from "../constants/user.constant";
 import {
     userGetSuccess,
     userGetFail,
@@ -17,7 +17,7 @@ import {
     userDeleteSuccess,
     userDeleteFail,
     closeDialog,
-} from "../actions/userAction";
+} from "../actions/user.action";
 import {
     passwordGenerator,
     userGetData,
@@ -45,6 +45,7 @@ function* uesrPostAsync(action) {
         const { data } = yield call(userPostData, action.payload);
         yield put(userPostSuccess(data));
         yield put(closeDialog());
+        yield put(openToast("user added successfully", "success"));
     } catch (error) {
         yield put(userPostFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -56,6 +57,7 @@ function* uesrUpdateAsync(action) {
         const { data } = yield call(userUpdateData, action.payload);
         yield put(userUpdateSuccess(data));
         yield put(closeDialog());
+        yield put(openToast("user updated successfully", "success"));
     } catch (error) {
         yield put(userUpdateFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -66,6 +68,7 @@ function* uesrDeleteAsync(action) {
     try {
         const { data } = yield call(userDeleteData, action.payload);
         yield put(userDeleteSuccess(action.payload));
+        yield put(openToast("user deleted Successfully", "success"));
     } catch (error) {
         yield put(userDeleteFail());
         yield put(openToast(getErrorMessage(error), "error"));
