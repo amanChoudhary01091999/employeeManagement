@@ -31,6 +31,10 @@ function Validation() {
                 value: 100,
                 message: "Max length is 100",
             },
+            pattern: {
+                value: new RegExp(/^[a-zA-Z ]*$/),
+                message: "name is Not Valid",
+            },
         },
         validationAreaInput: {
             required: {
@@ -73,19 +77,19 @@ function Validation() {
                 value: new RegExp(
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 ),
-                message: "Email is not valid", 
+                message: "Email is not valid",
             },
         },
         validationDrivingLicence: {
             pattern: {
                 value: new RegExp(
-                    /^(([A-Z]{2}[0-9]{2})()|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/),
+                    /^(([A-Z]{2}[0-9]{2})()|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/
+                ),
                 message: "Please enter valid licence number",
             },
         },
         validationPassport: {
             pattern: {
-
                 value: new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$"),
                 message: "Please enter valid passport number ",
             },
