@@ -8,7 +8,8 @@ import Validation from "../../validation/Validations";
 import { useSelector, useDispatch } from "react-redux";
 
 import "../BackGroundVerification/index.css";
-import { COVIDGetRequest, COVIDRequest } from "../../actions/CovidAction";
+import { COVIDGetRequest } from "../../actions/form.get.action";
+import { COVIDPostRequest } from "../../actions/form.post.action";
 import { LoadingButton } from "@mui/lab";
 import Snackbars from "../../components/Snackbar";
 import CovidFormAppBar from "./CovidFormAppBar";
@@ -74,7 +75,7 @@ const CovidForm = (props) => {
                 data.out_of_containment_zone == "Yes" ? true : false,
         };
         //dispatch(BGVRequest(empBGVobj))
-        dispatch(COVIDRequest(covidApiObj, navigate));
+        dispatch(COVIDPostRequest(covidApiObj, navigate));
     };
 
     const validation = Validation().validationDegree;

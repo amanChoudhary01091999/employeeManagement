@@ -15,9 +15,7 @@ import TextInput from "../../Input/TextInput";
 import { useSelector, useDispatch } from "react-redux";
 import Snackbars from "../../components/Snackbar";
 import LoginAppBar from "../HRLoginScreen/LoginAppBar";
-
-import LoginUserReducer from "../../reducers/loginUserReducer";
-import { UserLoginRequest } from "../../actions/userLoginAction";
+import { UserLoginRequest } from "../../actions/user.auth.action";
 import GetUserId from "../../validation/getUserId";
 
 const paperStyle = {
@@ -36,14 +34,14 @@ const textfieldStyle = {
 
 function UserLogin() {
     const formState = useForm();
-    const history = useNavigate();
+    const naviagte = useNavigate();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = formState;
 
-    const userloginState = useSelector((state) => state.LoginUserReducer);
+    const userloginState = useSelector((state) => state.userAuthReducer);
     const { loading, error, userInfo } = userloginState;
     const dispatch = useDispatch();
 
@@ -53,7 +51,7 @@ function UserLogin() {
             id: 1,
             password: data.token,
         };
-        dispatch(UserLoginRequest(LoginApiObj));
+        dispatch(UserLoginRequest(LoginApiObj, naviagte));
     };
 
     return (

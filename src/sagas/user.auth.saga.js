@@ -1,7 +1,7 @@
 import { takeLatest, put, call } from "redux-saga/effects";
-import { USER_LOGIN_REQUEST } from "../constants/userLoginConstant";
-import { UserLoginSuccess, UserLoginFail } from "../actions/userLoginAction";
-import UserLoginRequestURL from "../Api/loginUserPostRequest";
+import { USER_LOGIN_REQUEST } from "../constants/user.auth.constants";
+import { UserLoginSuccess, UserLoginFail } from "../actions/user.auth.action";
+import UserLoginRequestURL from "../api/loginUserPostRequest";
 import getErrorMessage from "../util/ErrorHandle";
 import { openToast } from "../actions/toast.action";
 
@@ -11,13 +11,14 @@ function* userLoginAsync(action) {
         yield put(UserLoginSuccess(data));
         yield put(openToast("Login Success", "success"));
         localStorage.setItem("accessToken", data.accessToken);
-        console.log(data);
+        const navigate = action.navigate;
+        navigate("/bgv-form");
     } catch (error) {
         const errorMessage = getErrorMessage(error);
         yield put(UserLoginFail());
         yield put(openToast(errorMessage, "error"));
     }
 }
-export function* userloginSaga() {
+export function* userAuthSaga() {
     yield takeLatest(USER_LOGIN_REQUEST, userLoginAsync);
 }

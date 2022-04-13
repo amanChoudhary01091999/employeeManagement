@@ -3,7 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { GFFormRequest } from "../../actions/GFFormAction";
+import { GFGetRequest } from "../../actions/form.get.action";
+import { GFPostRequest } from "../../actions/form.post.action";
 import Snackbars from "../../components/Snackbar";
 
 import GFAcknowledgement from "./GFAcknowledgement";
@@ -75,7 +76,7 @@ function GFFormMain() {
             acknowledgement_date: data.acknowledgement_date,
             signature_of_the_employee: data.signature_of_the_employee[0].name,
         };
-        dispatch(GFFormRequest(GFobjectAPI, naviagte));
+        dispatch(GFPostRequest(GFobjectAPI, naviagte));
     };
     return (
         <>

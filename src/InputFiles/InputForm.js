@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import React from "react";
 
 function InputForm(props) {
-    const { formState, label, name, validation } = props;
+    const { formState, label, name, validation, defaultValue } = props;
     const {
         register,
         formState: { errors },
@@ -14,7 +14,7 @@ function InputForm(props) {
             id={name}
             fullWidth
             size="small"
-            //variant="outlined"
+            defaultValue={defaultValue}
             {...register(`${name}`, validation)}
             error={errors[name] !== undefined}
             helperText={errors[name]?.message}
@@ -22,31 +22,3 @@ function InputForm(props) {
     );
 }
 export default InputForm;
-
-// import { TextField } from "@mui/material";
-// import React from "react";
-
-// function TextInput(props) {
-//     const { label, id, formState } = props;
-//     const {
-//         register,
-//         formState: { errors },
-//     } = formState;
-//     return (
-//         <TextField
-//             label={label}
-//             id={id}
-//             variant="outlined"
-//             error={errors[id] !== undefined}
-//             helperText={errors[id]?.message}
-//             {...register(id, {
-//                 required: {
-//                     value: true,
-//                     message: "this feild is required",
-//                 },
-//             })}
-//         />
-//     );
-// }
-
-// export default TextInput;

@@ -1,19 +1,21 @@
 import { LoadingButton } from "@mui/lab";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { requestEPF } from "../../actions/EPFAction";
+import { EPFGetRequest } from "../../actions/form.get.action";
+import { EPFPostRequest } from "../../actions/form.post.action";
 import EPFFormDetail from "./EPFFormDetail";
 import EPFUntrackingDeclaration from "./EPFUntrackingDeclaration";
-import Snackbars from "../../components/Snackbar";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 function EPFFormMain() {
     const formState = useForm();
     const { handleSubmit } = formState;
     const dispatch = useDispatch();
-    const { loading, error, userInfo } = useSelector(
-        (state) => state.reducerEPF
+    const { loading } = useSelector((state) => state.reducerEPF);
+    const { loadingEPF, userInfoEPF } = useSelector(
+        (state) => state.EPFGetReducer
     );
     const navigate = useNavigate();
     const onSubmit = (data) => {
@@ -67,55 +69,55 @@ function EPFFormMain() {
             date: data.employer_date,
             signature_of_employer: data.signature_employer[0].name,
         };
-
-        // PostData("http://10.1.30.18:9032/pf-form/create", EPFobjectAPI).then(
-        //     (data) => {
-        //         // history.push({
-        //         //     pathname: "/gratuity-form",
-        //         //     search: `?user-id=${id}`,
-        //         // });
-        //         //console.log(data);
-        //     }
-        // );
-        dispatch(requestEPF(EPFobjectAPI, navigate));
+        dispatch(EPFPostRequest(EPFobjectAPI, navigate));
     };
+    useEffect(() => {
+        dispatch(EPFGetRequest());
+    }, []);
+    console.log(userInfoEPF);
     return (
         <div className="container py-4">
-            <div className="text-center">
-                <h4 className="mb-0">EMPLOYEES PROVIDENT FUND ORGANIZATION</h4>
-                <p>
-                    Employees Provident Fund Scheme, 1952 (Pragraph 34 & 57) &
-                    <br />
-                    Employees Pension Scheme, 1995 (Paragraph 24)
-                </p>
-                <p>
-                    (Declaration by a person taking up employment in any
-                    establishment on which EPF Scheme 1952 and / or EPS, 1995 is
-                    applicable)
-                </p>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <EPFFormDetail formState={formState} />
-                <EPFUntrackingDeclaration formState={formState} />
-
-                <LoadingButton
-                    loading={loading}
-                    size="large"
-                    variant="contained"
-                    type="submit"
-                >
-                    Submit Form
-                </LoadingButton>
-            </form>
-            {error && (
-                <Snackbars value={true} severity={"error"} message={error} />
-            )}
-            {userInfo && (
-                <Snackbars
-                    value={true}
-                    severity={"success"}
-                    message={"Success"}
+            {loadingEPF && (
+                <CircularProgress
+                    color="inherit"
+                    style={{
+                        color: "indigo",
+                        position: "fixed",
+                        bottom: "50%",
+                    }}
                 />
+            )}
+            {userInfoEPF && (
+                <>
+                    <div className="text-center">
+                        <h4 className="mb-0">
+                            EMPLOYEES PROVIDENT FUND ORGANIZATION
+                        </h4>
+                        <p>
+                            Employees Provident Fund Scheme, 1952 (Pragraph 34 &
+                            57) &
+                            <br />
+                            Employees Pension Scheme, 1995 (Paragraph 24)
+                        </p>
+                        <p>
+                            (Declaration by a person taking up employment in any
+                            establishment on which EPF Scheme 1952 and / or EPS,
+                            1995 is applicable)
+                        </p>
+                    </div>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <EPFFormDetail formState={formState} />
+                        <EPFUntrackingDeclaration formState={formState} />
+                        <LoadingButton
+                            loading={loading}
+                            size="large"
+                            variant="contained"
+                            type="submit"
+                        >
+                            Submit Form
+                        </LoadingButton>
+                    </form>
+                </>
             )}
         </div>
     );

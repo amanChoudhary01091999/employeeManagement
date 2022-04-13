@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import DatePicker from "../../InputFiles/DatePicker";
+import FilePicker from "../../InputFiles/FileInput";
 import InputCkeckBox from "../../InputFiles/InputCkeckBox";
 import InputForm from "../../InputFiles/InputForm";
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
@@ -12,6 +14,9 @@ function EPFUntrackingDeclaration(props) {
         formState: { errors },
         watch,
     } = formState;
+    const { loadingEPF, userInfoEPF } = useSelector(
+        (state) => state.EPFGetReducer
+    );
     // const value = watch('The KYC details of the above members in the UAN database')
     // const value2 = watch('The above PF Account number/UAN of the member as mentioned in (A) above has been tagged with his/her UAN/Previous member  ID as declared by the member')
     // console.log(value)
@@ -73,6 +78,10 @@ function EPFUntrackingDeclaration(props) {
                                         name={"date_of_undertaking"}
                                         type={"date"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.date_of_undertaking
+                                        }
                                     />
                                 </div>
                             </div>
@@ -91,6 +100,9 @@ function EPFUntrackingDeclaration(props) {
                                         label={"Place"}
                                         name={"place"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.place
+                                        }
                                     />
                                 </div>
                             </div>
@@ -318,7 +330,7 @@ function EPFUntrackingDeclaration(props) {
                                     </p>
                                 </div>
                                 <div className="col-5">
-                                    <DatePicker
+                                    <FilePicker
                                         formState={formState}
                                         label={null}
                                         name={"signature_employer"}

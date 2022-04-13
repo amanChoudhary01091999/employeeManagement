@@ -7,7 +7,7 @@ import RCAFPart2 from "./RCAFPart2";
 import RCAFPart4 from "./RCAFPart4";
 import "../BackGroundVerification/index.css";
 import { useSelector, useDispatch } from "react-redux";
-import { RCAFRequest } from "../../actions/refCheckAction";
+import { RCAFPostRequest } from "../../actions/form.post.action";
 import { LoadingButton } from "@mui/lab";
 import Snackbars from "../../components/Snackbar";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,7 @@ function RCAFForm() {
             permanent_address: data.permanent_Address,
 
             first_degree: {
+                // degree miss
                 graduated: data.graduated_1,
                 program: data.programm_1,
                 institute_name: data.institute_name_1,
@@ -140,64 +141,49 @@ function RCAFForm() {
             contact_current_employer:
                 data.contact_current_employer === "Yes" ? true : false,
         };
-        dispatch(RCAFRequest(RCAFobjectAPI, navigate));
+        dispatch(RCAFPostRequest(RCAFobjectAPI, navigate));
     };
 
     return (
         <>
-        <div  style={{backgroundColor: "#F3F3F3",}}>
-        <RefCheckAppBar/>
-        <div className="mx-5">
-            
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
-                    <RAFCHeading formState={formState} />
-                    <RCAFPart1 formState={formState} />
-                    <RCAFPart2 formState={formState} number={"1"} />
-                    <RCAFPart2 formState={formState} number={"2"} />
-                    <RCAFPart2 formState={formState} number={"3"} />
-                    <RAFCPart3
-                        formState={formState}
-                        number={"0"}
-                        stateOfEmployer={"current"}
-                    />
-                    <RAFCPart3
-                        formState={formState}
-                        number={"1"}
-                        stateOfEmployer={"previous"}
-                    />
-                    <RAFCPart3
-                        formState={formState}
-                        number={"2"}
-                        stateOfEmployer={"previous"}
-                    />
-                    <RCAFPart4 formState={formState} />
+            <div style={{ backgroundColor: "#F3F3F3" }}>
+                <RefCheckAppBar />
+                <div className="mx-5">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="form-group">
+                            <RAFCHeading formState={formState} />
+                            <RCAFPart1 formState={formState} />
+                            <RCAFPart2 formState={formState} number={"1"} />
+                            <RCAFPart2 formState={formState} number={"2"} />
+                            <RCAFPart2 formState={formState} number={"3"} />
+                            <RAFCPart3
+                                formState={formState}
+                                number={"0"}
+                                stateOfEmployer={"current"}
+                            />
+                            <RAFCPart3
+                                formState={formState}
+                                number={"1"}
+                                stateOfEmployer={"previous"}
+                            />
+                            <RAFCPart3
+                                formState={formState}
+                                number={"2"}
+                                stateOfEmployer={"previous"}
+                            />
+                            <RCAFPart4 formState={formState} />
+                        </div>
+                        <LoadingButton
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            loading={loading}
+                        >
+                            <strong>Submit</strong>
+                        </LoadingButton>
+                    </form>
                 </div>
-                <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    loading={loading}
-                >
-                    <strong>Submit</strong>
-                </LoadingButton>
-                {error && (
-                    <Snackbars
-                        value={true}
-                        severity={"error"}
-                        message={error}
-                    />
-                )}
-                {userInfo && (
-                    <Snackbars
-                        value={true}
-                        severity={"success"}
-                        message={"Form Submitted"}
-                    />
-                )}
-            </form>
-        </div>
-        </div>
+            </div>
         </>
     );
 }
