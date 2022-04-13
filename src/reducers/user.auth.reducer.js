@@ -1,10 +1,10 @@
 import {
     USER_LOGIN_REQUEST,
-    USER_LOGIN_SUCCESS, 
+    USER_LOGIN_SUCCESS,
     USER_LOGIN_FAIL,
-} from "../constants/userLoginConstant";
+} from "../constants/user.auth.constants";
 
-export const LoginUserReducer = (state = {}, action) => {
+export const userAuthReducer = (state = {}, action) => {
     switch (action.type) {
         case USER_LOGIN_REQUEST:
             return { loading: true };

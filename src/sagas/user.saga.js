@@ -24,7 +24,7 @@ import {
     userPostData,
     userUpdateData,
     userDeleteData,
-} from "../Api/userRequest";
+} from "../api/userRequest";
 
 function* uesrGetAsync() {
     try {

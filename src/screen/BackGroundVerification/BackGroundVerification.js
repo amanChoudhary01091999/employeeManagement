@@ -9,13 +9,13 @@ import DashBoardAppBar from "../HRDashboard/DashBoardAppBar";
 import BGVAppBar from "./BGVAppBar";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { BGVRequest,BGVGetRequest } from "../../actions/BGVFormAction";
+import { BGVPostRequest } from "../../actions/form.post.action";
+import { BGVGetRequest } from "../../actions/form.get.action";
 import Snackbars from "../../components/Snackbar";
 import { LoadingButton } from "@mui/lab";
 import TextAreaInput from "../../InputFiles/TextAreaInput";
 import { typography } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-import { BGV_GET_REQUEST } from "../../constants/bgvConstants";
 import FilePicker from "../../InputFiles/FileInput";
 
 const BackgroundVerification = (props) => {
@@ -24,20 +24,18 @@ const BackgroundVerification = (props) => {
     const workEx = watch("workEx", "No");
 
     const bgvState = useSelector((state) => state.BGVReducer);
-    const { loading, error, userInfo } = bgvState; 
+    const { loading, error, userInfo } = bgvState;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const bgvGetState=useSelector((state)=>state.BGVGetReducer)
-    const{loadingBGV,userInfoBGV,errorBGV}=bgvGetState
+    const bgvGetState = useSelector((state) => state.BGVGetReducer);
+    const { loadingBGV, userInfoBGV, errorBGV } = bgvGetState;
 
+    useEffect(() => {
+        dispatch(BGVGetRequest());
+    }, []);
 
-    useEffect(() => { 
-     dispatch(BGVGetRequest())
-    },[])
-
-    console.log("Hi",userInfoBGV.gender)
-    
+    console.log("Hi", userInfoBGV.gender);
 
     const onSubmit = (data) => {
         //history.push('/covid-form')
@@ -289,7 +287,7 @@ const BackgroundVerification = (props) => {
         };
 
         //console.log(bgvApi(empBGVobj))
-        dispatch(BGVRequest(empBGVobj, navigate));
+        dispatch(BGVPostRequest(empBGVobj, navigate));
 
         //console.log(data)
     };
@@ -362,8 +360,9 @@ const BackgroundVerification = (props) => {
                                                         "Enter Your First Name"
                                                     }
                                                     validation={validation}
-                                                    defaultValue={userInfoBGV.first_name}
-                                                   
+                                                    defaultValue={
+                                                        userInfoBGV.first_name
+                                                    }
                                                 />
                                             </td>
                                             <td
@@ -381,8 +380,9 @@ const BackgroundVerification = (props) => {
                                                     }
                                                     //validation={validation}
 
-                                                    defaultValue={userInfoBGV.middle_name}
-                                                   
+                                                    defaultValue={
+                                                        userInfoBGV.middle_name
+                                                    }
                                                 />
                                             </td>
                                             <td
@@ -399,7 +399,9 @@ const BackgroundVerification = (props) => {
                                                         "Enter Your Last Name"
                                                     }
                                                     validation={validation}
-                                                    defaultValue={userInfoBGV.last_name}
+                                                    defaultValue={
+                                                        userInfoBGV.last_name
+                                                    }
                                                 />
                                             </td>
                                         </tr>
@@ -417,7 +419,9 @@ const BackgroundVerification = (props) => {
                                                     name={"fathers_first_name"}
                                                     label={"Father's Name"}
                                                     validation={validation}
-                                                    defaultValue={userInfoBGV.fathers_first_name}
+                                                    defaultValue={
+                                                        userInfoBGV.fathers_first_name
+                                                    }
                                                 />
                                             </td>
                                             <td
@@ -433,7 +437,9 @@ const BackgroundVerification = (props) => {
                                                     label={
                                                         "Father's middle name"
                                                     }
-                                                    defaultValue={userInfoBGV.first_middle_name}
+                                                    defaultValue={
+                                                        userInfoBGV.first_middle_name
+                                                    }
                                                 />
                                             </td>
                                             <td
@@ -448,7 +454,9 @@ const BackgroundVerification = (props) => {
                                                     name={"fathers_last_name"}
                                                     label={"Father's last name"}
                                                     validation={validation}
-                                                    defaultValue={userInfoBGV.fathers_last_name}
+                                                    defaultValue={
+                                                        userInfoBGV.fathers_last_name
+                                                    }
                                                 />
                                             </td>
                                         </tr>
@@ -467,7 +475,9 @@ const BackgroundVerification = (props) => {
                                                     label={""}
                                                     type={"date"}
                                                     validation={validation}
-                                                    defaultValue={userInfoBGV.date_of_birth}
+                                                    defaultValue={
+                                                        userInfoBGV.date_of_birth
+                                                    }
                                                 />
                                             </td>
                                             <td
@@ -483,8 +493,12 @@ const BackgroundVerification = (props) => {
                                                     name={"gender"}
                                                     labelGroup={null}
                                                     label={["Male", "Female"]}
-                                                    defaultValue={userInfoBGV.gender} 
-                                                    defaultChecked={userInfoBGV.gender}
+                                                    defaultValue={
+                                                        userInfoBGV.gender
+                                                    }
+                                                    defaultChecked={
+                                                        userInfoBGV.gender
+                                                    }
                                                 />
                                             </td>
 
@@ -501,7 +515,9 @@ const BackgroundVerification = (props) => {
                                                     name={"driving_license_no"}
                                                     label={"DL Number"}
                                                     validation={validationDL}
-                                                    defaultValue={userInfoBGV.driving_license_no}
+                                                    defaultValue={
+                                                        userInfoBGV.driving_license_no
+                                                    }
                                                 />
                                             </td>
                                         </tr>
@@ -519,7 +535,9 @@ const BackgroundVerification = (props) => {
                                                     name={"passport_no"}
                                                     label={"Passport Number"}
                                                     validation={validationPass}
-                                                    defaultValue={userInfoBGV.passport_no}
+                                                    defaultValue={
+                                                        userInfoBGV.passport_no
+                                                    }
                                                 />
                                             </td>
                                             <td
@@ -531,12 +549,15 @@ const BackgroundVerification = (props) => {
                                             <td>
                                                 <DatePicker
                                                     formState={formState}
-                                                    name={"passport_valid_until"}
+                                                    name={
+                                                        "passport_valid_until"
+                                                    }
                                                     label={""}
                                                     type={"date"}
                                                     validation={validation}
-                                                    defaultValue={userInfoBGV.passport_valid_until}
-                                                
+                                                    defaultValue={
+                                                        userInfoBGV.passport_valid_until
+                                                    }
                                                 />
                                                 {/* <input
                                                     type="date"
@@ -564,7 +585,9 @@ const BackgroundVerification = (props) => {
                                                     }
                                                     label={"Place"}
                                                     //validation={validation}
-                                                    defaultValue={userInfoBGV.passport_issue_place}
+                                                    defaultValue={
+                                                        userInfoBGV.passport_issue_place
+                                                    }
                                                 />
                                             </td>
                                         </tr>
@@ -612,7 +635,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.current_address}
+                                                            defaultValue={
+                                                                userInfoBGV.current_address
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -640,7 +665,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.duration_of_stay}
+                                                            defaultValue={
+                                                                userInfoBGV.duration_of_stay
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -668,7 +695,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationPh
                                                             }
-                                                            defaultValue={userInfoBGV.contact1_mobile_no}
+                                                            defaultValue={
+                                                                userInfoBGV.contact1_mobile_no
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -697,7 +726,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationLand
                                                             }
-                                                            defaultValue={userInfoBGV.contact1_Land_Line_No}
+                                                            defaultValue={
+                                                                userInfoBGV.contact1_Land_Line_No
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -736,7 +767,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.permanent_address}
+                                                            defaultValue={
+                                                                userInfoBGV.permanent_address
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -764,7 +797,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationPh
                                                             }
-                                                            defaultValue={userInfoBGV.contact2_mobile_no}
+                                                            defaultValue={
+                                                                userInfoBGV.contact2_mobile_no
+                                                            }
                                                         />
                                                     </td>
 
@@ -791,7 +826,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationLand
                                                             }
-                                                            defaultValue={userInfoBGV.contact2_Land_Line_No}
+                                                            defaultValue={
+                                                                userInfoBGV.contact2_Land_Line_No
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -817,7 +854,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationEmail
                                                             }
-                                                            defaultValue={userInfoBGV.email1}
+                                                            defaultValue={
+                                                                userInfoBGV.email1
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -842,7 +881,9 @@ const BackgroundVerification = (props) => {
                                                                 "Secondary Email"
                                                             }
                                                             //validation={validationEmail}
-                                                            defaultValue={userInfoBGV.email2}
+                                                            defaultValue={
+                                                                userInfoBGV.email2
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -889,7 +930,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.name_first}
+                                                            defaultValue={
+                                                                userInfoBGV.name_first
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -902,7 +945,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.name_second}
+                                                            defaultValue={
+                                                                userInfoBGV.name_second
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -930,7 +975,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.designation_first}
+                                                            defaultValue={
+                                                                userInfoBGV.designation_first
+                                                            }
                                                         />
                                                     </td>
 
@@ -948,7 +995,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.designation_second}
+                                                            defaultValue={
+                                                                userInfoBGV.designation_second
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -976,7 +1025,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.company_first}
+                                                            defaultValue={
+                                                                userInfoBGV.company_first
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -993,7 +1044,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.company_second}
+                                                            defaultValue={
+                                                                userInfoBGV.company_second
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1021,7 +1074,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationPh
                                                             }
-                                                            defaultValue={userInfoBGV.mobile_first}
+                                                            defaultValue={
+                                                                userInfoBGV.mobile_first
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1038,7 +1093,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationPh
                                                             }
-                                                            defaultValue={userInfoBGV.mobile_second}
+                                                            defaultValue={
+                                                                userInfoBGV.mobile_second
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1062,7 +1119,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationEmail
                                                             }
-                                                            defaultValue={userInfoBGV.email_first}
+                                                            defaultValue={
+                                                                userInfoBGV.email_first
+                                                            }
                                                         />
                                                     </td>
 
@@ -1078,7 +1137,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationEmail
                                                             }
-                                                            defaultValue={userInfoBGV.email_second}
+                                                            defaultValue={
+                                                                userInfoBGV.email_second
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1107,7 +1168,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.capacity_first}
+                                                            defaultValue={
+                                                                userInfoBGV.capacity_first
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1124,7 +1187,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.capacity_second}
+                                                            defaultValue={
+                                                                userInfoBGV.capacity_second
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1227,7 +1292,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Institue Name"
                                                             }
-                                                            defaultValue={userInfoBGV.collegeOrInstitutePG}
+                                                            defaultValue={
+                                                                userInfoBGV.collegeOrInstitutePG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1244,7 +1311,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.collegeOrInstituteUG}
+                                                            defaultValue={
+                                                                userInfoBGV.collegeOrInstituteUG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1261,7 +1330,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.collegeOrInstituteTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.collegeOrInstituteTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1282,7 +1353,9 @@ const BackgroundVerification = (props) => {
                                                             }
                                                             name={"locationPG"}
                                                             label={"Location"}
-                                                            defaultValue={userInfoBGV.locationPG}
+                                                            defaultValue={
+                                                                userInfoBGV.locationPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1296,7 +1369,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.locationUG}
+                                                            defaultValue={
+                                                                userInfoBGV.locationUG
+                                                            }
                                                         />{" "}
                                                     </td>
                                                     <td>
@@ -1311,7 +1386,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.locationTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.locationTWELVE
+                                                            }
                                                         />{" "}
                                                     </td>
                                                 </tr>
@@ -1337,7 +1414,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Affiliated University"
                                                             }
-                                                            defaultValue={userInfoBGV.affiliatedUniversityPG}
+                                                            defaultValue={
+                                                                userInfoBGV.affiliatedUniversityPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1354,7 +1433,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.affiliatedUniversityUG}
+                                                            defaultValue={
+                                                                userInfoBGV.affiliatedUniversityUG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1371,7 +1452,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.affiliatedUniversityTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.affiliatedUniversityTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1397,7 +1480,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Contact Number"
                                                             }
-                                                            defaultValue={userInfoBGV.contact_detailsPG}
+                                                            defaultValue={
+                                                                userInfoBGV.contact_detailsPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1414,7 +1499,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationPh
                                                             }
-                                                            defaultValue={userInfoBGV.contact_detailsUG}
+                                                            defaultValue={
+                                                                userInfoBGV.contact_detailsUG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1431,7 +1518,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validationPh
                                                             }
-                                                            defaultValue={userInfoBGV.contact_detailsTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.contact_detailsTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1457,7 +1546,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Qualification"
                                                             }
-                                                            defaultValue={userInfoBGV.qualificationPG}
+                                                            defaultValue={
+                                                                userInfoBGV.qualificationPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1474,7 +1565,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.qualificationUG}
+                                                            defaultValue={
+                                                                userInfoBGV.qualificationUG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1491,7 +1584,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.qualificationTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.qualificationTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1517,7 +1612,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Specialization"
                                                             }
-                                                            defaultValue={userInfoBGV.specializationPG}
+                                                            defaultValue={
+                                                                userInfoBGV.specializationPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1534,7 +1631,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.specializationUG}
+                                                            defaultValue={
+                                                                userInfoBGV.specializationUG
+                                                            }
                                                         />{" "}
                                                     </td>
                                                     <td>
@@ -1551,7 +1650,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.specializationTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.specializationTWELVE
+                                                            }
                                                         />{" "}
                                                     </td>
                                                 </tr>
@@ -1576,7 +1677,9 @@ const BackgroundVerification = (props) => {
                                                             }
                                                             label={""}
                                                             type={"date"}
-                                                            defaultValue={userInfoBGV.ates_attendedPG}
+                                                            defaultValue={
+                                                                userInfoBGV.ates_attendedPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1592,7 +1695,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.ates_attendedUG}
+                                                            defaultValue={
+                                                                userInfoBGV.ates_attendedUG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1608,7 +1713,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.dates_attendedTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.dates_attendedTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1634,7 +1741,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Enrollment Number"
                                                             }
-                                                            defaultValue={userInfoBGV.registration_no_or_enrollment_noPG}
+                                                            defaultValue={
+                                                                userInfoBGV.registration_no_or_enrollment_noPG
+                                                            }
                                                         />{" "}
                                                     </td>
                                                     <td>
@@ -1651,7 +1760,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.registration_no_or_enrollment_noUG}
+                                                            defaultValue={
+                                                                userInfoBGV.registration_no_or_enrollment_noUG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1668,7 +1779,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.registration_no_or_enrollment_noTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.registration_no_or_enrollment_noTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1694,7 +1807,9 @@ const BackgroundVerification = (props) => {
                                                             label={
                                                                 "Marks Obtained"
                                                             }
-                                                            defaultValue={userInfoBGV.marks_obtained_or_class_obtainedPG}
+                                                            defaultValue={
+                                                                userInfoBGV.marks_obtained_or_class_obtainedPG
+                                                            }
                                                         />
                                                     </td>
                                                     <td>
@@ -1711,7 +1826,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.marks_obtained_or_class_obtainedUG}
+                                                            defaultValue={
+                                                                userInfoBGV.marks_obtained_or_class_obtainedUG
+                                                            }
                                                         />{" "}
                                                     </td>
                                                     <td>
@@ -1728,7 +1845,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.marks_obtained_or_class_obtainedTWELVE}
+                                                            defaultValue={
+                                                                userInfoBGV.marks_obtained_or_class_obtainedTWELVE
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -1758,8 +1877,12 @@ const BackgroundVerification = (props) => {
                                                     <div className="btnSubmitcontainer">
                                                         <div className="center">
                                                             <InputRadioGroup
-                                                            defaultValue={userInfoBGV.workEx} 
-                                                            defaultChecked={userInfoBGV.workEx}
+                                                                defaultValue={
+                                                                    userInfoBGV.workEx
+                                                                }
+                                                                defaultChecked={
+                                                                    userInfoBGV.workEx
+                                                                }
                                                                 formState={
                                                                     formState
                                                                 }
@@ -1885,7 +2008,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.agency_detailsE1} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.agency_detailsE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -1904,7 +2029,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.agency_detailsE2} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.agency_detailsE2
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -1924,7 +2051,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.agency_detailsE3} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.agency_detailsE3
+                                                                    }
                                                                 />
                                                             </td>
                                                         </tr>
@@ -1957,7 +2086,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.locationE1} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.locationE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -1976,7 +2107,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.locationE2} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.locationE2
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -1996,7 +2129,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.locationE3} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.locationE3
+                                                                    }
                                                                 />
                                                             </td>
                                                         </tr>
@@ -2027,7 +2162,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.contact_detailsE1} 
+                                                                    defaultValue={
+                                                                        userInfoBGV.contact_detailsE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2046,7 +2183,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.contact_detailsE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.contact_detailsE2
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2067,7 +2206,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.contact_detailsE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.contact_detailsE3
+                                                                    }
                                                                 />
                                                             </td>
                                                         </tr>
@@ -2099,7 +2240,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.employee_codeE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employee_codeE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2119,7 +2262,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.employee_codeE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employee_codeE2
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2140,7 +2285,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.employee_codeE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employee_codeE3
+                                                                    }
                                                                 />
                                                             </td>
                                                         </tr>
@@ -2188,7 +2335,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.employment_start_dateE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employment_start_dateE1
+                                                                    }
                                                                 />
                                                                 <Box
                                                                     sx={{
@@ -2216,7 +2365,9 @@ const BackgroundVerification = (props) => {
                                                                     type={
                                                                         "date"
                                                                     }
-                                                                    defaultValue={userInfoBGV.employment_end_dateE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employment_end_dateE1
+                                                                    }
                                                                     //  validation={validation}
 
                                                                     placeholder={
@@ -2251,13 +2402,14 @@ const BackgroundVerification = (props) => {
                                                                     type={
                                                                         "date"
                                                                     }
-                                                                    defaultValue={userInfoBGV.employment_start_dateE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employment_start_dateE2
+                                                                    }
                                                                     //validation={validation}
 
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    
                                                                 />
                                                                 <Box
                                                                     sx={{
@@ -2281,7 +2433,9 @@ const BackgroundVerification = (props) => {
                                                                     name={
                                                                         "employment_end_dateE2"
                                                                     }
-                                                                    defaultValue={userInfoBGV.employment_end_dateE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employment_end_dateE2
+                                                                    }
                                                                     label={""}
                                                                     type={
                                                                         "date"
@@ -2320,7 +2474,9 @@ const BackgroundVerification = (props) => {
                                                                     type={
                                                                         "date"
                                                                     }
-                                                                    defaultValue={userInfoBGV.employment_start_dateE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employment_start_dateE3
+                                                                    }
                                                                     validation={
                                                                         validation
                                                                     }
@@ -2350,7 +2506,9 @@ const BackgroundVerification = (props) => {
                                                                     name={
                                                                         "employment_end_dateE3"
                                                                     }
-                                                                    defaultValue={userInfoBGV.employment_end_dateE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.employment_end_dateE3
+                                                                    }
                                                                     label={""}
                                                                     type={
                                                                         "date"
@@ -2385,7 +2543,9 @@ const BackgroundVerification = (props) => {
                                                                     label={
                                                                         "Designation"
                                                                     }
-                                                                    defaultValue={userInfoBGV.designationE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.designationE1
+                                                                    }
                                                                     //validation={validation}
 
                                                                     placeholder={
@@ -2405,7 +2565,9 @@ const BackgroundVerification = (props) => {
                                                                         "Designation"
                                                                     }
                                                                     //validation={validation}
-                                                                    defaultValue={userInfoBGV.designationE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.designationE2
+                                                                    }
                                                                     placeholder={
                                                                         ""
                                                                     }
@@ -2428,7 +2590,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.designationE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.designationE3
+                                                                    }
                                                                 />
                                                             </td>
                                                         </tr>
@@ -2460,7 +2624,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.last_salary_drawnE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.last_salary_drawnE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2479,7 +2645,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.last_salary_drawnE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.last_salary_drawnE2
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2496,7 +2664,9 @@ const BackgroundVerification = (props) => {
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    defaultValue={userInfoBGV.last_salary_drawnE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.last_salary_drawnE3
+                                                                    }
                                                                     placeholder={
                                                                         ""
                                                                     }
@@ -2530,7 +2700,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.reason_for_leavingE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.reason_for_leavingE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2544,8 +2716,9 @@ const BackgroundVerification = (props) => {
                                                                     label={
                                                                         "Reason for leaving"
                                                                     }
-                                                                    defaultValue={userInfoBGV.reason_for_leavingE2}
-                                                                
+                                                                    defaultValue={
+                                                                        userInfoBGV.reason_for_leavingE2
+                                                                    }
                                                                     //validation={validation}
 
                                                                     placeholder={
@@ -2564,7 +2737,9 @@ const BackgroundVerification = (props) => {
                                                                     label={
                                                                         "Reason for leaving"
                                                                     }
-                                                                    defaultValue={userInfoBGV.reason_for_leavingE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.reason_for_leavingE3
+                                                                    }
                                                                     validation={
                                                                         validation
                                                                     }
@@ -2601,7 +2776,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.reporting_managerE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.reporting_managerE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2617,7 +2794,9 @@ const BackgroundVerification = (props) => {
                                                                     }
                                                                     //validation={validation}
 
-                                                                    defaultValue={userInfoBGV.reporting_managerE2}
+                                                                    defaultValue={
+                                                                        userInfoBGV.reporting_managerE2
+                                                                    }
                                                                     placeholder={
                                                                         ""
                                                                     }
@@ -2634,7 +2813,9 @@ const BackgroundVerification = (props) => {
                                                                     label={
                                                                         "Reporting Manager"
                                                                     }
-                                                                    defaultValue={userInfoBGV.reporting_managerE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.reporting_managerE3
+                                                                    }
                                                                     validation={
                                                                         validation
                                                                     }
@@ -2670,7 +2851,9 @@ const BackgroundVerification = (props) => {
                                                                     placeholder={
                                                                         ""
                                                                     }
-                                                                    defaultValue={userInfoBGV.hr_managerE1}
+                                                                    defaultValue={
+                                                                        userInfoBGV.hr_managerE1
+                                                                    }
                                                                 />
                                                             </td>
                                                             <td>
@@ -2684,8 +2867,9 @@ const BackgroundVerification = (props) => {
                                                                     label={
                                                                         "HR MANAGER"
                                                                     }
-                                                                    defaultValue={userInfoBGV.hr_managerE2}
-                                                            
+                                                                    defaultValue={
+                                                                        userInfoBGV.hr_managerE2
+                                                                    }
                                                                     //validation={validation}
 
                                                                     placeholder={
@@ -2704,7 +2888,9 @@ const BackgroundVerification = (props) => {
                                                                     label={
                                                                         "HR MANAGER"
                                                                     }
-                                                                    defaultValue={userInfoBGV.hr_managerE3}
+                                                                    defaultValue={
+                                                                        userInfoBGV.hr_managerE3
+                                                                    }
                                                                     validation={
                                                                         validation
                                                                     }
@@ -2743,7 +2929,9 @@ const BackgroundVerification = (props) => {
                                                     }
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
-                                                    defaultValue={userInfoBGV.whether_to_contact_the_current_employer}
+                                                    defaultValue={
+                                                        userInfoBGV.whether_to_contact_the_current_employer
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -2836,7 +3024,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.full_name}
+                                                            defaultValue={
+                                                                userInfoBGV.full_name
+                                                            }
                                                         />
                                                     </td>
                                                     <td
@@ -2858,7 +3048,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.place}
+                                                            defaultValue={
+                                                                userInfoBGV.place
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>
@@ -2885,7 +3077,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.signature}
+                                                            defaultValue={
+                                                                userInfoBGV.signature
+                                                            }
                                                         />
                                                     </td>
                                                     <td
@@ -2908,7 +3102,9 @@ const BackgroundVerification = (props) => {
                                                             validation={
                                                                 validation
                                                             }
-                                                            defaultValue={userInfoBGV.date}
+                                                            defaultValue={
+                                                                userInfoBGV.date
+                                                            }
                                                         />
                                                     </td>
                                                 </tr>

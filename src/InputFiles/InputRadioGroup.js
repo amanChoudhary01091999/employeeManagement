@@ -8,33 +8,27 @@ function InputRadioGroup(props) {
     const {
         formState: { errors },
     } = props.formState;
-    
+
     const validation = Validation().validationDegree;
     const radiogroups = props.label;
     const name = props.name;
     const labelGroup = props.labelGroup;
-    const defaultChecked=props.defaultChecked
+    const defaultValue = props.defaultValue;
     const row = props.row === undefined ? true : false;
-    const[value,setValue]=useState(null)
+
     return (
         <div>
             {labelGroup ? (
                 <label className="mr-4 font-weight-bold">{labelGroup}</label>
             ) : null}
-            <RadioGroup row={row}>
-                {radiogroups.map((radioItems,index) => (
+            <RadioGroup row={row} defaultValue={defaultValue}>
+                {radiogroups.map((radioItems, index) => (
                     <InputRadio
                         key={index}
                         formState={props.formState}
                         label={radioItems}
                         name={name}
                         validation={validation}
-                        defaultChecked={defaultChecked === radioItems ? true : false}
-                       
-                        
-                        
-                        
-
                     />
                 ))}
                 <FormHelperText error={true}>

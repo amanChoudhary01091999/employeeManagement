@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DatePicker from "../../InputFiles/DatePicker";
 import InputForm from "../../InputFiles/TextAreaInput";
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
 import Validation from "../../validation/Validations";
 import "../BackGroundVerification/index.css";
+import { useDispatch, useSelector } from "react-redux";
 
 function EPFFormDetail(props) {
-    const formState = props.formState;
+    const { formState } = props;
+    const dispatch = useDispatch();
+    const { loadingEPF, userInfoEPF } = useSelector(
+        (state) => state.EPFGetReducer
+    );
     const validation = Validation().validationDegree;
     const phoneValidation = Validation().validationPhone;
     const emailValidation = Validation().validationEmail;
@@ -39,6 +44,10 @@ function EPFFormDetail(props) {
                                         label={"Name"}
                                         name={"name_of_the_member"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.name_of_the_member
+                                        }
                                     />
                                 </div>
                             </div>
@@ -70,6 +79,10 @@ function EPFFormDetail(props) {
                                         label={"Father's Name"}
                                         name={"fathers_name"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.fathers_name
+                                        }
                                     />
                                 </div>
                             </div>
@@ -90,6 +103,10 @@ function EPFFormDetail(props) {
                                         label={"Spouse Name"}
                                         name={"Spouse_name"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.Spouse_name
+                                        }
                                     />
                                 </div>
                             </div>
@@ -115,6 +132,10 @@ function EPFFormDetail(props) {
                                         type={"date"}
                                         name={"date_of_birth"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.date_of_birth
+                                        }
                                     />
                                 </div>
                             </div>
@@ -140,6 +161,9 @@ function EPFFormDetail(props) {
                                         label={["Male", "Female", "Other"]}
                                         labelGroup={null}
                                         name={"gender"}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.gender
+                                        }
                                     />
                                 </div>
                             </div>
@@ -171,6 +195,10 @@ function EPFFormDetail(props) {
                                         ]}
                                         labelGroup={null}
                                         name={"marital_status"}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.marital_status
+                                        }
                                     />
                                 </div>
                             </div>
@@ -196,6 +224,9 @@ function EPFFormDetail(props) {
                                         label={"Email id"}
                                         name={"email_id"}
                                         validation={emailValidation}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.email_id
+                                        }
                                     />
                                 </div>
                             </div>
@@ -211,12 +242,16 @@ function EPFFormDetail(props) {
                                     </p>
                                 </div>
                                 <div className="col-8">
-                                    <DatePicker
+                                    <InputForm
                                         formState={formState}
-                                        label={null}
+                                        label={"Phone Number"}
                                         type={"tel"}
                                         name={"mobile_number"}
                                         validation={phoneValidation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.mobile_number
+                                        }
                                     />
                                 </div>
                             </div>
@@ -243,6 +278,12 @@ function EPFFormDetail(props) {
                                         label={["Yes", "No"]}
                                         labelGroup={null}
                                         name={"provident_member"}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.provident_member
+                                                ? "Yes"
+                                                : "No"
+                                        }
                                     />
                                 </div>
                             </div>
@@ -269,6 +310,12 @@ function EPFFormDetail(props) {
                                         label={["Yes", "No"]}
                                         labelGroup={null}
                                         name={"pension_member"}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.pension_member
+                                                ? "Yes"
+                                                : "No"
+                                        }
                                     />
                                 </div>
                             </div>
@@ -306,6 +353,10 @@ function EPFFormDetail(props) {
                                                     "previous_employment_details"
                                                 }
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.previous_employment_details
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -330,6 +381,10 @@ function EPFFormDetail(props) {
                                                 }
                                                 name={"universal_accountnumber"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.universal_accountnumber
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -354,6 +409,10 @@ function EPFFormDetail(props) {
                                                 }
                                                 name={"pfaccNumber"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.pfaccNumber
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -405,6 +464,10 @@ function EPFFormDetail(props) {
                                                     "scheme_certificate_number"
                                                 }
                                                 validation={{}}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.scheme_certificate_number
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -432,6 +495,10 @@ function EPFFormDetail(props) {
                                                     "pension_payment_order_number"
                                                 }
                                                 validation={{}}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.pension_payment_order_number
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -461,6 +528,10 @@ function EPFFormDetail(props) {
                                         label={["Yes", "No"]}
                                         labelGroup={null}
                                         name={"international_worker"}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.international_worker
+                                        }
                                     />
                                 </div>
                             </div>
@@ -494,6 +565,10 @@ function EPFFormDetail(props) {
                                                 label={"country of origin"}
                                                 name={"country_of_origin"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.country_of_origin
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -516,6 +591,10 @@ function EPFFormDetail(props) {
                                                 label={"Passport Number"}
                                                 name={"passport_number"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.passport_number
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -587,6 +666,10 @@ function EPFFormDetail(props) {
                                         label={"Bank Account No."}
                                         name={"bank_account_no"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.bank_account_no
+                                        }
                                     />
                                 </div>
                             </div>
@@ -609,6 +692,9 @@ function EPFFormDetail(props) {
                                         label={"IFSC Code"}
                                         name={"IFSCode"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.IFSCode
+                                        }
                                     />
                                 </div>
                             </div>
@@ -631,6 +717,10 @@ function EPFFormDetail(props) {
                                         label={"Aadhar Number"}
                                         name={"aadhar_number"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.aadhar_number
+                                        }
                                     />
                                 </div>
                             </div>
@@ -654,6 +744,9 @@ function EPFFormDetail(props) {
                                         label={"Permanent Account Number (PAN)"}
                                         name={"pan"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.pan
+                                        }
                                     />
                                 </div>
                             </div>
