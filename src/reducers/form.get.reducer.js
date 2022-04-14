@@ -61,26 +61,26 @@ export const cocGetReducer = (
 
 export const COVIDGetReducer = (
     state = {
-        loadingCOVID: false,
-        userInfoCOVID: {},
-        errorCOVID: null,
+        loadingCovid: false,
+        userInfoCovid: null,
+        errorCovid: null,
     },
     action
 ) => {
     switch (action.type) {
         case COVID_GET_REQUEST:
-            return { ...state, loadingCOVID: true };
+            return { ...state, loadingCovid: true };
         case COVID_GET_SUCCESS:
             return {
                 ...state,
-                loadingCOVID: false,
-                userInfoCOVID: action.payload,
+                loadingCovid: false,
+                userInfoCovid: action.payload,
             };
         case COVID_GET_FAIL:
             return {
                 ...state,
-                errorCOVID: action.payload,
-                loadingCOVID: false,
+                errorCovid: action.payload,
+                loadingCovid: false,
             };
         default:
             return state;
@@ -118,7 +118,7 @@ export const EPFGetReducer = (
 export const GFGetReducer = (
     state = {
         loadingGF: false,
-        userInfoGF: {},
+        userInfoGF: null,
         errorGF: null,
     },
     action
@@ -146,7 +146,7 @@ export const GFGetReducer = (
 export const RCAFGetReducer = (
     state = {
         loadingRCAF: false,
-        userInfoRCAF: {},
+        userInfoRCAF: null,
         errorRCAF: null,
     },
     action

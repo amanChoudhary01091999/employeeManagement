@@ -74,7 +74,9 @@ function* EPFGetAsync(action) {
 function* GFGetAsync(action) {
     try {
         const { data } = yield call(GFGetApiRequest, action.payload);
+        console.log(data);
         yield put(GFGetSuccess(data));
+        yield put(openToast("success", "success"));
     } catch (error) {
         yield put(GFGetError());
         yield put(openToast(getErrorMessage(error), "error"));
