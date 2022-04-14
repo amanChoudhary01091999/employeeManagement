@@ -13,8 +13,10 @@ function InputRadioGroup(props) {
     const radiogroups = props.label;
     const name = props.name;
     const labelGroup = props.labelGroup;
-    const defaultValue = props.defaultValue;
+    let defaultValue = props.defaultValue;
     const row = props.row === undefined ? true : false;
+    if (defaultValue === true) defaultValue = "Yes";
+    if (defaultValue === false) defaultValue = "No";
 
     return (
         <div>

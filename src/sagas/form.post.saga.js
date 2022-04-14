@@ -45,6 +45,7 @@ function* BGVAsync(action) {
     try {
         const { data } = yield call(BGVPostUrl, action.payload);
         yield put(BGVPostSuccess(data));
+        yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
         navigate("/covid-form");
     } catch (error) {
@@ -57,6 +58,7 @@ function* CoCAsync(action) {
     try {
         const { data } = yield call(CoCPostUrl, action.payload);
         yield put(COCPostSuccess(data));
+        yield put(openToast("Form Submitted", "success"));
         console.log(data);
     } catch (error) {
         yield put(COCPostFail());
@@ -68,6 +70,7 @@ function* COVIDAsync(action) {
     try {
         const { data } = yield call(CovidPostUrl, action.payload);
         yield put(COVIDPostSuccess(data));
+        yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
         navigate("/gratuity-form");
     } catch (error) {
@@ -80,7 +83,7 @@ function* EPFAsync(action) {
     try {
         const { data } = yield call(epfPostRequest, action.payload);
         yield put(EPFPostSuccess(data));
-        yield put(openToast("Form Submitted", "error"));
+        yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
         navigate("/refcheck-form");
     } catch (error) {
@@ -93,6 +96,7 @@ function* GFFormAsync(action) {
     try {
         const { data } = yield call(GFFormPostUrl, action.payload);
         yield put(GFPostSuccess(data, action.navigate));
+        yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
         navigate("/epf-form");
     } catch (error) {
@@ -105,6 +109,7 @@ function* RCAFAsync(action) {
     try {
         const { data } = yield call(RCAFPostUrl, action.payload);
         yield put(RCAFPostSuccess(data));
+        yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
         navigate("/codeOfConduct-form");
     } catch (error) {
@@ -116,18 +121,23 @@ function* RCAFAsync(action) {
 export function* bgvSaga() {
     yield takeLatest(BGV_POST_REQUEST, BGVAsync);
 }
+
 export function* CoCSaga() {
     yield takeLatest(COC_POST_REQUEST, CoCAsync);
 }
+
 export function* COVIDSaga() {
     yield takeLatest(COVID_POST_REQUEST, COVIDAsync);
 }
+
 export function* EPFSaga() {
     yield takeLatest(EPF_POST_REQUEST, EPFAsync);
 }
+
 export function* GFFormSaga() {
     yield takeLatest(GF_POST_REQUEST, GFFormAsync);
 }
+
 export function* rcfSaga() {
     yield takeLatest(RCAF_POST_REQUEST, RCAFAsync);
 }

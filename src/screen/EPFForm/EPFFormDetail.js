@@ -12,6 +12,7 @@ function EPFFormDetail(props) {
     const { loadingEPF, userInfoEPF } = useSelector(
         (state) => state.EPFGetReducer
     );
+    console.log(userInfoEPF);
     const validation = Validation().validationDegree;
     const phoneValidation = Validation().validationPhone;
     const emailValidation = Validation().validationEmail;
@@ -281,8 +282,6 @@ function EPFFormDetail(props) {
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.provident_member
-                                                ? "Yes"
-                                                : "No"
                                         }
                                     />
                                 </div>
@@ -313,8 +312,6 @@ function EPFFormDetail(props) {
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.pension_member
-                                                ? "Yes"
-                                                : "No"
                                         }
                                     />
                                 </div>

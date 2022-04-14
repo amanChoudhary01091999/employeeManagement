@@ -113,12 +113,16 @@ function EPFUntrackingDeclaration(props) {
                                     <p className="mb-0">Signature of member:</p>
                                 </div>
                                 <div className="col-8">
-                                    <DatePicker
+                                    <FilePicker
                                         formState={formState}
                                         label={null}
                                         name={"signature_of_member"}
                                         type={"file"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.signature_of_member
+                                        }
                                     />
                                 </div>
                             </div>
@@ -144,6 +148,10 @@ function EPFUntrackingDeclaration(props) {
                                         label={"Name of the present Employee"}
                                         name={"name_of_present_employee"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.name_of_present_employee
+                                        }
                                     />
                                 </div>
                                 <div className="col-2 align-self-center">
@@ -156,6 +164,10 @@ function EPFUntrackingDeclaration(props) {
                                         name={"joined_date"}
                                         type={"date"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.joined_date
+                                        }
                                     />
                                 </div>
                                 <div className="col-3 mt-3 align-self-center">
@@ -169,6 +181,9 @@ function EPFUntrackingDeclaration(props) {
                                         label={"PF Number"}
                                         name={"pf_number"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.pf_number
+                                        }
                                     />
                                 </div>
                             </div>
@@ -194,6 +209,10 @@ function EPFUntrackingDeclaration(props) {
                                         label={"UAN Number"}
                                         name={"uan_number"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.uan_number
+                                        }
                                     />
                                 </div>
                             </div>
@@ -219,6 +238,10 @@ function EPFUntrackingDeclaration(props) {
                                     "Have been uploaded but not approved",
                                     "Have been uploaded and approved with DSC",
                                 ]}
+                                defaultValue={
+                                    userInfoEPF &&
+                                    userInfoEPF.kyc_details_in_uan_database
+                                }
                             />
                             {/* <InputCkeckBox
                                 formState={formState}
@@ -276,6 +299,9 @@ function EPFUntrackingDeclaration(props) {
                                 }
                                 name={"kyc_details"}
                                 validation={validation}
+                                defaultValue={
+                                    userInfoEPF && userInfoEPF.kyc_details
+                                }
                             />
                             <InputCkeckBox
                                 formState={formState}
@@ -284,6 +310,9 @@ function EPFUntrackingDeclaration(props) {
                                 }
                                 name={"dsc_approved"}
                                 validation={validation}
+                                defaultValue={
+                                    userInfoEPF && userInfoEPF.kyc_details
+                                }
                             />
                             <div className="text-danger">
                                 <small>{errors["dsc_approved"]?.message}</small>
@@ -317,6 +346,9 @@ function EPFUntrackingDeclaration(props) {
                                         name={"employer_date"}
                                         type={"date"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF && userInfoEPF.date
+                                        }
                                     />
                                 </div>
                             </div>
