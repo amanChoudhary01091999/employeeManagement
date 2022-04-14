@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
-import React from "react";
+import { CircularProgress } from "@mui/material";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import GFFormNomination from "./GFFormNomination";
 import GFFormNominee from "./GFFormNominee";
 import GFFormStatement from "./GFFormStatement";
 import GratuityAppBar from "./GratuityAppBar";
+//import React, { useEffect } from "react";
 
 function GFFormMain() {
     const formState = useForm();
@@ -21,6 +23,10 @@ function GFFormMain() {
 
     const GFState = useSelector((state) => state.GFFormReducer);
     const { loading, error, userInfo } = GFState;
+
+    const GFGetState = useSelector((state) => state.GFGetReducer);
+    const { loadingGF, userInfoGF, errorGF } = GFGetState;
+
     const dispatch = useDispatch();
     const naviagte = useNavigate();
 
@@ -78,7 +84,24 @@ function GFFormMain() {
         };
         dispatch(GFPostRequest(GFobjectAPI, naviagte));
     };
+    React.useEffect(() => {
+        dispatch(GFGetRequest());
+    }, []);
+    console.log(GFGetState);
     return (
+        // <div>
+        //     {loadingGF && (
+        //         <CircularProgress
+        //             color="inherit"
+        //             style={{
+        //                 color: "indigo",
+        //                 position: "fixed",
+        //                 bottom: "50%",
+        //             }}
+        //         />
+        //     )}
+
+        //     {userInfoGF && (
         <>
             <GratuityAppBar />
             <div style={{ backgroundColor: "#F3F3F3" }}>
@@ -117,6 +140,8 @@ function GFFormMain() {
                 </div>
             </div>
         </>
+        //     )}
+        // </div>
     );
 }
 

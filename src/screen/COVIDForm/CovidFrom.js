@@ -17,6 +17,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
 import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 const CovidForm = (props) => {
     const navigate = useNavigate();
@@ -32,11 +33,7 @@ const CovidForm = (props) => {
     const dispatch = useDispatch();
 
     const covidGetState = useSelector((state) => state.COVIDGetReducer);
-    const { loadingBGV, userInfoBGV, errorBGV } = covidGetState;
-
-    useEffect(() => {
-        dispatch(COVIDGetRequest());
-    }, []);
+    const { loadingCovid, userInfoCovid } = covidGetState;
 
     const onSubmit = (data) => {
         //history.push("/epf-form")
@@ -77,12 +74,28 @@ const CovidForm = (props) => {
         //dispatch(BGVRequest(empBGVobj))
         dispatch(COVIDPostRequest(covidApiObj, navigate));
     };
+    useEffect(() => {
+        dispatch(COVIDGetRequest());
+    }, []);
+    console.log(userInfoCovid);
 
     const validation = Validation().validationDegree;
     const validationPh = Validation().validationPhone;
-    const validationEm = Validation().validationEmail;
+    const validationName = Validation().validationName;
 
     return (
+        // <div>
+        //     {loadingCovid && (
+        //         <CircularProgress
+        //             color="inherit"
+        //             style={{
+        //                 color: "indigo",
+        //                 position: "fixed",
+        //                 bottom: "50%",
+        //             }}
+        //         />
+        //     )}
+        //     {userInfoCovid && (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <CovidFormAppBar />
@@ -172,8 +185,11 @@ const CovidForm = (props) => {
                                             formState={formState}
                                             name={"firstName"}
                                             label={"Enter Your Name"}
-                                            validation={validation}
-                                            placeholder={""}
+                                            validation={validationName}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.firstName
+                                            }
                                         />
                                     </td>
 
@@ -190,6 +206,10 @@ const CovidForm = (props) => {
                                             label={"Enter your employee id"}
                                             validation={validation}
                                             placeholder={""}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.empId
+                                            }
                                         />
                                     </td>
                                 </tr>
@@ -206,7 +226,10 @@ const CovidForm = (props) => {
                                             name={"phoneNumber"}
                                             label={"Enter your phone number"}
                                             validation={validationPh}
-                                            placeholder={""}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.phoneNumber
+                                            }
                                         />
                                     </td>
 
@@ -222,7 +245,10 @@ const CovidForm = (props) => {
                                         label={""}
                                         type={"date"}
                                         validation={validation}
-                                        placeholder={""}
+                                        defaultValue={
+                                            userInfoCovid &&
+                                            userInfoCovid.dateOfBirth
+                                        }
                                     />
                                 </tr>
                             </tbody>
@@ -268,6 +294,12 @@ const CovidForm = (props) => {
                                             name={"dryCough"}
                                             labelGroup={null}
                                             label={["Yes", "No"]}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.dryCough
+                                                    ? "Yes"
+                                                    : "No"
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -292,6 +324,12 @@ const CovidForm = (props) => {
                                             name={"soreThroat"}
                                             labelGroup={null}
                                             label={["Yes", "No"]}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.soreThroat
+                                                    ? "Yes"
+                                                    : "No"
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -316,6 +354,12 @@ const CovidForm = (props) => {
                                             name={"breathingProblem"}
                                             labelGroup={null}
                                             label={["Yes", "No"]}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.breathingProblem
+                                                    ? "Yes"
+                                                    : "No"
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -340,6 +384,12 @@ const CovidForm = (props) => {
                                             name={"fever"}
                                             labelGroup={null}
                                             label={["Yes", "No"]}
+                                            defaultValue={
+                                                userInfoCovid &&
+                                                userInfoCovid.fever
+                                                    ? "Yes"
+                                                    : "No"
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -384,6 +434,12 @@ const CovidForm = (props) => {
                                                     name={"conCovid"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.conCovid
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -416,6 +472,12 @@ const CovidForm = (props) => {
                                                     name={"conCovidFam"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.conCovidFam
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -445,6 +507,10 @@ const CovidForm = (props) => {
                                     type={"date"}
                                     validation={validation}
                                     placeholder={""}
+                                    defaultValue={
+                                        userInfoCovid &&
+                                        userInfoCovid.covidConDate
+                                    }
                                 />
                             </div>
                         ) : null}
@@ -484,6 +550,12 @@ const CovidForm = (props) => {
                                                     name={"respirtoryDisease"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.respirtoryDisease
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -516,6 +588,12 @@ const CovidForm = (props) => {
                                                     name={"heartDisease"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.heartDisease
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -560,6 +638,12 @@ const CovidForm = (props) => {
                                                     name={"diabetes"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.diabetes
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -604,6 +688,12 @@ const CovidForm = (props) => {
                                                     name={"medicalConditions"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.medicalConditions
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -648,6 +738,12 @@ const CovidForm = (props) => {
                                                     name={"vaccinated"}
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.vaccinated
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -670,7 +766,10 @@ const CovidForm = (props) => {
                                                         label={""}
                                                         type={"date"}
                                                         validation={validation}
-                                                        placeholder={""}
+                                                        defaultValue={
+                                                            userInfoCovid &&
+                                                            userInfoCovid.firstDose
+                                                        }
                                                     />
                                                 </td>
                                                 <td>2st Dose: </td>
@@ -682,6 +781,10 @@ const CovidForm = (props) => {
                                                         type={"date"}
                                                         validation={validation}
                                                         placeholder={""}
+                                                        defaultValue={
+                                                            userInfoCovid &&
+                                                            userInfoCovid.secondDose
+                                                        }
                                                     />
                                                 </td>
                                                 <td>
@@ -696,6 +799,10 @@ const CovidForm = (props) => {
                                                         label={"Vaccine Name"}
                                                         validation={validation}
                                                         placeholder={""}
+                                                        defaultValue={
+                                                            userInfoCovid &&
+                                                            userInfoCovid.vaccineName
+                                                        }
                                                     />
                                                 </td>
                                             </tr>
@@ -752,6 +859,12 @@ const CovidForm = (props) => {
                                                     }
                                                     labelGroup={null}
                                                     label={["Yes", "No"]}
+                                                    defaultValue={
+                                                        userInfoCovid &&
+                                                        userInfoCovid.containmentZoneDetail
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -766,7 +879,9 @@ const CovidForm = (props) => {
                                     <tr>
                                         <td
                                             className="text-center "
-                                            style={{ fontFamily: "Muller" }}
+                                            style={{
+                                                fontFamily: "Muller",
+                                            }}
                                         >
                                             My mode of travel to work everyday
                                             is{" "}
@@ -778,6 +893,10 @@ const CovidForm = (props) => {
                                                 label={"Mode of travel"}
                                                 validation={validation}
                                                 placeholder={""}
+                                                defaultValue={
+                                                    userInfoCovid &&
+                                                    userInfoCovid.travelMode
+                                                }
                                             />
                                         </td>
                                     </tr>
@@ -802,7 +921,9 @@ const CovidForm = (props) => {
                                     <tr>
                                         <td
                                             className="text-center "
-                                            style={{ fontFamily: "Muller" }}
+                                            style={{
+                                                fontFamily: "Muller",
+                                            }}
                                         >
                                             Name{" "}
                                         </td>
@@ -814,11 +935,17 @@ const CovidForm = (props) => {
                                                 label={"Full Name"}
                                                 validation={validation}
                                                 placeholder={""}
+                                                defaultValue={
+                                                    userInfoCovid &&
+                                                    userInfoCovid.confirmNameUser
+                                                }
                                             />{" "}
                                         </td>
                                         <td
                                             className="text-center "
-                                            style={{ fontFamily: "Muller" }}
+                                            style={{
+                                                fontFamily: "Muller",
+                                            }}
                                         >
                                             Signature{" "}
                                         </td>
@@ -826,7 +953,6 @@ const CovidForm = (props) => {
                                             <FilePicker
                                                 formState={formState}
                                                 name={"confirmSignUser"}
-                                                //type={"file"}
                                                 validation={validation}
                                                 placeholder={""}
                                                 defaultValue={null}
@@ -834,7 +960,9 @@ const CovidForm = (props) => {
                                         </td>
                                         <td
                                             className="text-center "
-                                            style={{ fontFamily: "Muller" }}
+                                            style={{
+                                                fontFamily: "Muller",
+                                            }}
                                         >
                                             Date{" "}
                                         </td>
@@ -846,6 +974,10 @@ const CovidForm = (props) => {
                                                 type={"date"}
                                                 validation={validation}
                                                 placeholder={""}
+                                                defaultValue={
+                                                    userInfoCovid &&
+                                                    userInfoCovid.confirmDateUser
+                                                }
                                             />
                                         </td>
                                     </tr>
@@ -856,30 +988,18 @@ const CovidForm = (props) => {
 
                     <br />
                     <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        size="large"
                         loading={loading}
+                        size="large"
+                        variant="contained"
+                        type="submit"
                     >
-                        <strong>Submit</strong>
+                        Submit Form
                     </LoadingButton>
-                    {error && (
-                        <Snackbars
-                            value={true}
-                            severity={"error"}
-                            message={error}
-                        />
-                    )}
-                    {userInfo && (
-                        <Snackbars
-                            value={true}
-                            severity={"success"}
-                            message={"Form Submitted"}
-                        />
-                    )}
                 </div>
             </form>
         </>
+        //     )}
+        // </div>
     );
 };
 

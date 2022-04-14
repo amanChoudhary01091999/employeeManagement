@@ -3,8 +3,8 @@ import { executeAPI } from "./MainAPI";
 const BGV_GET_PATH = "/employee-personal-details-form/details-employeeId/101";
 const COC_GET_PATH = "/ndhgo-code-of-conduct/details-employeeId/101";
 const COVID_GET_PATH = "/CovidDeclaration/details-employeeId/100";
-const EPF_GET_PATH = "/pf-form/details-employeeId/100";
-const GF_GET_PATH = "/Nomination/details-employeeId/101";
+const EPF_GET_PATH = "/pf-form/details-employeeId/102";
+const GF_GET_PATH = "/Nomination/details-employeeId/100";
 const RCAF_GET_PATH = "/reference-check/details-employeeId/101";
 
 const BGV_POST_PATH = "/employee-personal-details-form/create";

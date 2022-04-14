@@ -1,4 +1,4 @@
-import { Box, TableRow, TextField } from "@mui/material";
+import { Box, CircularProgress, TableRow, TextField } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -34,8 +34,6 @@ const BackgroundVerification = (props) => {
     useEffect(() => {
         dispatch(BGVGetRequest());
     }, []);
-
-    console.log("Hi", userInfoBGV.gender);
 
     const onSubmit = (data) => {
         //history.push('/covid-form')
@@ -293,24 +291,40 @@ const BackgroundVerification = (props) => {
     };
 
     const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
+    const validationNameNotRequired = Validation().validationNameNotRequired;
+
     const validationPh = Validation().validationPhone;
     const validationEmail = Validation().validationEmail;
     const validationLand = Validation().validationLandline;
     const validationDL = Validation().validationDrivingLicence;
     const validationPass = Validation().validationPassport;
     return (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div
+        <div>
+            {loadingBGV && (
+                <CircularProgress
+                    color="inherit"
                     style={{
-                        backgroundColor: "#F3F3F3",
-                        paddingBottom: "10px",
+                        color: "indigo",
+                        position: "fixed",
+                        bottom: "50%",
                     }}
-                >
-                    <BGVAppBar />
-                    <div style={{ marginTop: 50 }}>
-                        <div className="container">
-                            {/* <div className="form_header">
+                />
+            )}
+
+            {userInfoBGV && (
+                <>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div
+                            style={{
+                                backgroundColor: "#F3F3F3",
+                                paddingBottom: "10px",
+                            }}
+                        >
+                            <BGVAppBar />
+                            <div style={{ marginTop: 50 }}>
+                                <div className="container">
+                                    {/* <div className="form_header">
 
               <div className="company_info">
 
@@ -331,235 +345,345 @@ const BackgroundVerification = (props) => {
 
             </div> */}
 
-                            <section name="details-tableOne" className="abc">
-                                <Box
-                                    sx={{
-                                        bgcolor: "#cfe8fc",
-                                        height: "10vh",
-                                        fontSize: "5vh",
-                                        fontFamily: "Muller",
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    PERSONAL DETAILS
-                                </Box>
-                                <table className="table table-bordered table-hover">
-                                    <tbody>
-                                        <tr>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Applicant:First Name
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"first_name"}
-                                                    label={
-                                                        "Enter Your First Name"
-                                                    }
-                                                    validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.first_name
-                                                    }
-                                                />
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Middle Name
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"middle_name"}
-                                                    label={
-                                                        "Enter Your Middle Name"
-                                                    }
-                                                    //validation={validation}
+                                    <section
+                                        name="details-tableOne"
+                                        className="abc"
+                                    >
+                                        <Box
+                                            sx={{
+                                                bgcolor: "#cfe8fc",
+                                                height: "10vh",
+                                                fontSize: "5vh",
+                                                fontFamily: "Muller",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            PERSONAL DETAILS
+                                        </Box>
+                                        <table className="table table-bordered table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Applicant:First Name
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={"first_name"}
+                                                            label={
+                                                                "Enter Your First Name"
+                                                            }
+                                                            validation={
+                                                                validationName
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.first_name
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Middle Name
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={"middle_name"}
+                                                            label={
+                                                                "Enter Your Middle Name"
+                                                            }
+                                                            validation={
+                                                                validationNameNotRequired
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.middle_name
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Last Name
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={"last_name"}
+                                                            label={
+                                                                "Enter Your Last Name"
+                                                            }
+                                                            validation={
+                                                                validationName
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.last_name
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
 
-                                                    defaultValue={
-                                                        userInfoBGV.middle_name
-                                                    }
-                                                />
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Last Name
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"last_name"}
-                                                    label={
-                                                        "Enter Your Last Name"
-                                                    }
-                                                    validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.last_name
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
+                                                <tr>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Father's/Husband's First
+                                                        Name
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                "fathers_first_name"
+                                                            }
+                                                            label={
+                                                                "Father's Name"
+                                                            }
+                                                            validation={
+                                                                validationName
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.fathers_first_name
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Middle Name
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                " first_middle_name"
+                                                            }
+                                                            label={
+                                                                "Father's middle name"
+                                                            }
+                                                            validation={
+                                                                validationNameNotRequired
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.first_middle_name
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Last Name
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                "fathers_last_name"
+                                                            }
+                                                            label={
+                                                                "Father's last name"
+                                                            }
+                                                            validation={
+                                                                validationName
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.fathers_last_name
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
 
-                                        <tr>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Father's/Husband's First Name
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"fathers_first_name"}
-                                                    label={"Father's Name"}
-                                                    validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.fathers_first_name
-                                                    }
-                                                />
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Middle Name
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={" first_middle_name"}
-                                                    label={
-                                                        "Father's middle name"
-                                                    }
-                                                    defaultValue={
-                                                        userInfoBGV.first_middle_name
-                                                    }
-                                                />
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Last Name
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"fathers_last_name"}
-                                                    label={"Father's last name"}
-                                                    validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.fathers_last_name
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
+                                                <tr>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        DoB(dd/mm/yy)
+                                                    </td>
+                                                    <td>
+                                                        <DatePicker
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                "date_of_birth"
+                                                            }
+                                                            label={""}
+                                                            type={"date"}
+                                                            validation={
+                                                                validation
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.date_of_birth
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Gender
+                                                    </td>
 
-                                        <tr>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                DoB(dd/mm/yy)
-                                            </td>
-                                            <td>
-                                                <DatePicker
-                                                    formState={formState}
-                                                    name={"date_of_birth"}
-                                                    label={""}
-                                                    type={"date"}
-                                                    validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.date_of_birth
-                                                    }
-                                                />
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Gender
-                                            </td>
+                                                    <td>
+                                                        <InputRadioGroup
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={"gender"}
+                                                            labelGroup={null}
+                                                            label={[
+                                                                "Male",
+                                                                "Female",
+                                                            ]}
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.gender
+                                                            }
+                                                            defaultChecked={
+                                                                userInfo &&
+                                                                userInfoBGV.gender
+                                                            }
+                                                        />
+                                                    </td>
 
-                                            <td>
-                                                <InputRadioGroup
-                                                    formState={formState}
-                                                    name={"gender"}
-                                                    labelGroup={null}
-                                                    label={["Male", "Female"]}
-                                                    defaultValue={
-                                                        userInfoBGV.gender
-                                                    }
-                                                    defaultChecked={
-                                                        userInfoBGV.gender
-                                                    }
-                                                />
-                                            </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        DL number
+                                                    </td>
 
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                DL number
-                                            </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                "driving_license_no"
+                                                            }
+                                                            label={"DL Number"}
+                                                            validation={
+                                                                validationDL
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.driving_license_no
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
 
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"driving_license_no"}
-                                                    label={"DL Number"}
-                                                    validation={validationDL}
-                                                    defaultValue={
-                                                        userInfoBGV.driving_license_no
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Passport Number
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={"passport_no"}
-                                                    label={"Passport Number"}
-                                                    validation={validationPass}
-                                                    defaultValue={
-                                                        userInfoBGV.passport_no
-                                                    }
-                                                />
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Valid until
-                                            </td>
-                                            <td>
-                                                <DatePicker
-                                                    formState={formState}
-                                                    name={
-                                                        "passport_valid_until"
-                                                    }
-                                                    label={""}
-                                                    type={"date"}
-                                                    validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.passport_valid_until
-                                                    }
-                                                />
-                                                {/* <input
+                                                <tr>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Passport Number
+                                                    </td>
+                                                    <td>
+                                                        <TextAreaInput
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={"passport_no"}
+                                                            label={
+                                                                "Passport Number"
+                                                            }
+                                                            validation={
+                                                                validationPass
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.passport_no
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Valid until
+                                                    </td>
+                                                    <td>
+                                                        <DatePicker
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                "passport_valid_until"
+                                                            }
+                                                            label={""}
+                                                            type={"date"}
+                                                            validation={
+                                                                validation
+                                                            }
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.passport_valid_until
+                                                            }
+                                                        />
+                                                        {/* <input
                                                     type="date"
                                                     min="1950-01-01"
                                                     max="2050-01-01"
@@ -570,48 +694,7 @@ const BackgroundVerification = (props) => {
                                                     )}
                                                     defaultValue=
                                                 /> */}
-                                            </td>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Place of issue passport
-                                            </td>
-                                            <td>
-                                                <TextAreaInput
-                                                    formState={formState}
-                                                    name={
-                                                        "passport_issue_place"
-                                                    }
-                                                    label={"Place"}
-                                                    //validation={validation}
-                                                    defaultValue={
-                                                        userInfoBGV.passport_issue_place
-                                                    }
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <div className="container">
-                                <section name="details-tableTwo">
-                                    <div className="table-responsive">
-                                        <Box
-                                            sx={{
-                                                bgcolor: "#cfe8fc",
-                                                height: "10vh",
-                                                fontSize: "5vh",
-                                                fontFamily: "Muller",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            CONTACT DETAILS
-                                        </Box>
-                                        <table className="table table-bordered table-hover">
-                                            <tbody>
-                                                <tr>
+                                                    </td>
                                                     <td
                                                         className="text-center "
                                                         style={{
@@ -619,37 +702,7 @@ const BackgroundVerification = (props) => {
                                                                 "Muller",
                                                         }}
                                                     >
-                                                        Current Address
-                                                    </td>
-                                                    <td colSpan="4">
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "current_address"
-                                                            }
-                                                            label={
-                                                                "Current Address"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.current_address
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Duration of stay
+                                                        Place of issue passport
                                                     </td>
                                                     <td>
                                                         <TextAreaInput
@@ -657,1275 +710,689 @@ const BackgroundVerification = (props) => {
                                                                 formState
                                                             }
                                                             name={
-                                                                "duration_of_stay"
+                                                                "passport_issue_place"
                                                             }
-                                                            label={
-                                                                "Duration of Stay"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
+                                                            label={"Place"}
+                                                            //validation={validation}
                                                             defaultValue={
-                                                                userInfoBGV.duration_of_stay
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Contact - Mobile:
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact1_mobile_no"
-                                                            }
-                                                            label={
-                                                                "Mobile Number"
-                                                            }
-                                                            validation={
-                                                                validationPh
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact1_mobile_no
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Land line:
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact1_Land_Line_No"
-                                                            }
-                                                            label={
-                                                                "Landline Number"
-                                                            }
-                                                            validation={
-                                                                validationLand
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact1_Land_Line_No
+                                                                userInfoBGV &&
+                                                                userInfoBGV.passport_issue_place
                                                             }
                                                         />
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </section>
-                            </div>
+                                    </section>
 
-                            <div className="container">
-                                <section name="details-tableThree">
-                                    <div className="table-responsive">
-                                        <table className="table table-bordered table-hover">
-                                            <tbody>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Permanent Address
-                                                    </td>
-                                                    <td colSpan="4">
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "permanent_address"
-                                                            }
-                                                            label={
-                                                                "Permanent Address"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.permanent_address
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Contact - Mobile:
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact2_mobile_no"
-                                                            }
-                                                            label={
-                                                                "Mobile Number"
-                                                            }
-                                                            validation={
-                                                                validationPh
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact2_mobile_no
-                                                            }
-                                                        />
-                                                    </td>
-
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Land line:
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact2_Land_Line_No"
-                                                            }
-                                                            label={
-                                                                "LandLine Number"
-                                                            }
-                                                            validation={
-                                                                validationLand
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact2_Land_Line_No
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Email 1
-                                                    </td>
-                                                    <td colSpan="4">
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"email1"}
-                                                            label={
-                                                                "Primary Email"
-                                                            }
-                                                            validation={
-                                                                validationEmail
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.email1
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Email 2
-                                                    </td>
-                                                    <td colSpan="4">
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"email2"}
-                                                            label={
-                                                                "Secondary Email"
-                                                            }
-                                                            //validation={validationEmail}
-                                                            defaultValue={
-                                                                userInfoBGV.email2
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </section>
-                            </div>
-
-                            <div className="container">
-                                <section name="details-tableFour">
-                                    <div className="table-responsive">
-                                        <Box
-                                            sx={{
-                                                bgcolor: "#cfe8fc",
-                                                height: "10vh",
-                                                fontSize: "5vh",
-                                                fontFamily: "Muller",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            PROVIDE TWO REFERENCES YOU KNOW
-                                            PERSONALLY
-                                        </Box>
-                                        <table className="table table-bordered table-hover">
-                                            <tbody>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Name
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"name_first"}
-                                                            label={"Name"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.name_first
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"name_second"}
-                                                            label={"Name"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.name_second
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Designation
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "designation_first"
-                                                            }
-                                                            label={
-                                                                "Designation"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.designation_first
-                                                            }
-                                                        />
-                                                    </td>
-
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "designation_second"
-                                                            }
-                                                            label={
-                                                                "Designation"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.designation_second
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Company
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "company_first"
-                                                            }
-                                                            label={
-                                                                "1st Company "
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.company_first
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "company_second"
-                                                            }
-                                                            label={
-                                                                "2nd Company"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.company_second
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Mobile
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "mobile_first"
-                                                            }
-                                                            label={
-                                                                "Mobile Number"
-                                                            }
-                                                            validation={
-                                                                validationPh
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.mobile_first
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "mobile_second"
-                                                            }
-                                                            label={
-                                                                "Mobile Number"
-                                                            }
-                                                            validation={
-                                                                validationPh
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.mobile_second
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Email
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"email_first"}
-                                                            label={"Email"}
-                                                            validation={
-                                                                validationEmail
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.email_first
-                                                            }
-                                                        />
-                                                    </td>
-
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "email_second"
-                                                            }
-                                                            label={"Email"}
-                                                            validation={
-                                                                validationEmail
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.email_second
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Capacity in which they
-                                                        know you
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "capacity_first"
-                                                            }
-                                                            label={
-                                                                "Years Known"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.capacity_first
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "capacity_second"
-                                                            }
-                                                            label={
-                                                                "Years Known"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.capacity_second
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </section>
-                            </div>
-
-                            <div className="container">
-                                <section name="details-tableFive">
-                                    <div className="table-responsive">
-                                        <Box
-                                            sx={{
-                                                bgcolor: "#cfe8fc",
-                                                height: "10vh",
-                                                fontSize: "5vh",
-                                                fontFamily: "Muller",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            ACADEMIC BACKGROUND
-                                        </Box>
-                                        <table className="table table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <td></td>
-
-                                                    {/* <th className="text-center " style={{ fontFamily: 'Muller' }}>PG Degree</th> */}
-                                                    <td>
-                                                        <Box
-                                                            sx={{
-                                                                bgcolor:
-                                                                    "#cfe8fc",
-                                                                height: "5vh",
-                                                                fontSize: "3vh",
-                                                                fontFamily:
-                                                                    "Muller",
-                                                                textAlign:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            PG Degree
-                                                        </Box>
-                                                    </td>
-                                                    <td>
-                                                        <Box
-                                                            sx={{
-                                                                bgcolor:
-                                                                    "#cfe8fc",
-                                                                height: "5vh",
-                                                                fontSize: "3vh",
-                                                                fontFamily:
-                                                                    "Muller",
-                                                                textAlign:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            UG Degree
-                                                        </Box>
-                                                    </td>
-                                                    <td>
-                                                        <Box
-                                                            sx={{
-                                                                bgcolor:
-                                                                    "#cfe8fc",
-                                                                height: "5vh",
-                                                                fontSize: "3vh",
-                                                                fontFamily:
-                                                                    "Muller",
-                                                                textAlign:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            Diploma
-                                                        </Box>
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Name of the Institute /
-                                                        College
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "collegeOrInstitutePG"
-                                                            }
-                                                            label={
-                                                                "Institue Name"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.collegeOrInstitutePG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "collegeOrInstituteUG"
-                                                            }
-                                                            label={
-                                                                "Institue Name"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.collegeOrInstituteUG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "collegeOrInstituteTWELVE"
-                                                            }
-                                                            label={
-                                                                "Institue Name"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.collegeOrInstituteTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Location (City, State)
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"locationPG"}
-                                                            label={"Location"}
-                                                            defaultValue={
-                                                                userInfoBGV.locationPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        {" "}
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"locationUG"}
-                                                            label={"Location"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.locationUG
-                                                            }
-                                                        />{" "}
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "locationTWELVE"
-                                                            }
-                                                            label={"Location"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.locationTWELVE
-                                                            }
-                                                        />{" "}
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Affiliated University
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "affiliatedUniversityPG"
-                                                            }
-                                                            label={
-                                                                "Affiliated University"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.affiliatedUniversityPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "affiliatedUniversityUG"
-                                                            }
-                                                            label={
-                                                                "Affiliated University"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.affiliatedUniversityUG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "affiliatedUniversityTWELVE"
-                                                            }
-                                                            label={
-                                                                "Affiliated University"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.affiliatedUniversityTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        {" "}
-                                                        Contact Details
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact_detailsPG"
-                                                            }
-                                                            label={
-                                                                "Contact Number"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact_detailsPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact_detailsUG"
-                                                            }
-                                                            label={
-                                                                "Contact Number"
-                                                            }
-                                                            validation={
-                                                                validationPh
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact_detailsUG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "contact_detailsTWELVE"
-                                                            }
-                                                            label={
-                                                                "Contact Number"
-                                                            }
-                                                            validation={
-                                                                validationPh
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.contact_detailsTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Qualification (Type of
-                                                        Degree)
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "qualificationPG"
-                                                            }
-                                                            label={
-                                                                "Qualification"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.qualificationPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "qualificationUG"
-                                                            }
-                                                            label={
-                                                                "Qualification"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.qualificationUG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "qualificationTWELVE"
-                                                            }
-                                                            label={
-                                                                "Qualification"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.qualificationTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Specialization (Major
-                                                        Subject)
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "specializationPG"
-                                                            }
-                                                            label={
-                                                                "Specialization"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.specializationPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "specializationUG"
-                                                            }
-                                                            label={
-                                                                "Specialization"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.specializationUG
-                                                            }
-                                                        />{" "}
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "specializationTWELVE"
-                                                            }
-                                                            label={
-                                                                "Specialization"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.specializationTWELVE
-                                                            }
-                                                        />{" "}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Dates Attended
-                                                        (DD/MM/YYYY)
-                                                    </td>
-                                                    <td>
-                                                        <DatePicker
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "dates_attendedPG"
-                                                            }
-                                                            label={""}
-                                                            type={"date"}
-                                                            defaultValue={
-                                                                userInfoBGV.ates_attendedPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <DatePicker
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "dates_attendedUG"
-                                                            }
-                                                            label={""}
-                                                            type={"date"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.ates_attendedUG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <DatePicker
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "dates_attendedTWELVE"
-                                                            }
-                                                            label={""}
-                                                            type={"date"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.dates_attendedTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Registration Number /
-                                                        Enrollment No
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "registration_no_or_enrollment_noPG"
-                                                            }
-                                                            label={
-                                                                "Enrollment Number"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.registration_no_or_enrollment_noPG
-                                                            }
-                                                        />{" "}
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "registration_no_or_enrollment_noUG"
-                                                            }
-                                                            label={
-                                                                "Enrollment Number"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.registration_no_or_enrollment_noUG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "registration_no_or_enrollment_noTWELVE"
-                                                            }
-                                                            label={
-                                                                "Enrollment Number"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.registration_no_or_enrollment_noTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Marks Obtained / Class
-                                                        Obtained
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "marks_obtained_or_class_obtainedPG"
-                                                            }
-                                                            label={
-                                                                "Marks Obtained"
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.marks_obtained_or_class_obtainedPG
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "marks_obtained_or_class_obtainedUG"
-                                                            }
-                                                            label={
-                                                                "Marks Obtained"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.marks_obtained_or_class_obtainedUG
-                                                            }
-                                                        />{" "}
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "marks_obtained_or_class_obtainedTWELVE"
-                                                            }
-                                                            label={
-                                                                "Marks Obtained"
-                                                            }
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.marks_obtained_or_class_obtainedTWELVE
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </section>
-                            </div>
-
-                            <div className="container">
-                                <section name="details-tableSix">
-                                    <div className="table-responsive">
-                                        <Box
-                                            sx={{
-                                                bgcolor: "#cfe8fc",
-                                                height: "10vh",
-                                                fontSize: "5vh",
-                                                fontFamily: "Muller",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            Do you have any work experience
-                                        </Box>
-                                        <table className="table table-bordered table-hover">
-                                            <tr>
-                                                <td>
-                                                    <div className="btnSubmitcontainer">
-                                                        <div className="center">
-                                                            <InputRadioGroup
-                                                                defaultValue={
-                                                                    userInfoBGV.workEx
-                                                                }
-                                                                defaultChecked={
-                                                                    userInfoBGV.workEx
-                                                                }
-                                                                formState={
-                                                                    formState
-                                                                }
-                                                                name={"workEx"}
-                                                                labelGroup={
-                                                                    null
-                                                                }
-                                                                label={[
-                                                                    "Yes",
-                                                                    "No",
-                                                                ]}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </section>
-                            </div>
-
-                            {workEx === "Yes" ? (
-                                <>
                                     <div className="container">
-                                        <section name="details-tableSix">
-                                            <Box
-                                                sx={{
-                                                    bgcolor: "#cfe8fc",
-                                                    height: "10vh",
-                                                    fontSize: "5vh",
-                                                    fontFamily: "Muller",
-                                                    textAlign: "center",
-                                                }}
-                                            >
-                                                Employment History
-                                            </Box>
-
+                                        <section name="details-tableTwo">
                                             <div className="table-responsive">
+                                                <Box
+                                                    sx={{
+                                                        bgcolor: "#cfe8fc",
+                                                        height: "10vh",
+                                                        fontSize: "5vh",
+                                                        fontFamily: "Muller",
+                                                        textAlign: "center",
+                                                    }}
+                                                >
+                                                    CONTACT DETAILS
+                                                </Box>
+                                                <table className="table table-bordered table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Current Address
+                                                            </td>
+                                                            <td colSpan="4">
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "current_address"
+                                                                    }
+                                                                    label={
+                                                                        "Current Address"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.current_address
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Duration of stay
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "duration_of_stay"
+                                                                    }
+                                                                    label={
+                                                                        "Duration of Stay"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.duration_of_stay
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Contact -
+                                                                Mobile:
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "contact1_mobile_no"
+                                                                    }
+                                                                    label={
+                                                                        "Mobile Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationPh
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact1_mobile_no
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Land line:
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "contact1_Land_Line_No"
+                                                                    }
+                                                                    label={
+                                                                        "Landline Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationLand
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact1_Land_Line_No
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div className="container">
+                                        <section name="details-tableThree">
+                                            <div className="table-responsive">
+                                                <table className="table table-bordered table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Permanent
+                                                                Address
+                                                            </td>
+                                                            <td colSpan="4">
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "permanent_address"
+                                                                    }
+                                                                    label={
+                                                                        "Permanent Address"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.permanent_address
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Contact -
+                                                                Mobile:
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "contact2_mobile_no"
+                                                                    }
+                                                                    label={
+                                                                        "Mobile Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationPh
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact2_mobile_no
+                                                                    }
+                                                                />
+                                                            </td>
+
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Land line:
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "contact2_Land_Line_No"
+                                                                    }
+                                                                    label={
+                                                                        "LandLine Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationLand
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact2_Land_Line_No
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Email 1
+                                                            </td>
+                                                            <td colSpan="4">
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "email1"
+                                                                    }
+                                                                    label={
+                                                                        "Primary Email"
+                                                                    }
+                                                                    validation={
+                                                                        validationEmail
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.email1
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Email 2
+                                                            </td>
+                                                            <td colSpan="4">
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "email2"
+                                                                    }
+                                                                    label={
+                                                                        "Secondary Email"
+                                                                    }
+                                                                    //validation={validationEmail}
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.email2
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div className="container">
+                                        <section name="details-tableFour">
+                                            <div className="table-responsive">
+                                                <Box
+                                                    sx={{
+                                                        bgcolor: "#cfe8fc",
+                                                        height: "10vh",
+                                                        fontSize: "5vh",
+                                                        fontFamily: "Muller",
+                                                        textAlign: "center",
+                                                    }}
+                                                >
+                                                    PROVIDE TWO REFERENCES YOU
+                                                    KNOW PERSONALLY
+                                                </Box>
+                                                <table className="table table-bordered table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Name
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "name_first"
+                                                                    }
+                                                                    label={
+                                                                        "Name"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.name_first
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "name_second"
+                                                                    }
+                                                                    label={
+                                                                        "Name"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.name_second
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Designation
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "designation_first"
+                                                                    }
+                                                                    label={
+                                                                        "Designation"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.designation_first
+                                                                    }
+                                                                />
+                                                            </td>
+
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "designation_second"
+                                                                    }
+                                                                    label={
+                                                                        "Designation"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.designation_second
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Company
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "company_first"
+                                                                    }
+                                                                    label={
+                                                                        "1st Company "
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.company_first
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "company_second"
+                                                                    }
+                                                                    label={
+                                                                        "2nd Company"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.company_second
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Mobile
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "mobile_first"
+                                                                    }
+                                                                    label={
+                                                                        "Mobile Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationPh
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.mobile_first
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "mobile_second"
+                                                                    }
+                                                                    label={
+                                                                        "Mobile Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationPh
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.mobile_second
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Email
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "email_first"
+                                                                    }
+                                                                    label={
+                                                                        "Email"
+                                                                    }
+                                                                    validation={
+                                                                        validationEmail
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.email_first
+                                                                    }
+                                                                />
+                                                            </td>
+
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "email_second"
+                                                                    }
+                                                                    label={
+                                                                        "Email"
+                                                                    }
+                                                                    validation={
+                                                                        validationEmail
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.email_second
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Capacity in
+                                                                which they know
+                                                                you
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "capacity_first"
+                                                                    }
+                                                                    label={
+                                                                        "Years Known"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.capacity_first
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "capacity_second"
+                                                                    }
+                                                                    label={
+                                                                        "Years Known"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.capacity_second
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div className="container">
+                                        <section name="details-tableFive">
+                                            <div className="table-responsive">
+                                                <Box
+                                                    sx={{
+                                                        bgcolor: "#cfe8fc",
+                                                        height: "10vh",
+                                                        fontSize: "5vh",
+                                                        fontFamily: "Muller",
+                                                        textAlign: "center",
+                                                    }}
+                                                >
+                                                    ACADEMIC BACKGROUND
+                                                </Box>
                                                 <table className="table table-bordered table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
-                                                            <th>
+                                                            <td></td>
+
+                                                            {/* <th className="text-center " style={{ fontFamily: 'Muller' }}>PG Degree</th> */}
+                                                            <td>
                                                                 <Box
                                                                     sx={{
                                                                         bgcolor:
@@ -1939,10 +1406,10 @@ const BackgroundVerification = (props) => {
                                                                             "center",
                                                                     }}
                                                                 >
-                                                                    Employer 1
+                                                                    PG Degree
                                                                 </Box>
-                                                            </th>
-                                                            <th>
+                                                            </td>
+                                                            <td>
                                                                 <Box
                                                                     sx={{
                                                                         bgcolor:
@@ -1956,10 +1423,10 @@ const BackgroundVerification = (props) => {
                                                                             "center",
                                                                     }}
                                                                 >
-                                                                    Employer 2
+                                                                    UG Degree
                                                                 </Box>
-                                                            </th>
-                                                            <th>
+                                                            </td>
+                                                            <td>
                                                                 <Box
                                                                     sx={{
                                                                         bgcolor:
@@ -1973,9 +1440,9 @@ const BackgroundVerification = (props) => {
                                                                             "center",
                                                                     }}
                                                                 >
-                                                                    Employer 3
+                                                                    Diploma
                                                                 </Box>
-                                                            </th>
+                                                            </td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1987,10 +1454,9 @@ const BackgroundVerification = (props) => {
                                                                         "Muller",
                                                                 }}
                                                             >
-                                                                Employer
-                                                                (Provide Agency
-                                                                Details if on
-                                                                Contract)
+                                                                Name of the
+                                                                Institute /
+                                                                College
                                                             </td>
                                                             <td>
                                                                 <TextAreaInput
@@ -1998,18 +1464,14 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "agency_detailsE1"
+                                                                        "collegeOrInstitutePG"
                                                                     }
                                                                     label={
-                                                                        "Details"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                        "Institue Name"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.agency_detailsE1
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.collegeOrInstitutePG
                                                                     }
                                                                 />
                                                             </td>
@@ -2019,42 +1481,109 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "agency_detailsE2"
+                                                                        "collegeOrInstituteUG"
                                                                     }
                                                                     label={
-                                                                        "Details"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.agency_detailsE2
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "agency_detailsE3"
-                                                                    }
-                                                                    label={
-                                                                        "Details"
+                                                                        "Institue Name"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
                                                                     defaultValue={
-                                                                        userInfoBGV.agency_detailsE3
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.collegeOrInstituteUG
                                                                     }
                                                                 />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "collegeOrInstituteTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Institue Name"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.collegeOrInstituteTWELVE
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Location (City,
+                                                                State)
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "locationPG"
+                                                                    }
+                                                                    label={
+                                                                        "Location"
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.locationPG
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                {" "}
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "locationUG"
+                                                                    }
+                                                                    label={
+                                                                        "Location"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.locationUG
+                                                                    }
+                                                                />{" "}
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "locationTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Location"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.locationTWELVE
+                                                                    }
+                                                                />{" "}
                                                             </td>
                                                         </tr>
 
@@ -2066,28 +1595,23 @@ const BackgroundVerification = (props) => {
                                                                         "Muller",
                                                                 }}
                                                             >
-                                                                Location (City,
-                                                                State){" "}
+                                                                Affiliated
+                                                                University
                                                             </td>
-
                                                             <td>
                                                                 <TextAreaInput
                                                                     formState={
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "locationE1"
+                                                                        "affiliatedUniversityPG"
                                                                     }
                                                                     label={
-                                                                        "Location"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                        "Affiliated University"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.locationE1
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.affiliatedUniversityPG
                                                                     }
                                                                 />
                                                             </td>
@@ -2097,40 +1621,37 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "locationE2"
+                                                                        "affiliatedUniversityUG"
                                                                     }
                                                                     label={
-                                                                        "Location"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.locationE2
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "locationE3"
-                                                                    }
-                                                                    label={
-                                                                        "Location"
+                                                                        "Affiliated University"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.affiliatedUniversityUG
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "affiliatedUniversityTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Affiliated University"
+                                                                    }
+                                                                    validation={
+                                                                        validation
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.locationE3
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.affiliatedUniversityTWELVE
                                                                     }
                                                                 />
                                                             </td>
@@ -2152,18 +1673,14 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "contact_detailsE1"
+                                                                        "contact_detailsPG"
                                                                     }
                                                                     label={
-                                                                        "Contact Details"
-                                                                    }
-                                                                    //validation={validation, validationPh}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                        "Contact Number"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.contact_detailsE1
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact_detailsPG
                                                                     }
                                                                 />
                                                             </td>
@@ -2173,41 +1690,37 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "contact_detailsE2"
+                                                                        "contact_detailsUG"
                                                                     }
                                                                     label={
-                                                                        "Contact Details"
-                                                                    }
-                                                                    //validation={validationPh}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.contact_detailsE2
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                {" "}
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "contact_detailsE3"
-                                                                    }
-                                                                    label={
-                                                                        "Contact Details"
+                                                                        "Contact Number"
                                                                     }
                                                                     validation={
                                                                         validationPh
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact_detailsUG
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "contact_detailsTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Contact Number"
+                                                                    }
+                                                                    validation={
+                                                                        validationPh
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.contact_detailsE3
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.contact_detailsTWELVE
                                                                     }
                                                                 />
                                                             </td>
@@ -2220,73 +1733,63 @@ const BackgroundVerification = (props) => {
                                                                         "Muller",
                                                                 }}
                                                             >
-                                                                Employee Code
-                                                                (If applicable)
+                                                                Qualification
+                                                                (Type of Degree)
                                                             </td>
                                                             <td>
-                                                                {" "}
                                                                 <TextAreaInput
                                                                     formState={
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "employee_codeE1"
+                                                                        "qualificationPG"
                                                                     }
                                                                     label={
-                                                                        "Employee Code"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                        "Qualification"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.employee_codeE1
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.qualificationPG
                                                                     }
                                                                 />
                                                             </td>
                                                             <td>
-                                                                {" "}
                                                                 <TextAreaInput
                                                                     formState={
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "employee_codeE2"
+                                                                        "qualificationUG"
                                                                     }
                                                                     label={
-                                                                        "Employee Code"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.employee_codeE2
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                {" "}
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "employee_codeE3"
-                                                                    }
-                                                                    label={
-                                                                        "Employee Code"
+                                                                        "Qualification"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.qualificationUG
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "qualificationTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Qualification"
+                                                                    }
+                                                                    validation={
+                                                                        validation
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.employee_codeE3
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.qualificationTWELVE
                                                                     }
                                                                 />
                                                             </td>
@@ -2299,215 +1802,103 @@ const BackgroundVerification = (props) => {
                                                                         "Muller",
                                                                 }}
                                                             >
-                                                                Dates of
-                                                                Employment (DD
-                                                                MM YYYY){" "}
+                                                                Specialization
+                                                                (Major Subject)
                                                             </td>
                                                             <td>
-                                                                <Box
-                                                                    sx={{
-                                                                        bgcolor:
-                                                                            "#cfe8fc",
-                                                                        height: "4vh",
-                                                                        fontSize:
-                                                                            "3vh",
-                                                                        fontFamily:
-                                                                            "Muller",
-                                                                        textAlign:
-                                                                            "center",
-                                                                    }}
-                                                                >
-                                                                    Start date
-                                                                </Box>
-                                                                <DatePicker
+                                                                <TextAreaInput
                                                                     formState={
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "employment_start_dateE1"
+                                                                        "specializationPG"
                                                                     }
-                                                                    label={""}
-                                                                    type={
-                                                                        "date"
-                                                                    }
-                                                                    // validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                    label={
+                                                                        "Specialization"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.employment_start_dateE1
-                                                                    }
-                                                                />
-                                                                <Box
-                                                                    sx={{
-                                                                        bgcolor:
-                                                                            "#cfe8fc",
-                                                                        height: "4vh",
-                                                                        fontSize:
-                                                                            "3vh",
-                                                                        fontFamily:
-                                                                            "Muller",
-                                                                        textAlign:
-                                                                            "center",
-                                                                    }}
-                                                                >
-                                                                    End date
-                                                                </Box>
-                                                                <DatePicker
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        " employment_end_dateE1"
-                                                                    }
-                                                                    label={""}
-                                                                    type={
-                                                                        "date"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.employment_end_dateE1
-                                                                    }
-                                                                    //  validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.specializationPG
                                                                     }
                                                                 />
                                                             </td>
                                                             <td>
-                                                                <Box
-                                                                    sx={{
-                                                                        bgcolor:
-                                                                            "#cfe8fc",
-                                                                        height: "4vh",
-                                                                        fontSize:
-                                                                            "3vh",
-                                                                        fontFamily:
-                                                                            "Muller",
-                                                                        textAlign:
-                                                                            "center",
-                                                                    }}
-                                                                >
-                                                                    Start date
-                                                                </Box>
-                                                                <DatePicker
+                                                                <TextAreaInput
                                                                     formState={
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "employment_start_dateE2"
+                                                                        "specializationUG"
                                                                     }
-                                                                    label={""}
-                                                                    type={
-                                                                        "date"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.employment_start_dateE2
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                                <Box
-                                                                    sx={{
-                                                                        bgcolor:
-                                                                            "#cfe8fc",
-                                                                        height: "4vh",
-                                                                        fontSize:
-                                                                            "3vh",
-                                                                        fontFamily:
-                                                                            "Muller",
-                                                                        textAlign:
-                                                                            "center",
-                                                                    }}
-                                                                >
-                                                                    End date
-                                                                </Box>
-                                                                <DatePicker
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "employment_end_dateE2"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.employment_end_dateE2
-                                                                    }
-                                                                    label={""}
-                                                                    type={
-                                                                        "date"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <Box
-                                                                    sx={{
-                                                                        bgcolor:
-                                                                            "#cfe8fc",
-                                                                        height: "4vh",
-                                                                        fontSize:
-                                                                            "3vh",
-                                                                        fontFamily:
-                                                                            "Muller",
-                                                                        textAlign:
-                                                                            "center",
-                                                                    }}
-                                                                >
-                                                                    Start date
-                                                                </Box>
-                                                                <DatePicker
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "employment_start_dateE3"
-                                                                    }
-                                                                    label={""}
-                                                                    type={
-                                                                        "date"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.employment_start_dateE3
+                                                                    label={
+                                                                        "Specialization"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.specializationUG
                                                                     }
-                                                                />
-                                                                <Box
-                                                                    sx={{
-                                                                        bgcolor:
-                                                                            "#cfe8fc",
-                                                                        height: "4vh",
-                                                                        fontSize:
-                                                                            "3vh",
-                                                                        fontFamily:
-                                                                            "Muller",
-                                                                        textAlign:
-                                                                            "center",
-                                                                    }}
-                                                                >
-                                                                    End date
-                                                                </Box>
+                                                                />{" "}
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "specializationTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Specialization"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.specializationTWELVE
+                                                                    }
+                                                                />{" "}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Dates Attended
+                                                                (DD/MM/YYYY)
+                                                            </td>
+                                                            <td>
                                                                 <DatePicker
                                                                     formState={
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "employment_end_dateE3"
+                                                                        "dates_attendedPG"
+                                                                    }
+                                                                    label={""}
+                                                                    type={
+                                                                        "date"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.employment_end_dateE3
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.ates_attendedPG
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <DatePicker
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "dates_attendedUG"
                                                                     }
                                                                     label={""}
                                                                     type={
@@ -2516,8 +1907,30 @@ const BackgroundVerification = (props) => {
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.ates_attendedUG
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <DatePicker
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "dates_attendedTWELVE"
+                                                                    }
+                                                                    label={""}
+                                                                    type={
+                                                                        "date"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.dates_attendedTWELVE
                                                                     }
                                                                 />
                                                             </td>
@@ -2530,7 +1943,9 @@ const BackgroundVerification = (props) => {
                                                                         "Muller",
                                                                 }}
                                                             >
-                                                                Designation{" "}
+                                                                Registration
+                                                                Number /
+                                                                Enrollment No
                                                             </td>
                                                             <td>
                                                                 <TextAreaInput
@@ -2538,20 +1953,16 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "designationE1"
+                                                                        "registration_no_or_enrollment_noPG"
                                                                     }
                                                                     label={
-                                                                        "Designation"
+                                                                        "Enrollment Number"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.designationE1
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.registration_no_or_enrollment_noPG
                                                                     }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
+                                                                />{" "}
                                                             </td>
                                                             <td>
                                                                 <TextAreaInput
@@ -2559,116 +1970,37 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "designationE2"
+                                                                        "registration_no_or_enrollment_noUG"
                                                                     }
                                                                     label={
-                                                                        "Designation"
-                                                                    }
-                                                                    //validation={validation}
-                                                                    defaultValue={
-                                                                        userInfoBGV.designationE2
-                                                                    }
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "designationE3"
-                                                                    }
-                                                                    label={
-                                                                        "Designation"
-                                                                    }
-                                                                    validation={
-                                                                        validation
-                                                                    }
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.designationE3
-                                                                    }
-                                                                />
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
-                                                                Last Salary
-                                                                Drawn (CTC){" "}
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "last_salary_drawnE1"
-                                                                    }
-                                                                    label={
-                                                                        "Last Salary"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.last_salary_drawnE1
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "last_salary_drawnE2"
-                                                                    }
-                                                                    label={
-                                                                        "Last Salary"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.last_salary_drawnE2
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "last_salary_drawnE3"
-                                                                    }
-                                                                    label={
-                                                                        "Last Salary"
+                                                                        "Enrollment Number"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.last_salary_drawnE3
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.registration_no_or_enrollment_noUG
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "registration_no_or_enrollment_noTWELVE"
+                                                                    }
+                                                                    label={
+                                                                        "Enrollment Number"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.registration_no_or_enrollment_noTWELVE
                                                                     }
                                                                 />
                                                             </td>
@@ -2681,8 +2013,8 @@ const BackgroundVerification = (props) => {
                                                                         "Muller",
                                                                 }}
                                                             >
-                                                                Reason for
-                                                                Leaving{" "}
+                                                                Marks Obtained /
+                                                                Class Obtained
                                                             </td>
                                                             <td>
                                                                 <TextAreaInput
@@ -2690,18 +2022,14 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "reason_for_leavingE1"
+                                                                        "marks_obtained_or_class_obtainedPG"
                                                                     }
                                                                     label={
-                                                                        "Reason for leaving"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
+                                                                        "Marks Obtained"
                                                                     }
                                                                     defaultValue={
-                                                                        userInfoBGV.reason_for_leavingE1
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.marks_obtained_or_class_obtainedPG
                                                                     }
                                                                 />
                                                             </td>
@@ -2711,54 +2039,19 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "reason_for_leavingE2"
+                                                                        "marks_obtained_or_class_obtainedUG"
                                                                     }
                                                                     label={
-                                                                        "Reason for leaving"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.reason_for_leavingE2
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "reason_for_leavingE3"
-                                                                    }
-                                                                    label={
-                                                                        "Reason for leaving"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.reason_for_leavingE3
+                                                                        "Marks Obtained"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.marks_obtained_or_class_obtainedUG
                                                                     }
-                                                                />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
-                                                                Reporting
-                                                                Manager{" "}
+                                                                />{" "}
                                                             </td>
                                                             <td>
                                                                 <TextAreaInput
@@ -2766,136 +2059,17 @@ const BackgroundVerification = (props) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "reporting_managerE1"
+                                                                        "marks_obtained_or_class_obtainedTWELVE"
                                                                     }
                                                                     label={
-                                                                        "Reporting Manager"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.reporting_managerE1
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "reporting_managerE2"
-                                                                    }
-                                                                    label={
-                                                                        "Reporting Manager"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    defaultValue={
-                                                                        userInfoBGV.reporting_managerE2
-                                                                    }
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "reporting_managerE3"
-                                                                    }
-                                                                    label={
-                                                                        "Reporting Manager"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.reporting_managerE3
+                                                                        "Marks Obtained"
                                                                     }
                                                                     validation={
                                                                         validation
                                                                     }
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
-                                                                HR Manager
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "hr_managerE1"
-                                                                    }
-                                                                    label={
-                                                                        "HR MANAGER"
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
                                                                     defaultValue={
-                                                                        userInfoBGV.hr_managerE1
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "hr_managerE2"
-                                                                    }
-                                                                    label={
-                                                                        "HR MANAGER"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.hr_managerE2
-                                                                    }
-                                                                    //validation={validation}
-
-                                                                    placeholder={
-                                                                        ""
-                                                                    }
-                                                                />
-                                                            </td>
-                                                            <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
-                                                                    }
-                                                                    name={
-                                                                        "hr_managerE3"
-                                                                    }
-                                                                    label={
-                                                                        "HR MANAGER"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV.hr_managerE3
-                                                                    }
-                                                                    validation={
-                                                                        validation
-                                                                    }
-                                                                    placeholder={
-                                                                        ""
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.marks_obtained_or_class_obtainedTWELVE
                                                                     }
                                                                 />
                                                             </td>
@@ -2907,313 +2081,1475 @@ const BackgroundVerification = (props) => {
                                     </div>
 
                                     <div className="container">
-                                        <div className="contactEmp">
+                                        <section name="details-tableSix">
+                                            <div className="table-responsive">
+                                                <Box
+                                                    sx={{
+                                                        bgcolor: "#cfe8fc",
+                                                        height: "10vh",
+                                                        fontSize: "5vh",
+                                                        fontFamily: "Muller",
+                                                        textAlign: "center",
+                                                    }}
+                                                >
+                                                    Do you have any work
+                                                    experience
+                                                </Box>
+                                                <table className="table table-bordered table-hover">
+                                                    <tr>
+                                                        <td>
+                                                            <div className="btnSubmitcontainer">
+                                                                <div className="center">
+                                                                    <InputRadioGroup
+                                                                        defaultValue={
+                                                                            userInfoBGV &&
+                                                                            userInfoBGV.workEx
+                                                                                ? "Yes"
+                                                                                : "No"
+                                                                        }
+                                                                        formState={
+                                                                            formState
+                                                                        }
+                                                                        name={
+                                                                            "workEx"
+                                                                        }
+                                                                        labelGroup={
+                                                                            null
+                                                                        }
+                                                                        label={[
+                                                                            "Yes",
+                                                                            "No",
+                                                                        ]}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    {workEx === "Yes" ? (
+                                        <>
+                                            <div className="container">
+                                                <section name="details-tableSix">
+                                                    <Box
+                                                        sx={{
+                                                            bgcolor: "#cfe8fc",
+                                                            height: "10vh",
+                                                            fontSize: "5vh",
+                                                            fontFamily:
+                                                                "Muller",
+                                                            textAlign: "center",
+                                                        }}
+                                                    >
+                                                        Employment History
+                                                    </Box>
+
+                                                    <div className="table-responsive">
+                                                        <table className="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "5vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            Employer
+                                                                            1
+                                                                        </Box>
+                                                                    </th>
+                                                                    <th>
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "5vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            Employer
+                                                                            2
+                                                                        </Box>
+                                                                    </th>
+                                                                    <th>
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "5vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            Employer
+                                                                            3
+                                                                        </Box>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Employer
+                                                                        (Provide
+                                                                        Agency
+                                                                        Details
+                                                                        if on
+                                                                        Contract)
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "agency_detailsE1"
+                                                                            }
+                                                                            label={
+                                                                                "Details"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.agency_detailsE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "agency_detailsE2"
+                                                                            }
+                                                                            label={
+                                                                                "Details"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.agency_detailsE2
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "agency_detailsE3"
+                                                                            }
+                                                                            label={
+                                                                                "Details"
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.agency_detailsE3
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Location
+                                                                        (City,
+                                                                        State){" "}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "locationE1"
+                                                                            }
+                                                                            label={
+                                                                                "Location"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.locationE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "locationE2"
+                                                                            }
+                                                                            label={
+                                                                                "Location"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.locationE2
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "locationE3"
+                                                                            }
+                                                                            label={
+                                                                                "Location"
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.locationE3
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        {" "}
+                                                                        Contact
+                                                                        Details
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "contact_detailsE1"
+                                                                            }
+                                                                            label={
+                                                                                "Contact Details"
+                                                                            }
+                                                                            //validation={validation, validationPh}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.contact_detailsE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "contact_detailsE2"
+                                                                            }
+                                                                            label={
+                                                                                "Contact Details"
+                                                                            }
+                                                                            //validation={validationPh}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.contact_detailsE2
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        {" "}
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "contact_detailsE3"
+                                                                            }
+                                                                            label={
+                                                                                "Contact Details"
+                                                                            }
+                                                                            validation={
+                                                                                validationPh
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.contact_detailsE3
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Employee
+                                                                        Code (If
+                                                                        applicable)
+                                                                    </td>
+                                                                    <td>
+                                                                        {" "}
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employee_codeE1"
+                                                                            }
+                                                                            label={
+                                                                                "Employee Code"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employee_codeE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        {" "}
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employee_codeE2"
+                                                                            }
+                                                                            label={
+                                                                                "Employee Code"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employee_codeE2
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        {" "}
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employee_codeE3"
+                                                                            }
+                                                                            label={
+                                                                                "Employee Code"
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employee_codeE3
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Dates of
+                                                                        Employment
+                                                                        (DD MM
+                                                                        YYYY){" "}
+                                                                    </td>
+                                                                    <td>
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "4vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            Start
+                                                                            date
+                                                                        </Box>
+                                                                        <DatePicker
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employment_start_dateE1"
+                                                                            }
+                                                                            label={
+                                                                                ""
+                                                                            }
+                                                                            type={
+                                                                                "date"
+                                                                            }
+                                                                            // validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employment_start_dateE1
+                                                                            }
+                                                                        />
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "4vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            End
+                                                                            date
+                                                                        </Box>
+                                                                        <DatePicker
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                " employment_end_dateE1"
+                                                                            }
+                                                                            label={
+                                                                                ""
+                                                                            }
+                                                                            type={
+                                                                                "date"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employment_end_dateE1
+                                                                            }
+                                                                            //  validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "4vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            Start
+                                                                            date
+                                                                        </Box>
+                                                                        <DatePicker
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employment_start_dateE2"
+                                                                            }
+                                                                            label={
+                                                                                ""
+                                                                            }
+                                                                            type={
+                                                                                "date"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employment_start_dateE2
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "4vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            End
+                                                                            date
+                                                                        </Box>
+                                                                        <DatePicker
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employment_end_dateE2"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employment_end_dateE2
+                                                                            }
+                                                                            label={
+                                                                                ""
+                                                                            }
+                                                                            type={
+                                                                                "date"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "4vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            Start
+                                                                            date
+                                                                        </Box>
+                                                                        <DatePicker
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employment_start_dateE3"
+                                                                            }
+                                                                            label={
+                                                                                ""
+                                                                            }
+                                                                            type={
+                                                                                "date"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employment_start_dateE3
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                        <Box
+                                                                            sx={{
+                                                                                bgcolor:
+                                                                                    "#cfe8fc",
+                                                                                height: "4vh",
+                                                                                fontSize:
+                                                                                    "3vh",
+                                                                                fontFamily:
+                                                                                    "Muller",
+                                                                                textAlign:
+                                                                                    "center",
+                                                                            }}
+                                                                        >
+                                                                            End
+                                                                            date
+                                                                        </Box>
+                                                                        <DatePicker
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "employment_end_dateE3"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.employment_end_dateE3
+                                                                            }
+                                                                            label={
+                                                                                ""
+                                                                            }
+                                                                            type={
+                                                                                "date"
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Designation{" "}
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "designationE1"
+                                                                            }
+                                                                            label={
+                                                                                "Designation"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.designationE1
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "designationE2"
+                                                                            }
+                                                                            label={
+                                                                                "Designation"
+                                                                            }
+                                                                            //validation={validation}
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.designationE2
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "designationE3"
+                                                                            }
+                                                                            label={
+                                                                                "Designation"
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.designationE3
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Last
+                                                                        Salary
+                                                                        Drawn
+                                                                        (CTC){" "}
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "last_salary_drawnE1"
+                                                                            }
+                                                                            label={
+                                                                                "Last Salary"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.last_salary_drawnE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "last_salary_drawnE2"
+                                                                            }
+                                                                            label={
+                                                                                "Last Salary"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.last_salary_drawnE2
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "last_salary_drawnE3"
+                                                                            }
+                                                                            label={
+                                                                                "Last Salary"
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.last_salary_drawnE3
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Reason
+                                                                        for
+                                                                        Leaving{" "}
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "reason_for_leavingE1"
+                                                                            }
+                                                                            label={
+                                                                                "Reason for leaving"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.reason_for_leavingE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "reason_for_leavingE2"
+                                                                            }
+                                                                            label={
+                                                                                "Reason for leaving"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.reason_for_leavingE2
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "reason_for_leavingE3"
+                                                                            }
+                                                                            label={
+                                                                                "Reason for leaving"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.reason_for_leavingE3
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        Reporting
+                                                                        Manager{" "}
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "reporting_managerE1"
+                                                                            }
+                                                                            label={
+                                                                                "Reporting Manager"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.reporting_managerE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "reporting_managerE2"
+                                                                            }
+                                                                            label={
+                                                                                "Reporting Manager"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.reporting_managerE2
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "reporting_managerE3"
+                                                                            }
+                                                                            label={
+                                                                                "Reporting Manager"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.reporting_managerE3
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        className="text-center "
+                                                                        style={{
+                                                                            fontFamily:
+                                                                                "Muller",
+                                                                        }}
+                                                                    >
+                                                                        HR
+                                                                        Manager
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "hr_managerE1"
+                                                                            }
+                                                                            label={
+                                                                                "HR MANAGER"
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.hr_managerE1
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "hr_managerE2"
+                                                                            }
+                                                                            label={
+                                                                                "HR MANAGER"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.hr_managerE2
+                                                                            }
+                                                                            //validation={validation}
+
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <TextAreaInput
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "hr_managerE3"
+                                                                            }
+                                                                            label={
+                                                                                "HR MANAGER"
+                                                                            }
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.hr_managerE3
+                                                                            }
+                                                                            validation={
+                                                                                validation
+                                                                            }
+                                                                            placeholder={
+                                                                                ""
+                                                                            }
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </section>
+                                            </div>
+
+                                            <div className="container">
+                                                <div className="contactEmp">
+                                                    <p
+                                                        className="text-center "
+                                                        style={{
+                                                            fontFamily:
+                                                                "Muller",
+                                                        }}
+                                                    >
+                                                        Whether to contact the
+                                                        current employer
+                                                    </p>
+                                                    <div
+                                                        style={{
+                                                            display: "flex",
+                                                            justifyContent:
+                                                                "spaceAround",
+                                                        }}
+                                                    >
+                                                        <InputRadioGroup
+                                                            formState={
+                                                                formState
+                                                            }
+                                                            name={
+                                                                "whether_to_contact_the_current_employer"
+                                                            }
+                                                            labelGroup={null}
+                                                            label={[
+                                                                "Yes",
+                                                                "No",
+                                                            ]}
+                                                            defaultValue={
+                                                                userInfoBGV &&
+                                                                userInfoBGV.whether_to_contact_the_current_employer
+                                                                    ? "Yes"
+                                                                    : "No"
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : null}
+
+                                    <hr></hr>
+
+                                    <div className="container">
+                                        <Box
+                                            sx={{
+                                                bgcolor: "#cfe8fc",
+                                                height: "7vh",
+                                                fontSize: "4vh",
+                                                fontFamily: "Muller",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Declaration
+                                        </Box>
+                                        <section name="details-tableSeven">
                                             <p
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Whether to contact the current
-                                                employer
-                                            </p>
-                                            <div
                                                 style={{
-                                                    display: "flex",
-                                                    justifyContent:
-                                                        "spaceAround",
+                                                    fontFamily: "ubuntu",
+                                                    fontSize: 20,
                                                 }}
                                             >
-                                                <InputRadioGroup
-                                                    formState={formState}
-                                                    name={
-                                                        "whether_to_contact_the_current_employer"
-                                                    }
-                                                    labelGroup={null}
-                                                    label={["Yes", "No"]}
-                                                    defaultValue={
-                                                        userInfoBGV.whether_to_contact_the_current_employer
-                                                    }
-                                                />
+                                                I hereby authorize ASDintech
+                                                Services Pvt. Ltd. (or a third
+                                                party agent appointed by the
+                                                Company) to contact any former
+                                                employers as indicated above and
+                                                carry out all Background Checks
+                                                not restricted to education and
+                                                employment deemed appropriate
+                                                through this selection
+                                                procedure. I authorize former
+                                                employers, agencies, educational
+                                                institutes etc. to release any
+                                                information pertaining to my
+                                                employment/education and I
+                                                release them from any liability
+                                                in doing so.
+                                            </p>
+                                            <p
+                                                style={{
+                                                    fontFamily: "ubuntu",
+                                                    fontSize: 20,
+                                                }}
+                                            >
+                                                I confirm that the above
+                                                information is correct to the
+                                                best of my knowledge and I
+                                                understand that any
+                                                misrepresentation of information
+                                                on this application form may, in
+                                                the event of my obtaining
+                                                employment, result in action
+                                                based on company policy.
+                                            </p>
+                                            <hr />
+                                            <Box
+                                                sx={{
+                                                    bgcolor: "#cfe8fc",
+                                                    height: "7vh",
+                                                    fontSize: "4vh",
+                                                    fontFamily: "Muller",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Thankyou
+                                            </Box>
+
+                                            <div className="table-responsive">
+                                                <table className="table table-borderless table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Full Name:
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "full_name"
+                                                                    }
+                                                                    label={
+                                                                        "Full Name"
+                                                                    }
+                                                                    validation={
+                                                                        validationName
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.full_name
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Place:{" "}
+                                                            </td>
+                                                            <td>
+                                                                <TextAreaInput
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "place"
+                                                                    }
+                                                                    label={
+                                                                        "Place"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.place
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Signature:{" "}
+                                                            </td>
+                                                            <td>
+                                                                {" "}
+                                                                <FilePicker
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "signature"
+                                                                    }
+                                                                    //label={'signature'}
+
+                                                                    type={
+                                                                        "file"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.signature
+                                                                    }
+                                                                />
+                                                            </td>
+                                                            <td
+                                                                className="text-center "
+                                                                style={{
+                                                                    fontFamily:
+                                                                        "Muller",
+                                                                }}
+                                                            >
+                                                                Date:{" "}
+                                                            </td>
+                                                            <td>
+                                                                <DatePicker
+                                                                    formState={
+                                                                        formState
+                                                                    }
+                                                                    name={
+                                                                        "date"
+                                                                    }
+                                                                    //label={"date"}
+                                                                    type={
+                                                                        "date"
+                                                                    }
+                                                                    validation={
+                                                                        validation
+                                                                    }
+                                                                    defaultValue={
+                                                                        userInfoBGV &&
+                                                                        userInfoBGV.date
+                                                                    }
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                        </div>
+                                        </section>
                                     </div>
-                                </>
-                            ) : null}
 
-                            <hr></hr>
-
-                            <div className="container">
-                                <Box
-                                    sx={{
-                                        bgcolor: "#cfe8fc",
-                                        height: "7vh",
-                                        fontSize: "4vh",
-                                        fontFamily: "Muller",
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    Declaration
-                                </Box>
-                                <section name="details-tableSeven">
-                                    <p
-                                        style={{
-                                            fontFamily: "ubuntu",
-                                            fontSize: 20,
-                                        }}
-                                    >
-                                        I hereby authorize ASDintech Services
-                                        Pvt. Ltd. (or a third party agent
-                                        appointed by the Company) to contact any
-                                        former employers as indicated above and
-                                        carry out all Background Checks not
-                                        restricted to education and employment
-                                        deemed appropriate through this
-                                        selection procedure. I authorize former
-                                        employers, agencies, educational
-                                        institutes etc. to release any
-                                        information pertaining to my
-                                        employment/education and I release them
-                                        from any liability in doing so.
-                                    </p>
-                                    <p
-                                        style={{
-                                            fontFamily: "ubuntu",
-                                            fontSize: 20,
-                                        }}
-                                    >
-                                        I confirm that the above information is
-                                        correct to the best of my knowledge and
-                                        I understand that any misrepresentation
-                                        of information on this application form
-                                        may, in the event of my obtaining
-                                        employment, result in action based on
-                                        company policy.
-                                    </p>
-                                    <hr />
-                                    <Box
-                                        sx={{
-                                            bgcolor: "#cfe8fc",
-                                            height: "7vh",
-                                            fontSize: "4vh",
-                                            fontFamily: "Muller",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        Thankyou
-                                    </Box>
-
-                                    <div className="table-responsive">
-                                        <table className="table table-borderless table-hover">
-                                            <tbody>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Full Name:
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"full_name"}
-                                                            label={"Full Name"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.full_name
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Place:{" "}
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"place"}
-                                                            label={"Place"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.place
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Signature:{" "}
-                                                    </td>
-                                                    <td>
-                                                        {" "}
-                                                        <FilePicker
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"signature"}
-                                                            //label={'signature'}
-
-                                                            type={"file"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.signature
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Date:{" "}
-                                                    </td>
-                                                    <td>
-                                                        <DatePicker
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"date"}
-                                                            //label={"date"}
-                                                            type={"date"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV.date
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div className="container">
+                                        <Box
+                                            sx={{
+                                                bgcolor: "#cfe8fc",
+                                                height: "7vh",
+                                                fontSize: "4vh",
+                                                fontFamily: "Muller",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Documents Needed
+                                        </Box>
+                                        <section name="details-tableEight">
+                                            <ul
+                                                style={{
+                                                    listStyleType: "none",
+                                                }}
+                                            >
+                                                <li
+                                                    style={{
+                                                        fontFamily: "ubuntu",
+                                                        fontSize: 20,
+                                                        textAlign: "left",
+                                                    }}
+                                                >
+                                                    {" "}
+                                                    •⁍Completed & Signed
+                                                    Application Form
+                                                </li>
+                                                <li
+                                                    style={{
+                                                        fontFamily: "ubuntu",
+                                                        fontSize: 20,
+                                                        textAlign: "left",
+                                                    }}
+                                                >
+                                                    •⁍Relevant Education
+                                                    Certificates and marks
+                                                    card(10th, 12th, UG, PG)
+                                                </li>
+                                                <li
+                                                    style={{
+                                                        fontFamily: "ubuntu",
+                                                        fontSize: 20,
+                                                        textAlign: "left",
+                                                    }}
+                                                >
+                                                    {" "}
+                                                    •⁍Experience Certificate or
+                                                    Relieving Certificate ( last
+                                                    2 employers not including
+                                                    current )
+                                                </li>
+                                                <li
+                                                    style={{
+                                                        fontFamily: "ubuntu",
+                                                        fontSize: 20,
+                                                        textAlign: "left",
+                                                    }}
+                                                >
+                                                    {" "}
+                                                    •⁍ Proof of Address &
+                                                    Identity: Government issued
+                                                    ID or Passport Copy or Pan
+                                                    Card
+                                                </li>
+                                                <li
+                                                    style={{
+                                                        fontFamily: "ubuntu",
+                                                        fontSize: 20,
+                                                        textAlign: "left",
+                                                    }}
+                                                >
+                                                    •⁍Pay slip of last 3 months
+                                                    and Revised CTC letter
+                                                </li>
+                                            </ul>
+                                        </section>
                                     </div>
-                                </section>
-                            </div>
+                                </div>
 
-                            <div className="container">
-                                <Box
-                                    sx={{
-                                        bgcolor: "#cfe8fc",
-                                        height: "7vh",
-                                        fontSize: "4vh",
-                                        fontFamily: "Muller",
-                                        textAlign: "center",
-                                    }}
+                                <LoadingButton
+                                    type="submit"
+                                    variant="contained"
+                                    size="large"
+                                    loading={loading}
                                 >
-                                    Documents Needed
-                                </Box>
-                                <section name="details-tableEight">
-                                    <ul style={{ listStyleType: "none" }}>
-                                        <li
-                                            style={{
-                                                fontFamily: "ubuntu",
-                                                fontSize: 20,
-                                                textAlign: "left",
-                                            }}
-                                        >
-                                            {" "}
-                                            •⁍Completed & Signed Application
-                                            Form
-                                        </li>
-                                        <li
-                                            style={{
-                                                fontFamily: "ubuntu",
-                                                fontSize: 20,
-                                                textAlign: "left",
-                                            }}
-                                        >
-                                            •⁍Relevant Education Certificates
-                                            and marks card(10th, 12th, UG, PG)
-                                        </li>
-                                        <li
-                                            style={{
-                                                fontFamily: "ubuntu",
-                                                fontSize: 20,
-                                                textAlign: "left",
-                                            }}
-                                        >
-                                            {" "}
-                                            •⁍Experience Certificate or
-                                            Relieving Certificate ( last 2
-                                            employers not including current )
-                                        </li>
-                                        <li
-                                            style={{
-                                                fontFamily: "ubuntu",
-                                                fontSize: 20,
-                                                textAlign: "left",
-                                            }}
-                                        >
-                                            {" "}
-                                            •⁍ Proof of Address & Identity:
-                                            Government issued ID or Passport
-                                            Copy or Pan Card
-                                        </li>
-                                        <li
-                                            style={{
-                                                fontFamily: "ubuntu",
-                                                fontSize: 20,
-                                                textAlign: "left",
-                                            }}
-                                        >
-                                            •⁍Pay slip of last 3 months and
-                                            Revised CTC letter
-                                        </li>
-                                    </ul>
-                                </section>
+                                    <strong>Log In</strong>
+                                </LoadingButton>
+                                {error && (
+                                    <Snackbars
+                                        value={true}
+                                        severity={"error"}
+                                        message={error}
+                                    />
+                                )}
+                                {userInfo && (
+                                    <Snackbars
+                                        value={true}
+                                        severity={"success"}
+                                        message={"Login Success"}
+                                    />
+                                )}
                             </div>
                         </div>
-
-                        <LoadingButton
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            loading={loading}
-                        >
-                            <strong>Log In</strong>
-                        </LoadingButton>
-                        {error && (
-                            <Snackbars
-                                value={true}
-                                severity={"error"}
-                                message={error}
-                            />
-                        )}
-                        {userInfo && (
-                            <Snackbars
-                                value={true}
-                                severity={"success"}
-                                message={"Login Success"}
-                            />
-                        )}
-                    </div>
-                </div>
-            </form>
-        </>
+                    </form>
+                </>
+            )}
+        </div>
     );
 };
 

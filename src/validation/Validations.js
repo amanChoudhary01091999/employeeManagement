@@ -12,6 +12,30 @@ function Validation() {
                 message: "min",
             },
         },
+        validationName: {
+            required: {
+                value: true,
+                message: "this field is required",
+            },
+            minLength: {
+                value: 3,
+                message: "min",
+            },
+            pattern: {
+                value: new RegExp(/^[a-zA-Z ]*$/),
+                message: "name is Not Valid",
+            },
+        },
+        validationNameNotRequired: {
+            minLength: {
+                value: 3,
+                message: "min",
+            },
+            pattern: {
+                value: new RegExp(/^[a-zA-Z ]*$/),
+                message: "name is Not Valid",
+            },
+        },
         validationDegree: {
             required: {
                 value: true,
@@ -30,10 +54,6 @@ function Validation() {
             maxLength: {
                 value: 100,
                 message: "Max length is 100",
-            },
-            pattern: {
-                value: new RegExp(/^[a-zA-Z ]*$/),
-                message: "name is Not Valid",
             },
         },
         validationAreaInput: {

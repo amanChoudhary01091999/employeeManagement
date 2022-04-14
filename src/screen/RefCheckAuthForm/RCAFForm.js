@@ -12,6 +12,8 @@ import { LoadingButton } from "@mui/lab";
 import Snackbars from "../../components/Snackbar";
 import { useNavigate } from "react-router-dom";
 import RefCheckAppBar from "./RefCheckAppBar";
+import { RCAFGetRequest } from "../../actions/form.get.action";
+import { CircularProgress } from "@mui/material";
 
 function RCAFForm() {
     const formState = useForm();
@@ -19,6 +21,10 @@ function RCAFForm() {
     const navigate = useNavigate();
     const RCFState = useSelector((state) => state.RCAFReducer);
     const { loading, error, userInfo } = RCFState;
+
+    const RCAFGetState = useSelector((state) => state.RCAFGetReducer);
+    const { loadingRCAF, errorRCAF, userInfoRCAF } = RCAFGetState;
+
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
@@ -144,47 +150,75 @@ function RCAFForm() {
         dispatch(RCAFPostRequest(RCAFobjectAPI, navigate));
     };
 
+    React.useEffect(() => {
+        dispatch(RCAFGetRequest());
+    }, []);
+
     return (
-        <>
-            <div style={{ backgroundColor: "#F3F3F3" }}>
-                <RefCheckAppBar />
-                <div className="mx-5">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="form-group">
-                            <RAFCHeading formState={formState} />
-                            <RCAFPart1 formState={formState} />
-                            <RCAFPart2 formState={formState} number={"1"} />
-                            <RCAFPart2 formState={formState} number={"2"} />
-                            <RCAFPart2 formState={formState} number={"3"} />
-                            <RAFCPart3
-                                formState={formState}
-                                number={"0"}
-                                stateOfEmployer={"current"}
-                            />
-                            <RAFCPart3
-                                formState={formState}
-                                number={"1"}
-                                stateOfEmployer={"previous"}
-                            />
-                            <RAFCPart3
-                                formState={formState}
-                                number={"2"}
-                                stateOfEmployer={"previous"}
-                            />
-                            <RCAFPart4 formState={formState} />
+        <div>
+            {loadingRCAF && (
+                <CircularProgress
+                    color="inherit"
+                    style={{
+                        color: "indigo",
+                        position: "fixed",
+                        bottom: "50%",
+                    }}
+                />
+            )}
+
+            {userInfoRCAF && (
+                <>
+                    <div style={{ backgroundColor: "#F3F3F3" }}>
+                        <RefCheckAppBar />
+                        <div className="mx-5">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="form-group">
+                                    <RAFCHeading formState={formState} />
+                                    <RCAFPart1 formState={formState} />
+                                    <RCAFPart2
+                                        formState={formState}
+                                        number={"1"}
+                                    />
+                                    <RCAFPart2
+                                        formState={formState}
+                                        number={"2"}
+                                    />
+                                    <RCAFPart2
+                                        formState={formState}
+                                        number={"3"}
+                                    />
+                                    <RAFCPart3
+                                        formState={formState}
+                                        number={"0"}
+                                        stateOfEmployer={"current"}
+                                    />
+                                    <RAFCPart3
+                                        formState={formState}
+                                        number={"1"}
+                                        stateOfEmployer={"previous"}
+                                    />
+                                    <RAFCPart3
+                                        formState={formState}
+                                        number={"2"}
+                                        stateOfEmployer={"previous"}
+                                    />
+                                    <RCAFPart4 formState={formState} />
+                                </div>
+                                <LoadingButton
+                                    type="submit"
+                                    variant="contained"
+                                    size="large"
+                                    loading={loading}
+                                >
+                                    <strong>Submit</strong>
+                                </LoadingButton>
+                            </form>
                         </div>
-                        <LoadingButton
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            loading={loading}
-                        >
-                            <strong>Submit</strong>
-                        </LoadingButton>
-                    </form>
-                </div>
-            </div>
-        </>
+                    </div>
+                </>
+            )}
+        </div>
     );
 }
 

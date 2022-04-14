@@ -34,7 +34,6 @@ function FilePicker(props) {
                     }}
                 >
                     <TextField
-                        ref={inputRef}
                         type={"file"}
                         id={name}
                         variant="filled"

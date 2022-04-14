@@ -5,4 +5,5 @@ const api = executeAPI("POST", path);
 
 const EPFPostURL = api;
 export default EPFPostURL;
-export const EPFGetUrl=()=>axios.get("http://10.1.30.18:9032/pf-form/details-employeeId/100")
+export const EPFGetUrl = () =>
+    axios.get("http://10.1.30.18:9032/pf-form/details-employeeId/102");

@@ -1,26 +1,77 @@
-import React from 'react'
+import React from "react";
 
-import TextAreaInput from '../../InputFiles/TextAreaInput'
-import Validation from '../../validation/Validations'
-import DatePicker from '../../InputFiles/DatePicker'
-import { Box } from '@mui/system'
-
+import TextAreaInput from "../../InputFiles/TextAreaInput";
+import Validation from "../../validation/Validations";
+import DatePicker from "../../InputFiles/DatePicker";
+import { Box } from "@mui/system";
+import { useSelector, useDispatch } from "react-redux";
 
 function GFFormNominee(props) {
+    const GFGetState = useSelector((state) => state.GFGetReducer);
+    const { loadingGF, userInfoGF, errorGF } = GFGetState;
 
-    const validation = Validation().validationDegree
+    const validation = Validation().validationDegree;
     return (
         <div>
-           
-<h5 style={{fontFamily: 'Muller',textAlign:"center" }}>Nominee(s)</h5>
-            <table className="table table-bordered align-middle mt-4" style={{backgroundColor:"#cfe8fc"}}>
+            <h5 style={{ fontFamily: "Muller", textAlign: "center" }}>
+                Nominee(s)
+            </h5>
+            <table
+                className="table table-bordered align-middle mt-4"
+                style={{ backgroundColor: "#cfe8fc" }}
+            >
                 <thead>
                     {/* <th className="text-center">Sl.No.</th> */}
-                  <th className="text-center" style={{fontSize:'3vh',fontFamily: 'Muller',textAlign:'center'}} >Sl.No</th>
-                    <th className="text-center" style={{fontSize:'3vh',fontFamily: 'Muller',textAlign:'center'}} >Name in full with full address of nominee(s)</th>
-                    <th className="text-center" style={{fontSize:'3vh',fontFamily: 'Muller',textAlign:'center'}} >Relationship with the employee</th>
-                    <th className="text-center" style={{fontSize:'3vh',fontFamily: 'Muller',textAlign:'center'}} >DOB of nominee</th>
-                    <th className="text-center" style={{fontSize:'3vh',fontFamily: 'Muller',textAlign:'center'}} >Proportion by which the gratuity will be shared</th>
+                    <th
+                        className="text-center"
+                        style={{
+                            fontSize: "3vh",
+                            fontFamily: "Muller",
+                            textAlign: "center",
+                        }}
+                    >
+                        Sl.No
+                    </th>
+                    <th
+                        className="text-center"
+                        style={{
+                            fontSize: "3vh",
+                            fontFamily: "Muller",
+                            textAlign: "center",
+                        }}
+                    >
+                        Name in full with full address of nominee(s)
+                    </th>
+                    <th
+                        className="text-center"
+                        style={{
+                            fontSize: "3vh",
+                            fontFamily: "Muller",
+                            textAlign: "center",
+                        }}
+                    >
+                        Relationship with the employee
+                    </th>
+                    <th
+                        className="text-center"
+                        style={{
+                            fontSize: "3vh",
+                            fontFamily: "Muller",
+                            textAlign: "center",
+                        }}
+                    >
+                        DOB of nominee
+                    </th>
+                    <th
+                        className="text-center"
+                        style={{
+                            fontSize: "3vh",
+                            fontFamily: "Muller",
+                            textAlign: "center",
+                        }}
+                    >
+                        Proportion by which the gratuity will be shared
+                    </th>
                 </thead>
                 <tbody>
                     {/* <tr>
@@ -31,40 +82,64 @@ function GFFormNominee(props) {
                         <td className="text-center">(4)</td>
                     </tr> */}
                     <tr>
-                        <td className='text-center'>1.</td>
-                        <td><TextAreaInput
-                            formState={props.formState}
-                            name={'nominee_full_name_and_address'}
-                            label={"Name"}
-                            validation={validation}
-                            placeholder={""} /></td>
-                        <td><TextAreaInput
-                            formState={props.formState}
-                            name={'relationship_with_nominee'}
-                            label={"Relationship"}
-                            validation={validation}
-                            placeholder={""} /></td>
-                        <td><DatePicker
-                            type={"date"}
-                            formState={props.formState}
-                            name={'dob_of_nominee'}
-                            label={null}
-                            validation={validation}
-                            placeholder={""} /></td>
-                        <td><TextAreaInput
-                            formState={props.formState}
-                            name={'shared_proportion'}
-                            label={'Shared Proposition'}
-                            validation={validation}
-                            placeholder={""}
-                        /></td>
+                        <td className="text-center">1.</td>
+                        <td>
+                            <TextAreaInput
+                                formState={props.formState}
+                                name={"nominee_full_name_and_address"}
+                                label={"Name"}
+                                validation={validation}
+                                defaultValue={
+                                    userInfoGF &&
+                                    userInfoGF.nominee_full_name_and_address
+                                }
+                                placeholder={""}
+                            />
+                        </td>
+                        <td>
+                            <TextAreaInput
+                                formState={props.formState}
+                                name={"relationship_with_nominee"}
+                                label={"Relationship"}
+                                defaultValue={
+                                    userInfoGF &&
+                                    userInfoGF.relationship_with_nominee
+                                }
+                                validation={validation}
+                                placeholder={""}
+                            />
+                        </td>
+                        <td>
+                            <DatePicker
+                                type={"date"}
+                                formState={props.formState}
+                                name={"dob_of_nominee"}
+                                label={null}
+                                defaultValue={
+                                    userInfoGF && userInfoGF.dob_of_nominee
+                                }
+                                validation={validation}
+                                placeholder={""}
+                            />
+                        </td>
+                        <td>
+                            <TextAreaInput
+                                formState={props.formState}
+                                name={"shared_proportion"}
+                                label={"Shared Proposition"}
+                                validation={validation}
+                                defaultValue={
+                                    userInfoGF && userInfoGF.shared_proportion
+                                }
+                                placeholder={""}
+                            />
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <hr/>
-
+            <hr />
         </div>
-    )
+    );
 }
 
-export default GFFormNominee
+export default GFFormNominee;
