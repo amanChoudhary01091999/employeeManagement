@@ -31,7 +31,6 @@ import {
     GFGetApiRequest,
     RCAFGetApiRequest,
 } from "../api/form.request";
-import epfPostRequest, { EPFGetUrl } from "../api/epfPostRequest";
 
 function* BGVGetAsync(action) {
     try {
@@ -64,7 +63,7 @@ function* COVIDGetAsync(action) {
 
 function* EPFGetAsync(action) {
     try {
-        const { data } = yield call(EPFGetUrl, action.payload);
+        const { data } = yield call(EPFGetApiRequest, action.payload);
         yield put(EPFGetSuccess(data));
     } catch (error) {
         yield put(EPFGetError());

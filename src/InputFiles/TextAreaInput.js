@@ -16,7 +16,7 @@ function TextAreaInput(props) {
                 id={name}
                 multiline
                 fullWidth
-                defaultValue={defaultValue ? defaultValue : ""}
+                defaultValue={defaultValue}
                 {...register(`${name}`, validation)}
                 error={errors[name] !== undefined}
                 helperText={errors[name]?.message}

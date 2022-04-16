@@ -146,23 +146,20 @@ function RAFCHeading(props) {
                                     type={"file"}
                                     validation={validation}
                                     defaultValue={
-                                        userInfoRCAF &&
-                                        userInfoRCAF.candidateSingnature
+                                        userInfoRCAF && userInfoRCAF.signed
                                     }
-                                    placeholder={""}
                                 />
                             </td>
                             <td>
                                 <TextAreaInput
                                     formState={props.formState}
-                                    defaultValue={
-                                        userInfoRCAF &&
-                                        userInfoRCAF.candidateName
-                                    }
                                     name={"candidateName"}
                                     label={"Name"}
                                     validation={validation}
-                                    placeholder={""}
+                                    defaultValue={
+                                        userInfoRCAF &&
+                                        userInfoRCAF.capital_name
+                                    }
                                 />
                             </td>
                             <td>
@@ -172,10 +169,8 @@ function RAFCHeading(props) {
                                     label={"Place"}
                                     validation={validation}
                                     defaultValue={
-                                        userInfoRCAF &&
-                                        userInfoRCAF.candidatePlace
+                                        userInfoRCAF && userInfoRCAF.place
                                     }
-                                    placeholder={""}
                                 />
                             </td>
                             <td>
@@ -183,13 +178,11 @@ function RAFCHeading(props) {
                                     formState={props.formState}
                                     name={"candidateDate"}
                                     type={"date"}
-                                    defaultValue={
-                                        userInfoRCAF &&
-                                        userInfoRCAF.candidateDate
-                                    }
                                     label={null}
                                     validation={validation}
-                                    placeholder={""}
+                                    defaultValue={
+                                        userInfoRCAF && userInfoRCAF.date
+                                    }
                                 />
                             </td>
                         </tr>

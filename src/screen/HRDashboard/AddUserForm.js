@@ -1,11 +1,12 @@
 import React from "react";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import TextInput from "../../Input/TextInput";
 import { userPostRequest } from "../../actions/user.action";
 import Validation from "../../validation/Validations";
+import { AlternateEmail, Person, Phone } from "@mui/icons-material";
 
 function AddUserForm(props) {
     const emailValidation = Validation().validationEmail;
@@ -36,7 +37,8 @@ function AddUserForm(props) {
         <Stack
             direction={"column"}
             spacing={3}
-            padding={3}
+            padding={1}
+            marginTop={2}
             width={400}
             component="form"
             onSubmit={handleSubmit(OnSubmit)}
@@ -52,6 +54,7 @@ function AddUserForm(props) {
                 label={"Email-id"}
                 id={"email"}
                 validation={emailValidation}
+                icon={<AlternateEmail fontSize="small" />}
             />
             <TextInput
                 formState={formState}
@@ -59,6 +62,7 @@ function AddUserForm(props) {
                 label={"Name"}
                 id={"name"}
                 validation={nameValidation}
+                icon={<Person fontSize="small" />}
             />
             <TextInput
                 formState={formState}
@@ -66,6 +70,7 @@ function AddUserForm(props) {
                 id={"phoneNumber"}
                 value={user.mobileNo}
                 validation={phoneValidation}
+                icon={<Phone fontSize="small" />}
             />
             <LoadingButton
                 type="submit"
@@ -73,7 +78,13 @@ function AddUserForm(props) {
                 loading={loading}
                 variant="contained"
             >
-                submit
+                <Typography
+                    fontFamily={"Rubik"}
+                    fontWeight={"bold"}
+                    letterSpacing={2}
+                >
+                    Add User
+                </Typography>
             </LoadingButton>
         </Stack>
     );

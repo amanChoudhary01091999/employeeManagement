@@ -13,7 +13,7 @@ import Snackbars from "../../components/Snackbar";
 import { useNavigate } from "react-router-dom";
 import RefCheckAppBar from "./RefCheckAppBar";
 import { RCAFGetRequest } from "../../actions/form.get.action";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 
 function RCAFForm() {
     const formState = useForm();
@@ -24,6 +24,13 @@ function RCAFForm() {
 
     const RCAFGetState = useSelector((state) => state.RCAFGetReducer);
     const { loadingRCAF, errorRCAF, userInfoRCAF } = RCAFGetState;
+
+    const onPreviousClick = () => {
+        navigate("/epf-form", { replace: true });
+    };
+    const onNextClick = () => {
+        navigate("/codeOfConduct-form", { replace: true });
+    };
 
     const dispatch = useDispatch();
 
@@ -205,14 +212,33 @@ function RCAFForm() {
                                     />
                                     <RCAFPart4 formState={formState} />
                                 </div>
-                                <LoadingButton
-                                    type="submit"
-                                    variant="contained"
-                                    size="large"
-                                    loading={loading}
+                                <Stack
+                                    display={"flex"}
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    className="py-5"
                                 >
-                                    <strong>Submit</strong>
-                                </LoadingButton>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={onPreviousClick}
+                                    >
+                                        Previous
+                                    </Button>
+                                    <LoadingButton
+                                        type="submit"
+                                        variant="contained"
+                                        size="large"
+                                        loading={loading}
+                                    >
+                                        <strong>Submit</strong>
+                                    </LoadingButton>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={onNextClick}
+                                    >
+                                        Next
+                                    </Button>
+                                </Stack>
                             </form>
                         </div>
                     </div>

@@ -64,7 +64,7 @@ function RCAFPart1(props) {
                                 <TextAreaInput
                                     defaultValue={
                                         userInfoRCAF &&
-                                        userInfoRCAF.postel_address
+                                        userInfoRCAF.postal_address
                                     }
                                     formState={props.formState}
                                     label={"Postel Address"}
@@ -96,7 +96,7 @@ function RCAFPart1(props) {
                                     className="col"
                                     defaultValue={
                                         userInfoRCAF &&
-                                        userInfoRCAF.permanent_Address
+                                        userInfoRCAF.permanent_address
                                     }
                                     formState={props.formState}
                                     label={"Permanent Address"}

@@ -7,7 +7,7 @@ import { EPFPostRequest } from "../../actions/form.post.action";
 import EPFFormDetail from "./EPFFormDetail";
 import EPFUntrackingDeclaration from "./EPFUntrackingDeclaration";
 import { useNavigate } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 
 function EPFFormMain() {
     const formState = useForm();
@@ -18,6 +18,13 @@ function EPFFormMain() {
         (state) => state.EPFGetReducer
     );
     const navigate = useNavigate();
+
+    const onPreviousClick = () => {
+        navigate("/gratuity-form", { replace: true });
+    };
+    const onNextClick = () => {
+        navigate("/refcheck-form", { replace: true });
+    };
     const onSubmit = (data) => {
         const EPFobjectAPI = {
             id: 1,
@@ -108,14 +115,30 @@ function EPFFormMain() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <EPFFormDetail formState={formState} />
                         <EPFUntrackingDeclaration formState={formState} />
-                        <LoadingButton
-                            loading={loading}
-                            size="large"
-                            variant="contained"
-                            type="submit"
+                        <Stack
+                            display={"flex"}
+                            flexDirection={"row"}
+                            justifyContent={"space-between"}
+                            className="py-5"
                         >
-                            Submit Form
-                        </LoadingButton>
+                            <Button
+                                variant="outlined"
+                                onClick={onPreviousClick}
+                            >
+                                Previous
+                            </Button>
+                            <LoadingButton
+                                loading={loading}
+                                size="large"
+                                variant="contained"
+                                type="submit"
+                            >
+                                Submit Form
+                            </LoadingButton>
+                            <Button variant="outlined" onClick={onNextClick}>
+                                Next
+                            </Button>
+                        </Stack>
                     </form>
                 </>
             )}

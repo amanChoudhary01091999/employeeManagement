@@ -7,16 +7,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 
 function RCAFPart2(props) {
-    const RCAFGetState = useSelector((state) => state.RCAFGetReducer);
-    const { loadingRCAF, errorRCAF, userInfoRCAF } = RCAFGetState;
-
+    const number = props.number;
+    const formState = props.formState;
+    const { loadingRCAF, errorRCAF, userInfoRCAF } = useSelector(
+        (state) => state.RCAFGetReducer
+    );
+    let userInfo = null;
+    console.log(userInfoRCAF);
+    if (number === "1") userInfo = userInfoRCAF?.first_degree;
+    else if (number === "2") userInfo = userInfoRCAF?.second_degree;
+    else if (number === "3") userInfo = userInfoRCAF?.third_degree;
     const validationAddress = Validation().validationAddress;
     const validationDegree = Validation().validationDegree;
     const {
         formState: { errors },
     } = props.formState;
-    const number = props.number;
-    const formState = props.formState;
+
     return (
         <div>
             <hr className="my-5"></hr>
@@ -54,12 +60,11 @@ function RCAFPart2(props) {
                                     <TextAreaInput
                                         formState={props.formState}
                                         label={"Title"}
-                                        defaultValue={
-                                            userInfoRCAF &&
-                                            userInfoRCAF.candidateDate
-                                        }
                                         name={`degree_earned_${number}`}
                                         validation={validationDegree}
+                                        defaultValue={
+                                            userInfo && userInfo.institute_name
+                                        }
                                     />
                                 </div>
                             </div>
@@ -86,6 +91,9 @@ function RCAFPart2(props) {
                                         label={"Name of the Institute"}
                                         name={`institute_name_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.institute_name
+                                        }
                                     />
                                 </div>
                             </div>
@@ -110,6 +118,9 @@ function RCAFPart2(props) {
                                         label={"University Name"}
                                         name={`university_name_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.university_name
+                                        }
                                     />
                                 </div>
                             </div>
@@ -137,6 +148,10 @@ function RCAFPart2(props) {
                                         label={"Institute Address"}
                                         name={`institute_address_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo &&
+                                            userInfo.Institute_details
+                                        }
                                     />
                                 </div>
                             </div>
@@ -163,6 +178,10 @@ function RCAFPart2(props) {
                                         label={"University Address"}
                                         name={`university_address_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo &&
+                                            userInfo.university_details
+                                        }
                                     />
                                 </div>
                             </div>
@@ -190,6 +209,9 @@ function RCAFPart2(props) {
                                         type={"date"}
                                         name={`degree_period_to_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.to_date
+                                        }
                                     />
                                 </div>
                             </div>
@@ -215,6 +237,9 @@ function RCAFPart2(props) {
                                         type={"date"}
                                         name={`degree_period_from_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.from_date
+                                        }
                                     />
                                 </div>
                             </div>
@@ -241,6 +266,9 @@ function RCAFPart2(props) {
                                         name={`graduated_${number}`}
                                         labelGroup={""}
                                         label={["Yes", "No", "Pursuing"]}
+                                        defaultValue={
+                                            userInfo && userInfo.graduated
+                                        }
                                     />
                                 </div>
                             </div>
@@ -265,6 +293,9 @@ function RCAFPart2(props) {
                                         name={`programm_${number}`}
                                         labelGroup={""}
                                         label={["Full Time", "Part Time"]}
+                                        defaultValue={
+                                            userInfo && userInfo.program
+                                        }
                                     />
                                 </div>
                             </div>
@@ -291,6 +322,9 @@ function RCAFPart2(props) {
                                         label={"Type of degree"}
                                         name={`type_of_degree_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.degree_type
+                                        }
                                     />
                                 </div>
                             </div>
@@ -317,6 +351,9 @@ function RCAFPart2(props) {
                                         type={"date"}
                                         name={`graduation_date_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.graduation_date
+                                        }
                                     />
                                 </div>
                             </div>
@@ -343,6 +380,9 @@ function RCAFPart2(props) {
                                         label={"Major subject"}
                                         name={`major_subject_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.major_subject
+                                        }
                                     />
                                 </div>
                             </div>
@@ -367,6 +407,9 @@ function RCAFPart2(props) {
                                         label={"Roll Number"}
                                         name={`roll_no_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.roll_no
+                                        }
                                     />
                                 </div>
                             </div>
@@ -393,6 +436,9 @@ function RCAFPart2(props) {
                                         label={"Enrollment Number"}
                                         name={`enrolment_no_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.enrollment_no
+                                        }
                                     />
                                 </div>
                             </div>
@@ -417,6 +463,9 @@ function RCAFPart2(props) {
                                         label={"Hall ticket number"}
                                         name={`hall_ticket_no_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.hall_ticket_no
+                                        }
                                     />
                                 </div>
                             </div>
@@ -443,6 +492,9 @@ function RCAFPart2(props) {
                                         label={"registration Number"}
                                         name={`registration_no_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.registration_no
+                                        }
                                     />
                                 </div>
                             </div>

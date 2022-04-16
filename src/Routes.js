@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import PrivateRoutes from "./util/PrivateRoutes";
+import { PrivateRoutes, PrivateFormRoutes } from "./util/PrivateRoutes";
 import BackgroundVerification from "./screen/BackGroundVerification/BackGroundVerification";
 import CodeOfConduct from "./screen/CodeOfConductForm/CodeOfConduct";
 import CovidForm from "./screen/COVIDForm/CovidFrom";
@@ -29,17 +29,53 @@ function Routers() {
                 <Route
                     exact
                     path="/bgv-form"
-                    element={<BackgroundVerification />}
+                    element={
+                        <PrivateFormRoutes>
+                            <BackgroundVerification />
+                        </PrivateFormRoutes>
+                    }
                 />
                 <Route
                     exact
                     path="/codeOfConduct-form"
-                    element={<CodeOfConduct />}
+                    element={
+                        <PrivateFormRoutes>
+                            <CodeOfConduct />
+                        </PrivateFormRoutes>
+                    }
                 />
-                <Route path="/covid-form" element={<CovidForm />} />
-                <Route path="/gratuity-form" element={<GFFormMain />} />
-                <Route path="/refcheck-form" element={<RCAFForm />} />
-                <Route path="/epf-form" element={<EPFFormMain />} />
+                <Route
+                    path="/covid-form"
+                    element={
+                        <PrivateFormRoutes>
+                            <CovidForm />
+                        </PrivateFormRoutes>
+                    }
+                />
+                <Route
+                    path="/gratuity-form"
+                    element={
+                        <PrivateFormRoutes>
+                            <GFFormMain />
+                        </PrivateFormRoutes>
+                    }
+                />
+                <Route
+                    path="/refcheck-form"
+                    element={
+                        <PrivateFormRoutes>
+                            <RCAFForm />
+                        </PrivateFormRoutes>
+                    }
+                />
+                <Route
+                    path="/epf-form"
+                    element={
+                        <PrivateFormRoutes>
+                            <EPFFormMain />
+                        </PrivateFormRoutes>
+                    }
+                />
                 <Route path="/form" element={<Form />} />
                 <Route path="*" element={<p>There's nothing here: 404!</p>} />
             </Routes>

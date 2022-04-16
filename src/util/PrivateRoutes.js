@@ -4,11 +4,19 @@ import { Navigate, Route } from "react-router-dom";
 function getLocalValue() {
     return localStorage.getItem("authToken");
 }
-const PrivateRoutes = ({ children }) => {
+function getUserAccessToken() {
+    return localStorage.getItem("accessToken");
+}
+export const PrivateRoutes = ({ children }) => {
     if (getLocalValue() === null) {
         return <Navigate to="/login" replace />;
     }
     return children;
 };
 
-export default PrivateRoutes;
+export const PrivateFormRoutes = ({ children }) => {
+    if (getUserAccessToken() === null) {
+        return <Navigate to="/user-login" replace />;
+    }
+    return children;
+};

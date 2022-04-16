@@ -1,34 +1,39 @@
 import { Box } from "@mui/material";
 import React from "react";
-import DatePicker from '../../InputFiles/DatePicker'
+import { useSelector } from "react-redux";
+import DatePicker from "../../InputFiles/DatePicker";
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
-import TextAreaInput from '../../InputFiles/TextAreaInput'
-import Validation from '../../validation/Validations'
+import TextAreaInput from "../../InputFiles/TextAreaInput";
+import Validation from "../../validation/Validations";
 
 function RAFCPart3(props) {
     const validationAddress = Validation().validationAddress;
     const validationPhone = Validation().validationPhone;
     const number = props.number;
     const stateOfEmployer = props.stateOfEmployer;
+    const { loadingRCAF, errorRCAF, userInfoRCAF } = useSelector(
+        (state) => state.RCAFGetReducer
+    );
+    let userInfo = null;
+    if (number === "0") userInfo = userInfoRCAF?.first_company;
+    else if (number === "1") userInfo = userInfoRCAF?.second_comapny;
+    else if (number === "2") userInfo = userInfoRCAF?.third_company;
+    console.log(userInfo);
     return (
         <div>
             <hr className="my-5"></hr>
             <Box
-                                    sx={{
-                                        bgcolor: "#cfe8fc",
-                                        height: "10vh",
-                                        fontSize: "5vh",
-                                        fontFamily: "Muller",
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    
-                                
-            
+                sx={{
+                    bgcolor: "#cfe8fc",
+                    height: "10vh",
+                    fontSize: "5vh",
+                    fontFamily: "Muller",
+                    textAlign: "center",
+                }}
+            >
                 Details of {stateOfEmployer} Employer{" "}
                 {stateOfEmployer === "current" ? "" : number} :-{" "}
-                </Box>
-            
+            </Box>
 
             <table className="table table-bordered align-middle mt-4">
                 <tbody>
@@ -36,7 +41,16 @@ function RAFCPart3(props) {
                         <td className="col-6">
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Company Name :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Company Name :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
@@ -44,6 +58,9 @@ function RAFCPart3(props) {
                                         label={"Company Name"}
                                         name={`company_name_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.company_name
+                                        }
                                     />
                                 </div>
                             </div>
@@ -51,14 +68,26 @@ function RAFCPart3(props) {
                         <td className="col-6">
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Position Held :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Position Held :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={'Position Held'}
+                                        label={"Position Held"}
                                         name={`position_held_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.position_held
+                                        }
                                     />
                                 </div>
                             </div>
@@ -68,7 +97,16 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Department :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Department :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
@@ -76,6 +114,9 @@ function RAFCPart3(props) {
                                         label={"Department"}
                                         name={`department_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.department
+                                        }
                                     />
                                 </div>
                             </div>
@@ -83,7 +124,16 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Telephone :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Telephone :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
@@ -91,6 +141,9 @@ function RAFCPart3(props) {
                                         label={"Telephone"}
                                         name={`telephone_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.telephone
+                                        }
                                     />
                                 </div>
                             </div>
@@ -100,7 +153,14 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Employment Period From :
                                     </p>
                                 </div>
@@ -111,6 +171,9 @@ function RAFCPart3(props) {
                                         type={"date"}
                                         name={`employment_period_from_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.from_date
+                                        }
                                     />
                                 </div>
                             </div>
@@ -118,7 +181,14 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Employment Period To :
                                     </p>
                                 </div>
@@ -129,6 +199,9 @@ function RAFCPart3(props) {
                                         type={"date"}
                                         name={`employment_period_to_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.to_date
+                                        }
                                     />
                                 </div>
                             </div>
@@ -138,7 +211,14 @@ function RAFCPart3(props) {
                         <td colSpan="2">
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Address : (main office & branch where
                                         worked) :
                                     </p>
@@ -149,6 +229,9 @@ function RAFCPart3(props) {
                                         label={"Address"}
                                         name={`address_office_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.address
+                                        }
                                     />
                                 </div>
                             </div>
@@ -158,7 +241,14 @@ function RAFCPart3(props) {
                         <td colSpan="2">
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Agency Details (if temporary or
                                         contractual) :
                                     </p>
@@ -169,6 +259,9 @@ function RAFCPart3(props) {
                                         label={"Agency Details"}
                                         name={`agency_details_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.agency_details
+                                        }
                                     />
                                 </div>
                             </div>
@@ -178,7 +271,14 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Whether employment is of permanent or
                                         temporary nature :
                                     </p>
@@ -189,6 +289,9 @@ function RAFCPart3(props) {
                                         label={["Permanent", "Temporary"]}
                                         labelGroup={""}
                                         name={`employer_nature_${number}`}
+                                        defaultValue={
+                                            userInfo && userInfo.employer_nature
+                                        }
                                     />
                                 </div>
                             </div>
@@ -196,7 +299,14 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Employee Code ({number}) :
                                     </p>
                                 </div>
@@ -206,6 +316,9 @@ function RAFCPart3(props) {
                                         label={"Employee Code"}
                                         name={`employee_code_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.employee_code
+                                        }
                                     />
                                 </div>
                             </div>
@@ -214,7 +327,14 @@ function RAFCPart3(props) {
                     <tr>
                         <td colSpan="2">
                             <div className="row align-center">
-                                <div style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"center",marginRight:"10px"}}>
+                                <div
+                                    style={{
+                                        fontFamily: "Muller",
+                                        fontSize: "20px",
+                                        textAlign: "center",
+                                        marginRight: "10px",
+                                    }}
+                                >
                                     Reporting details: (Last Supervisor) :
                                 </div>
                             </div>
@@ -224,14 +344,27 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Name :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Name :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
                                         formState={props.formState}
-                                        label={'Name'}
+                                        label={"Name"}
                                         name={`RD_name_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo &&
+                                            userInfo.reporting_details
+                                        }
                                     />
                                 </div>
                             </div>
@@ -239,7 +372,16 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Position :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Position :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
@@ -247,6 +389,9 @@ function RAFCPart3(props) {
                                         label={"Position"}
                                         name={`RD_position_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.position
+                                        }
                                     />
                                 </div>
                             </div>
@@ -256,7 +401,16 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>Contact No. :</p>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Contact No. :
+                                    </p>
                                 </div>
                                 <div className="col">
                                     <TextAreaInput
@@ -264,6 +418,9 @@ function RAFCPart3(props) {
                                         label={"Contact Number"}
                                         name={`RD_contactNo_${number}`}
                                         validation={validationPhone}
+                                        defaultValue={
+                                            userInfo && userInfo.contact_no
+                                        }
                                     />
                                 </div>
                             </div>
@@ -271,7 +428,14 @@ function RAFCPart3(props) {
                         <td>
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         Remunerations / Salary CTC / Gross per
                                         month] :
                                     </p>
@@ -282,6 +446,9 @@ function RAFCPart3(props) {
                                         label={"Remunarations"}
                                         name={`remunerations_${number}`}
                                         validation={validationAddress}
+                                        defaultValue={
+                                            userInfo && userInfo.remunerations
+                                        }
                                     />
                                 </div>
                             </div>
@@ -291,7 +458,14 @@ function RAFCPart3(props) {
                         <td colSpan="2">
                             <div className="row align-center">
                                 <div className="col-auto align-self-center">
-                                    <p style={{ fontFamily: "Muller",fontSize:"20px",textAlign:"left",marginRight:"10px"}}>
+                                    <p
+                                        style={{
+                                            fontFamily: "Muller",
+                                            fontSize: "20px",
+                                            textAlign: "left",
+                                            marginRight: "10px",
+                                        }}
+                                    >
                                         {stateOfEmployer === "current"
                                             ? "When Can Conduct Discussion with Current Employer  :"
                                             : "Reason(s) for Leaving :"}
@@ -308,6 +482,10 @@ function RAFCPart3(props) {
                                                     "After Quarter",
                                                 ]}
                                                 name={"conduct_discussion"}
+                                                defaultValue={
+                                                    userInfo &&
+                                                    userInfo.conduct_discussion
+                                                }
                                             />
                                         </div>
                                     ) : (
@@ -317,6 +495,10 @@ function RAFCPart3(props) {
                                                 label={"raeson for leaving"}
                                                 name={`leaving_reason_${number}`}
                                                 validation={validationAddress}
+                                                defaultValue={
+                                                    userInfo &&
+                                                    userInfo.reason_for_leaving
+                                                }
                                             />
                                         </div>
                                     )}
