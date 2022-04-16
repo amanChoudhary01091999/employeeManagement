@@ -11,6 +11,7 @@ function GFFormDeclaration(props) {
     const GFGetState = useSelector((state) => state.GFGetReducer);
     const { loadingGF, userInfoGF, errorGF } = GFGetState;
 
+    const validationName = Validation().validationName;
     const validation = Validation().validationDegree;
     return (
         <div>
@@ -36,7 +37,7 @@ function GFFormDeclaration(props) {
                         formState={props.formState}
                         name={"name_of_witnesses"}
                         label={"Name of witnesses"}
-                        validation={validation}
+                        validation={validationName}
                         placeholder={""}
                         defaultValue={
                             userInfoGF && userInfoGF.name_of_witnesses

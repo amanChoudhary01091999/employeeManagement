@@ -14,8 +14,13 @@ function EPFFormDetail(props) {
     );
     console.log(userInfoEPF);
     const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
+    const validationNameNotRequired = Validation().validationNameNotRequired;
     const phoneValidation = Validation().validationPhone;
     const emailValidation = Validation().validationEmail;
+    const ifscValidation = Validation().validationIFSC;
+    const aadharValidation = Validation().validationAadhar;
+    const panValidation = Validation().validationPAN;
     const { watch } = formState;
     const stateOfProvident = watch("provident_member", "No");
     const stateOfPension = watch("pension_member", "No");
@@ -44,7 +49,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"Name"}
                                         name={"name_of_the_member"}
-                                        validation={validation}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.name_of_the_member
@@ -79,7 +84,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"Father's Name"}
                                         name={"fathers_name"}
-                                        validation={validation}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.fathers_name
@@ -103,7 +108,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"Spouse Name"}
                                         name={"Spouse_name"}
-                                        validation={validation}
+                                        validation={validationNameNotRequired}
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.Spouse_name
@@ -688,7 +693,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"IFSC Code"}
                                         name={"IFSCode"}
-                                        validation={validation}
+                                        validation={ifscValidation}
                                         defaultValue={
                                             userInfoEPF && userInfoEPF.IFSCode
                                         }
@@ -713,7 +718,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"Aadhar Number"}
                                         name={"aadhar_number"}
-                                        validation={validation}
+                                        validation={aadharValidation}
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.aadhar_number
@@ -740,7 +745,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"Permanent Account Number (PAN)"}
                                         name={"pan"}
-                                        validation={validation}
+                                        validation={panValidation}
                                         defaultValue={
                                             userInfoEPF && userInfoEPF.pan
                                         }

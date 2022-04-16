@@ -1,4 +1,11 @@
-import { Box, CircularProgress, TableRow, TextField } from "@mui/material";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Stack,
+    TableRow,
+    TextField,
+} from "@mui/material";
 import { withStyles } from "@mui/styles";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -312,17 +319,17 @@ const BackgroundVerification = (props) => {
                 />
             )}
 
-            {userInfoBGV && (
+            {true && (
                 <>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div
                             style={{
                                 backgroundColor: "#F3F3F3",
-                                paddingBottom: "10px",
+                                paddingBottom: 30,
                             }}
                         >
                             <BGVAppBar />
-                            <div style={{ marginTop: 50 }}>
+                            <div style={{ marginTop: 50, marginBottom: 50 }}>
                                 <div className="container">
                                     {/* <div className="form_header">
 
@@ -2104,8 +2111,6 @@ const BackgroundVerification = (props) => {
                                                                         defaultValue={
                                                                             userInfoBGV &&
                                                                             userInfoBGV.workEx
-                                                                                ? "Yes"
-                                                                                : "No"
                                                                         }
                                                                         formState={
                                                                             formState
@@ -3231,8 +3236,6 @@ const BackgroundVerification = (props) => {
                                                             defaultValue={
                                                                 userInfoBGV &&
                                                                 userInfoBGV.whether_to_contact_the_current_employer
-                                                                    ? "Yes"
-                                                                    : "No"
                                                             }
                                                         />
                                                     </div>
@@ -3528,22 +3531,25 @@ const BackgroundVerification = (props) => {
                                     size="large"
                                     loading={loading}
                                 >
-                                    <strong>Log In</strong>
+                                    <strong>Submit Form</strong>
                                 </LoadingButton>
-                                {error && (
-                                    <Snackbars
-                                        value={true}
-                                        severity={"error"}
-                                        message={error}
-                                    />
-                                )}
-                                {userInfo && (
-                                    <Snackbars
-                                        value={true}
-                                        severity={"success"}
-                                        message={"Login Success"}
-                                    />
-                                )}
+
+                                <Button
+                                    style={{
+                                        float: "right",
+                                        marginRight: "10%",
+                                    }}
+                                    disabled={
+                                        userInfoBGV === "" ||
+                                        userInfoBGV === null
+                                            ? true
+                                            : false
+                                    }
+                                    type="button"
+                                    variant="outlined"
+                                >
+                                    Next
+                                </Button>
                             </div>
                         </div>
                     </form>
