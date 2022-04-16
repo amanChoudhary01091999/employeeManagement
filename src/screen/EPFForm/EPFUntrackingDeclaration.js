@@ -17,10 +17,6 @@ function EPFUntrackingDeclaration(props) {
     const { loadingEPF, userInfoEPF } = useSelector(
         (state) => state.EPFGetReducer
     );
-    // const value = watch('The KYC details of the above members in the UAN database')
-    // const value2 = watch('The above PF Account number/UAN of the member as mentioned in (A) above has been tagged with his/her UAN/Previous member  ID as declared by the member')
-    // console.log(value)
-    // console.log(value2)
     return (
         <div style={{ textAlign: "left" }}>
             <table className="table table-bordered align-middle mt-5">
@@ -243,28 +239,7 @@ function EPFUntrackingDeclaration(props) {
                                     userInfoEPF.kyc_details_in_uan_database
                                 }
                             />
-                            {/* <InputCkeckBox
-                                formState={formState}
-                                label={"Have not been uploaded"}
-                                name={"kyc_details_in_uan_database"}
-                                validation={validation}
-                            />
 
-                            <InputCkeckBox
-                                formState={formState}
-                                label={"Have been uploaded but not approved"}
-                                name={"kyc_details_in_uan_database"}
-                                validation={validation}
-                            />
-
-                            <InputCkeckBox
-                                formState={formState}
-                                label={
-                                    "Have been uploaded and approved with DSC"
-                                }
-                                name={"kyc_details_in_uan_database"}
-                                validation={validation}
-                            /> */}
                             <div className="text-danger">
                                 <small>
                                     {
@@ -317,20 +292,6 @@ function EPFUntrackingDeclaration(props) {
                             <div className="text-danger">
                                 <small>{errors["dsc_approved"]?.message}</small>
                             </div>
-                            {/* <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="digitalSignature" />
-                                <label className="form-check-label" for="digitalSignature">
-                                    The KYC details of the above member in the UAN database have been approved with Digital Signature Certificate and transfer
-                                    request has been generated on portal
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="notRegisteredEPFO" />
-                                <label className="form-check-label" for="notRegisteredEPFO">
-                                    As the DSC of establishment are not registered with EPFO, the member has been informed to file physical claim (Form 13) for
-                                    transfer of finds from the previous establishment
-                                </label>
-                            </div> */}
                         </td>
                     </tr>
                     <tr>

@@ -128,6 +128,36 @@ function Validation() {
                 message: "Landline No is Not Valid",
             },
         },
+        validationIFSC: {
+            required: {
+                value: true,
+                message: "this field is required",
+            },
+            pattern: {
+                value: new RegExp(/^[A-Z]{4}0[A-Z0-9]{6}$/),
+                message: "IFSC Number is Not Valid",
+            },
+        },
+        validationAadhar: {
+            required: {
+                value: true,
+                message: "this field is required",
+            },
+            pattern: {
+                value: new RegExp(/^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$/),
+                message: "Aadhar Number is Not Valid",
+            },
+        },
+        validationPAN: {
+            required: {
+                value: true,
+                message: "this field is required",
+            },
+            pattern: {
+                value: new RegExp(/[A-Z]{5}[0-9]{4}[A-Z]{1}/),
+                message: "PAN Number is Not Valid",
+            },
+        },
     };
     return validation;
 }

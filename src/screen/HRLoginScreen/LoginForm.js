@@ -1,6 +1,13 @@
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
-import { Alert, Button, MenuItem, Stack, TextField } from "@mui/material";
+import {
+    Alert,
+    Button,
+    MenuItem,
+    Select,
+    Stack,
+    TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextInput from "../../Input/TextInput";
@@ -75,14 +82,6 @@ function LoginForm() {
                 label="Select Role"
                 value={currency}
                 onChange={handleChange}
-                error={errors["role"] !== undefined}
-                helperText={errors["role"]?.message}
-                {...register("role", {
-                    required: {
-                        value: true,
-                        message: "this feild is required",
-                    },
-                })}
             >
                 {currencies.map((option) => (
                     <MenuItem key={option.value} value={option.value}>

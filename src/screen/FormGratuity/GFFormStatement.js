@@ -11,6 +11,7 @@ function GFFormStatement(props) {
     const { loadingGF, userInfoGF, errorGF } = GFGetState;
 
     const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
 
     return (
         <div>
@@ -35,7 +36,7 @@ function GFFormStatement(props) {
                                 formState={props.formState}
                                 name={"employee_full_name"}
                                 label={"Full Name"}
-                                validation={validation}
+                                validation={validationName}
                                 defaultValue={
                                     userInfoGF && userInfoGF.employee_full_name
                                 }
@@ -86,7 +87,7 @@ function GFFormStatement(props) {
                                 formState={props.formState}
                                 name={"religion"}
                                 label={"Religion"}
-                                validation={validation}
+                                validation={validationName}
                                 defaultValue={userInfoGF && userInfoGF.religion}
                                 placeholder={""}
                             />

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
 import { type } from "@testing-library/user-event/dist/type";
 import encodeImageFileAsURL from "../../util/FileToUriConverter";
-import { CircularProgress, TextField } from "@mui/material";
+import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import { COCGetRequest } from "../../actions/form.get.action";
 import { COCPostRequest } from "../../actions/form.post.action";
 
@@ -31,6 +31,7 @@ const CodeOfConduct = (props) => {
     };
 
     const formState = useForm();
+    const navigate = useNavigate();
     const { handleSubmit } = formState;
     const CoCState = useSelector((state) => state.CoCReducer);
     const { loading, error, userInfo } = CoCState;
@@ -42,6 +43,14 @@ const CodeOfConduct = (props) => {
     useEffect(() => {
         dispatch(COCGetRequest());
     }, []);
+
+    const onPreviousClick = () => {
+        navigate("/refcheck-form", { replace: true });
+    };
+
+    const onNextClicked = () => {
+        //navigate("/gratuity-form", { replace: true });
+    };
 
     const onSubmit = (data) => {
         const ndhCodeOfConductObj = {
@@ -70,7 +79,7 @@ const CodeOfConduct = (props) => {
                 />
             )}
 
-            {userInfoCOC && (
+            {true && (
                 <>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CodeOfConductAppBar />
@@ -1634,7 +1643,7 @@ const CodeOfConduct = (props) => {
                                                 <TextAreaInput
                                                     formState={formState}
                                                     name={"full_name"}
-                                                    //label={"Full Name"}
+                                                    label={"Full Name"}
                                                     validation={validation}
                                                     placeholder={""}
                                                     defaultValue={
@@ -1653,7 +1662,7 @@ const CodeOfConduct = (props) => {
                                                 Signature:{" "}
                                             </td>
                                             <td>
-                                                <input
+                                                <TextField
                                                     type="file"
                                                     fullWidth
                                                     name={"employee_signature"}
@@ -1722,29 +1731,41 @@ const CodeOfConduct = (props) => {
                                     </tbody>
                                 </table>
                             </div>
-
-                            <LoadingButton
-                                type="submit"
-                                variant="contained"
-                                size="large"
-                                loading={loading}
+                            <Stack
+                                display={"flex"}
+                                flexDirection={"row"}
+                                justifyContent={"space-between"}
+                                className="py-5"
                             >
-                                <strong>Log In</strong>
-                            </LoadingButton>
-                            {error && (
-                                <Snackbars
-                                    value={true}
-                                    severity={"error"}
-                                    message={error}
-                                />
-                            )}
-                            {userInfo && (
-                                <Snackbars
-                                    value={true}
-                                    severity={"success"}
-                                    message={"Login Success"}
-                                />
-                            )}
+                                <Button
+                                    onClick={onPreviousClick}
+                                    type="button"
+                                    variant="outlined"
+                                >
+                                    Previous
+                                </Button>
+                                <LoadingButton
+                                    loading={loading}
+                                    size="large"
+                                    variant="contained"
+                                    type="submit"
+                                >
+                                    Submit Form
+                                </LoadingButton>
+                                <Button
+                                    onClick={onNextClicked}
+                                    disabled={
+                                        userInfoCOC === "" ||
+                                        userInfoCOC === null
+                                            ? true
+                                            : false
+                                    }
+                                    type="button"
+                                    variant="outlined"
+                                >
+                                    Next
+                                </Button>
+                            </Stack>
                         </div>
                     </form>
                 </>

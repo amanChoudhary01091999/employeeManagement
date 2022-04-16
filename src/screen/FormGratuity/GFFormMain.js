@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,7 +28,14 @@ function GFFormMain() {
     const { loadingGF, userInfoGF, errorGF } = GFGetState;
 
     const dispatch = useDispatch();
-    const naviagte = useNavigate();
+    const navigate = useNavigate();
+    const onPreviousClick = () => {
+        navigate("/covid-form", { replace: true });
+    };
+
+    const onNextClicked = () => {
+        navigate("/epf-form", { replace: true });
+    };
 
     const onSubmit = (data) => {
         const GFobjectAPI = {
@@ -82,66 +89,77 @@ function GFFormMain() {
             acknowledgement_date: data.acknowledgement_date,
             signature_of_the_employee: data.signature_of_the_employee[0].name,
         };
-        dispatch(GFPostRequest(GFobjectAPI, naviagte));
+        dispatch(GFPostRequest(GFobjectAPI, navigate));
     };
     React.useEffect(() => {
         dispatch(GFGetRequest());
     }, []);
     console.log(GFGetState);
     return (
-        // <div>
-        //     {loadingGF && (
-        //         <CircularProgress
-        //             color="inherit"
-        //             style={{
-        //                 color: "indigo",
-        //                 position: "fixed",
-        //                 bottom: "50%",
-        //             }}
-        //         />
-        //     )}
+        <div>
+            {loadingGF && (
+                <CircularProgress
+                    color="inherit"
+                    style={{
+                        color: "indigo",
+                        position: "fixed",
+                        bottom: "50%",
+                    }}
+                />
+            )}
 
-        //     {userInfoGF && (
-        <>
-            <GratuityAppBar />
-            <div style={{ backgroundColor: "#F3F3F3" }}>
-                <div className="container py-4">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <GFFormNomination formState={formState} />
-                        <GFFormNominee formState={formState} />
-                        <GFFormStatement formState={formState} />
-                        <GFFormDeclaration formState={formState} />
-                        <GFCertificateEmployer formState={formState} />
-                        <GFAcknowledgement formState={formState} />
-
-                        <LoadingButton
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            loading={loading}
-                        >
-                            <strong>Submit Form</strong>
-                        </LoadingButton>
-                        {error && (
-                            <Snackbars
-                                value={true}
-                                severity={"error"}
-                                message={error}
-                            />
-                        )}
-                        {userInfo && (
-                            <Snackbars
-                                value={true}
-                                severity={"success"}
-                                message={"Form Submitted"}
-                            />
-                        )}
-                    </form>
-                </div>
-            </div>
-        </>
-        //     )}
-        // </div>
+            {true && (
+                <>
+                    <GratuityAppBar />
+                    <div style={{ backgroundColor: "#F3F3F3" }}>
+                        <div className="container py-4">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <GFFormNomination formState={formState} />
+                                <GFFormNominee formState={formState} />
+                                <GFFormStatement formState={formState} />
+                                <GFFormDeclaration formState={formState} />
+                                <GFCertificateEmployer formState={formState} />
+                                <GFAcknowledgement formState={formState} />
+                                <Stack
+                                    display={"flex"}
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                >
+                                    <Button
+                                        onClick={onPreviousClick}
+                                        type="button"
+                                        variant="outlined"
+                                    >
+                                        Previous
+                                    </Button>
+                                    <LoadingButton
+                                        loading={loading}
+                                        size="large"
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        Submit Form
+                                    </LoadingButton>
+                                    <Button
+                                        onClick={onNextClicked}
+                                        disabled={
+                                            userInfoGF === "" ||
+                                            userInfoGF === null
+                                                ? true
+                                                : false
+                                        }
+                                        type="button"
+                                        variant="outlined"
+                                    >
+                                        Next
+                                    </Button>
+                                </Stack>
+                            </form>
+                        </div>
+                    </div>
+                </>
+            )}
+        </div>
     );
 }
 

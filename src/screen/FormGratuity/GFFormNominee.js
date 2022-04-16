@@ -11,6 +11,7 @@ function GFFormNominee(props) {
     const { loadingGF, userInfoGF, errorGF } = GFGetState;
 
     const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
     return (
         <div>
             <h5 style={{ fontFamily: "Muller", textAlign: "center" }}>
@@ -88,7 +89,7 @@ function GFFormNominee(props) {
                                 formState={props.formState}
                                 name={"nominee_full_name_and_address"}
                                 label={"Name"}
-                                validation={validation}
+                                validation={validationName}
                                 defaultValue={
                                     userInfoGF &&
                                     userInfoGF.nominee_full_name_and_address
@@ -105,7 +106,7 @@ function GFFormNominee(props) {
                                     userInfoGF &&
                                     userInfoGF.relationship_with_nominee
                                 }
-                                validation={validation}
+                                validation={validationName}
                                 placeholder={""}
                             />
                         </td>
