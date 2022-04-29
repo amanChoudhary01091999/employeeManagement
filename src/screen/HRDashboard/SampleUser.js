@@ -2,11 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { CheckCircleOutlined, Delete, Edit } from "@mui/icons-material";
+import {
+    CheckCircleOutlined,
+    Delete,
+    Edit,
+    RemoveRedEye,
+} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { openDialog, userDeleteRequest } from "../../actions/user.action";
 import { makeStyles } from "@mui/styles";
 import { Avatar, Typography, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
     tableBody: {
@@ -28,6 +34,7 @@ const useStyle = makeStyles((theme) => ({
 function SampleUser({ row }) {
     const classes = useStyle();
     const dispatch = useDispatch();
+    const naviagte = useNavigate();
 
     const onDelete = (id) => {
         if (window.confirm("Are You Sure")) dispatch(userDeleteRequest(id));
@@ -35,9 +42,18 @@ function SampleUser({ row }) {
     const onUpdate = (row) => {
         dispatch(openDialog(row));
     };
+    const onView = (id) => {
+        naviagte("/user-detail", {
+            state: { id },
+        });
+    };
     return (
         <TableRow key={row.name}>
-            <TableCell align="left" className={classes.tableBody}>
+            <TableCell
+                align="left"
+                className={classes.tableBody}
+                onClick={() => onView(row.id)}
+            >
                 <Stack
                     display={"flex"}
                     direction={"row"}
@@ -75,11 +91,11 @@ function SampleUser({ row }) {
                     <CheckCircleOutlined />
                 </Stack>
             </TableCell>
-            <TableCell align="center" className={classes.tableBody}>
+            {/* <TableCell align="center" className={classes.tableBody}>
                 <IconButton color="primary" onClick={() => onUpdate(row)}>
                     <Edit />
                 </IconButton>
-            </TableCell>
+            </TableCell> */}
             <TableCell align="center" className={classes.tableBody}>
                 <LoadingButton
                     loading={false}

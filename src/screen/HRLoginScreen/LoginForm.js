@@ -1,20 +1,13 @@
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
-import {
-    Alert,
-    Button,
-    MenuItem,
-    Select,
-    Stack,
-    TextField,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { MenuItem, Stack, TextField } from "@mui/material";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import TextInput from "../../Input/TextInput";
+import TextInput from "../../components/Input/TextInput";
 import { useSelector, useDispatch } from "react-redux";
 import { loginRequest } from "../../actions/login.action";
-import Snackbars from "../../components/Snackbar";
 import Validation from "../../validation/Validations";
+import { AlternateEmail, LockRounded } from "@mui/icons-material";
 
 const currencies = [
     {
@@ -28,24 +21,26 @@ const currencies = [
 ];
 const validation = Validation().validationDegree;
 const validationEmail = Validation().validationEmail;
+
 function LoginForm() {
     const formState = useForm();
     const navigate = useNavigate();
-    const [currency, setCurrency] = React.useState("admin");
-    const accessToken = localStorage.getItem("accessToken");
+    const [currency, setCurrency] = useState("admin");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (event) => {
         setCurrency(event.target.value);
     };
-
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
     const {
-        register,
         handleSubmit,
+        register,
         formState: { errors },
     } = formState;
-
     const loginState = useSelector((state) => state.loginReducer);
-    const { loading, error, userInfo } = loginState;
+    const { loading } = loginState;
     const dispatch = useDispatch();
     const OnSubmit = (data) => {
         const LoginApiObj = {
@@ -74,8 +69,8 @@ function LoginForm() {
                 label={"email"}
                 id={"user_name"}
                 validation={validationEmail}
+                icon={<AlternateEmail fontSize="small" />}
             />
-
             <TextField
                 id="role"
                 select
@@ -93,7 +88,9 @@ function LoginForm() {
                 formState={formState}
                 label={"Password"}
                 id={"password"}
+                type={"password"}
                 validation={validation}
+                icon={<LockRounded fontSize="small" />}
             />
 
             <LoadingButton

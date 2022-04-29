@@ -5,27 +5,34 @@ import LoginAppBar from "./LoginAppBar";
 import LoginForm from "./LoginForm";
 import LoginFormImage from "./LoginFormImage";
 
-const useStyle = makeStyles((theme) => ({
-    container: {},
-    imageContainer: {
-        backgroundColor: "indigo",
+const useStyle = makeStyles(() => ({
+    container: {
+        backgroundColor: "#F3F3F3",
+        display: "flex",
+        flexDirection: "column",
         height: "100vh",
+        minWidth: "1000px",
     },
-    formContainer: {},
+    appBarContainer: {},
+    formContainer: {
+        margin: "auto",
+    },
+    paperStyle: {
+        border: true,
+        borderRadius: "100px",
+        padding: 40,
+    },
 }));
 function HRLoginPageMain() {
     const classes = useStyle();
     return (
-        <div style={{ backgroundColor: "#F3F3F3", paddingBottom: "10px" }}>
-            <LoginAppBar />
-            <Container style={{ marginTop: 100, marginBottom: 100 }}>
+        <div className={classes.container}>
+            <LoginAppBar className={classes.appBarContainer} />
+            <Container className={classes.formContainer}>
                 <Paper
                     elevation={0}
-                    sx={{
-                        border: true,
-                        borderRadius: 3,
-                        padding: 4,
-                    }}
+                    sx={{ borderRadius: 4 }}
+                    className={classes.paperStyle}
                 >
                     <Grid container>
                         <Grid item xs={6} alignSelf="center">
@@ -38,26 +45,6 @@ function HRLoginPageMain() {
                 </Paper>
             </Container>
         </div>
-        // <div>
-        //     <Grid container>
-        //         <Grid
-        //             item
-        //             xs={5}
-        //             alignSelf="center"
-        //             className={classes.imageContainer}
-        //         >
-        //             {/* <LoginFormImage /> */}
-        //         </Grid>
-        //         <Grid
-        //             item
-        //             xs={7}
-        //             alignSelf="center"
-        //             className={classes.formContainer}
-        //         >
-        //             <LoginForm />
-        //         </Grid>
-        //     </Grid>
-        // </div>
     );
 }
 

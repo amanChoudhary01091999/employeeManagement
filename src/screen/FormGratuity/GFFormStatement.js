@@ -87,7 +87,7 @@ function GFFormStatement(props) {
                                 formState={props.formState}
                                 name={"religion"}
                                 label={"Religion"}
-                                validation={validationName}
+                                validation={validation}
                                 defaultValue={userInfoGF && userInfoGF.religion}
                                 placeholder={""}
                             />

@@ -9,6 +9,8 @@ import Validation from "../../validation/Validations";
 function RAFCPart3(props) {
     const validationAddress = Validation().validationAddress;
     const validationPhone = Validation().validationPhone;
+    const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
     const number = props.number;
     const stateOfEmployer = props.stateOfEmployer;
     const { loadingRCAF, errorRCAF, userInfoRCAF } = useSelector(
@@ -57,7 +59,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Company Name"}
                                         name={`company_name_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.company_name
                                         }
@@ -84,7 +86,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Position Held"}
                                         name={`position_held_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.position_held
                                         }
@@ -113,7 +115,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Department"}
                                         name={`department_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.department
                                         }
@@ -360,7 +362,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Name"}
                                         name={`RD_name_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo &&
                                             userInfo.reporting_details
@@ -388,7 +390,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Position"}
                                         name={`RD_position_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.position
                                         }
@@ -445,7 +447,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Remunarations"}
                                         name={`remunerations_${number}`}
-                                        validation={validationAddress}
+                                        validation={validation}
                                         defaultValue={
                                             userInfo && userInfo.remunerations
                                         }

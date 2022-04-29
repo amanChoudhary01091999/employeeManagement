@@ -11,7 +11,7 @@ function RAFCHeading(props) {
     const RCAFGetState = useSelector((state) => state.RCAFGetReducer);
     const { loadingRCAF, errorRCAF, userInfoRCAF } = RCAFGetState;
 
-    const validation = Validation().validationAddress;
+    const validation = Validation().validationName;
 
     return (
         <>

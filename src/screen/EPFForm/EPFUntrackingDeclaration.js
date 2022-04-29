@@ -27,24 +27,29 @@ function EPFUntrackingDeclaration(props) {
                         </td>
                     </tr>
                     <tr>
-                        <td className="text-center" scope="row"></td>
+                        <td className="text-center" scope="row">
+                            1.
+                        </td>
                         <td colSpan="2">
-                            1) Certified that the particulars are true to the
-                            best of my knowledge
+                            Certified that the particulars are true to the best
+                            of my knowledge
                         </td>
                     </tr>
                     <tr>
-                        <td className="text-center" scope="row"></td>
+                        <td className="text-center" scope="row">
+                            2.
+                        </td>
                         <td colSpan="2">
-                            2) I authorize EPFO to use my Aadhar for
-                            verification/ authentication /eKYC purpose for
-                            service delivery
+                            I authorize EPFO to use my Aadhar for verification/
+                            authentication /eKYC purpose for service delivery
                         </td>
                     </tr>
                     <tr>
-                        <td className="text-center" scope="row"></td>
+                        <td className="text-center" scope="row">
+                            3.
+                        </td>
                         <td colSpan="2">
-                            3) Kindly transfer the funds and service details, if
+                            Kindly transfer the funds and service details, if
                             applicable, from the previous PF account as declared
                             above to the present P.F Account (The transfer would
                             be possible only if the identified KYC details
@@ -54,9 +59,11 @@ function EPFUntrackingDeclaration(props) {
                         </td>
                     </tr>
                     <tr>
-                        <td className="text-center" scope="row"></td>
+                        <td className="text-center" scope="row">
+                            4.
+                        </td>
                         <td colSpan="2">
-                            4) In case of changes in the above details, the same
+                            In case of changes in the above details, the same
                             will be intimated to the employer at the earliest
                         </td>
                     </tr>
@@ -278,6 +285,7 @@ function EPFUntrackingDeclaration(props) {
                                     userInfoEPF && userInfoEPF.kyc_details
                                 }
                             />
+
                             <InputCkeckBox
                                 formState={formState}
                                 label={
@@ -289,9 +297,6 @@ function EPFUntrackingDeclaration(props) {
                                     userInfoEPF && userInfoEPF.kyc_details
                                 }
                             />
-                            <div className="text-danger">
-                                <small>{errors["dsc_approved"]?.message}</small>
-                            </div>
                         </td>
                     </tr>
                     <tr>

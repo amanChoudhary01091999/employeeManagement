@@ -19,8 +19,9 @@ import {
     RCAF_GET_FAIL,
 } from "../constants/form.get.constants";
 
-export const BGVGetRequest = () => ({
+export const BGVGetRequest = (id) => ({
     type: BGV_GET_REQUEST,
+    payload: id,
 });
 export const BGVGetSuccess = (userInfo) => ({
     type: BGV_GET_SUCCESS,
@@ -31,8 +32,9 @@ export const BGVGetError = (message) => ({
     payload: message,
 });
 
-export const COCGetRequest = () => ({
+export const COCGetRequest = (id) => ({
     type: COC_GET_REQUEST,
+    payload: id,
 });
 export const COCGetSuccess = (userInfo) => ({
     type: COC_GET_SUCCESS,
@@ -43,8 +45,9 @@ export const COCGetFail = (message) => ({
     payload: message,
 });
 
-export const COVIDGetRequest = () => ({
+export const COVIDGetRequest = (id) => ({
     type: COVID_GET_REQUEST,
+    payload: id,
 });
 export const COVIDGetSuccess = (userInfo) => ({
     type: COVID_GET_SUCCESS,
@@ -55,8 +58,9 @@ export const COVIDGetError = (message) => ({
     payload: message,
 });
 
-export const EPFGetRequest = () => ({
+export const EPFGetRequest = (id) => ({
     type: EPF_GET_REQUEST,
+    payload: id,
 });
 export const EPFGetSuccess = (userInfo) => ({
     type: EPF_GET_SUCCESS,
@@ -67,8 +71,9 @@ export const EPFGetError = (message) => ({
     payload: message,
 });
 
-export const GFGetRequest = () => ({
+export const GFGetRequest = (id) => ({
     type: GF_GET_REQUEST,
+    payload: id,
 });
 export const GFGetSuccess = (userInfo) => ({
     type: GF_GET_SUCCESS,
@@ -79,8 +84,9 @@ export const GFGetError = (message) => ({
     payload: message,
 });
 
-export const RCAFGetRequest = () => ({
+export const RCAFGetRequest = (id) => ({
     type: RCAF_GET_REQUEST,
+    payload: id,
 });
 export const RCAFGetSuccess = (userInfo) => ({
     type: RCAF_GET_SUCCESS,

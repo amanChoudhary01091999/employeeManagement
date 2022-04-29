@@ -1,6 +1,10 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { PrivateRoutes, PrivateFormRoutes } from "./util/PrivateRoutes";
+import {
+    PrivateRoutes,
+    PrivateFormRoutes,
+    PrivateUserLoginRoutes,
+} from "./util/PrivateRoutes";
 import BackgroundVerification from "./screen/BackGroundVerification/BackGroundVerification";
 import CodeOfConduct from "./screen/CodeOfConductForm/CodeOfConduct";
 import CovidForm from "./screen/COVIDForm/CovidFrom";
@@ -11,6 +15,7 @@ import HRLoginPageMain from "./screen/HRLoginScreen/HRLoginPageMain";
 import RCAFForm from "./screen/RefCheckAuthForm/RCAFForm";
 import UserLogin from "./screen/UserAuthentication/UserLogin";
 import Form from "./screen/Form/Form";
+import UserDetailMain from "./screen/user-details/user.detail.main";
 
 function Routers() {
     return (
@@ -24,8 +29,24 @@ function Routers() {
                         </PrivateRoutes>
                     }
                 />
+                <Route
+                    path="/user-detail"
+                    element={
+                        <PrivateRoutes>
+                            <UserDetailMain />
+                        </PrivateRoutes>
+                    }
+                />
                 <Route path="/login" element={<HRLoginPageMain />} />
-                <Route exact path="/user-login" element={<UserLogin />} />
+                <Route
+                    exact
+                    path="/user-login"
+                    element={
+                        <PrivateUserLoginRoutes>
+                            <UserLogin />
+                        </PrivateUserLoginRoutes>
+                    }
+                />
                 <Route
                     exact
                     path="/bgv-form"
@@ -76,6 +97,7 @@ function Routers() {
                         </PrivateFormRoutes>
                     }
                 />
+
                 <Route path="/form" element={<Form />} />
                 <Route path="*" element={<p>There's nothing here: 404!</p>} />
             </Routes>

@@ -126,14 +126,15 @@ const useStyle = makeStyles((theme) => ({
     },
 }));
 
-const rows = [];
-for (let i = 0; i < 100; i++) {
-    rows[i] = {
-        name: "Gautam",
-        email: "krgautam@gmail.com",
-        mobileNo: "1234567890",
-    };
-}
+// const rows = [];
+// for (let i = 0; i < 100; i++) {
+//     rows[i] = {
+//         id: i,
+//         name: "Gautam",
+//         email: "krgautam@gmail.com",
+//         mobileNo: "1234567890",
+//     };
+// }
 
 export default function ShowAllUsers() {
     const dispatch = useDispatch();
@@ -141,7 +142,7 @@ export default function ShowAllUsers() {
     const { loading, userInfo, error } = useSelector(
         (state) => state.userGetReducer
     );
-    //const rows = userInfo ? userInfo : [];
+    const rows = userInfo ? userInfo : [];
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -159,7 +160,7 @@ export default function ShowAllUsers() {
     const postData = useSelector((state) => state.userPostReducer);
     const deleleData = useSelector((state) => state.userDeleteReducer);
     React.useEffect(() => {
-        //dispatch(userGetRequest());
+        dispatch(userGetRequest());
     }, [postData.userInfo, deleleData.userInfo]);
 
     return (
@@ -214,12 +215,12 @@ export default function ShowAllUsers() {
                             >
                                 status
                             </TableCell>
-                            <TableCell
+                            {/* <TableCell
                                 align="center"
                                 className={classes.tableHead}
                             >
                                 Edit
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell
                                 align="center"
                                 className={classes.tableHead}

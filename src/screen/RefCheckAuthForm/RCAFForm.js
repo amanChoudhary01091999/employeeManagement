@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import RAFCHeading from "./RAFCHeading";
 import RAFCPart3 from "./RAFCPart3";
@@ -9,13 +9,15 @@ import "../BackGroundVerification/index.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RCAFPostRequest } from "../../actions/form.post.action";
 import { LoadingButton } from "@mui/lab";
-import Snackbars from "../../components/Snackbar";
 import { useNavigate } from "react-router-dom";
 import RefCheckAppBar from "./RefCheckAppBar";
 import { RCAFGetRequest } from "../../actions/form.get.action";
 import { Button, CircularProgress, Stack } from "@mui/material";
 
-function RCAFForm() {
+function RCAFForm({ idFromDashBoard }) {
+    const idFromLocalStorage = localStorage.getItem("id");
+    const id =
+        idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const formState = useForm();
     const { handleSubmit } = formState;
     const navigate = useNavigate();
@@ -36,10 +38,10 @@ function RCAFForm() {
 
     const onSubmit = (data) => {
         const RCAFobjectAPI = {
-            id: 1,
+            id: id,
             employee_id: "100",
 
-            signed: data.candidateSingnature[0].name,
+            //signed: data.candidateSingnature[0].name,
             capital_name: data.candidateName,
             date: data.candidateDate,
             place: data.candidatePlace,
@@ -154,15 +156,18 @@ function RCAFForm() {
             contact_current_employer:
                 data.contact_current_employer === "Yes" ? true : false,
         };
-        dispatch(RCAFPostRequest(RCAFobjectAPI, navigate));
+        const formData = new FormData();
+        formData.append("signed", data.candidateSingnature[0]);
+        formData.append("data", JSON.stringify(RCAFobjectAPI));
+        dispatch(RCAFPostRequest(formData, navigate));
     };
 
-    React.useEffect(() => {
-        dispatch(RCAFGetRequest());
+    useEffect(() => {
+        dispatch(RCAFGetRequest(id));
     }, []);
 
     return (
-        <div>
+        <div style={{ minWidth: "1300px" }}>
             {loadingRCAF && (
                 <CircularProgress
                     color="inherit"
@@ -212,33 +217,35 @@ function RCAFForm() {
                                     />
                                     <RCAFPart4 formState={formState} />
                                 </div>
-                                <Stack
-                                    display={"flex"}
-                                    flexDirection={"row"}
-                                    justifyContent={"space-between"}
-                                    className="py-5"
-                                >
-                                    <Button
-                                        variant="outlined"
-                                        onClick={onPreviousClick}
+                                {idFromDashBoard !== undefined ? null : (
+                                    <Stack
+                                        display={"flex"}
+                                        flexDirection={"row"}
+                                        justifyContent={"space-between"}
+                                        className="py-5"
                                     >
-                                        Previous
-                                    </Button>
-                                    <LoadingButton
-                                        type="submit"
-                                        variant="contained"
-                                        size="large"
-                                        loading={loading}
-                                    >
-                                        <strong>Submit</strong>
-                                    </LoadingButton>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={onNextClick}
-                                    >
-                                        Next
-                                    </Button>
-                                </Stack>
+                                        <Button
+                                            variant="outlined"
+                                            onClick={onPreviousClick}
+                                        >
+                                            Previous
+                                        </Button>
+                                        <LoadingButton
+                                            type="submit"
+                                            variant="contained"
+                                            size="large"
+                                            loading={loading}
+                                        >
+                                            <strong>Submit</strong>
+                                        </LoadingButton>
+                                        <Button
+                                            variant="outlined"
+                                            onClick={onNextClick}
+                                        >
+                                            Next
+                                        </Button>
+                                    </Stack>
+                                )}
                             </form>
                         </div>
                     </div>

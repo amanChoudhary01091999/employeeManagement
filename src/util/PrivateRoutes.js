@@ -7,6 +7,10 @@ function getLocalValue() {
 function getUserAccessToken() {
     return localStorage.getItem("accessToken");
 }
+function getUserId() {
+    return localStorage.getItem("id");
+}
+
 export const PrivateRoutes = ({ children }) => {
     if (getLocalValue() === null) {
         return <Navigate to="/login" replace />;
@@ -17,6 +21,13 @@ export const PrivateRoutes = ({ children }) => {
 export const PrivateFormRoutes = ({ children }) => {
     if (getUserAccessToken() === null) {
         return <Navigate to="/user-login" replace />;
+    }
+    return children;
+};
+
+export const PrivateUserLoginRoutes = ({ children }) => {
+    if (getUserAccessToken() !== null) {
+        return <Navigate to="/bgv-form" replace />;
     }
     return children;
 };

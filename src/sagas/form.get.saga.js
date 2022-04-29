@@ -41,9 +41,9 @@ function* BGVGetAsync(action) {
         yield put(openToast(getErrorMessage(error), "error"));
     }
 }
-function* cocGetAsync() {
+function* cocGetAsync(action) {
     try {
-        const { data } = yield call(COCGetApiRequest);
+        const { data } = yield call(COCGetApiRequest, action.payload);
         yield put(COCGetSuccess(data));
     } catch (error) {
         yield put(COCGetFail());
@@ -73,7 +73,6 @@ function* EPFGetAsync(action) {
 function* GFGetAsync(action) {
     try {
         const { data } = yield call(GFGetApiRequest, action.payload);
-        console.log(data);
         yield put(GFGetSuccess(data));
         yield put(openToast("success", "success"));
     } catch (error) {

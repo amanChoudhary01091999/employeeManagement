@@ -9,6 +9,7 @@ function InputForm(props) {
     } = formState;
     return (
         <TextField
+            //placeholder={label}
             label={label}
             type="text"
             id={name}

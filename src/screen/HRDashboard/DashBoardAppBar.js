@@ -1,9 +1,10 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, InputAdornment, Stack, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogForm from "./DialogForm";
+import { SearchRounded } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -77,19 +78,16 @@ export default function DashBoardAppBar() {
                     variant="outlined"
                     label="Search"
                     size="small"
+                    sx={{ width: "30vw" }}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <SearchRounded />
+                            </InputAdornment>
+                        ),
+                    }}
                 ></TextField>
 
-                <TextField
-                    variant="outlined"
-                    label="Search"
-                    size="small"
-                ></TextField>
-
-                <TextField
-                    variant="outlined"
-                    label="Search"
-                    size="small"
-                ></TextField>
                 <Button
                     style={{ marginLeft: "auto" }}
                     variant="outlined"

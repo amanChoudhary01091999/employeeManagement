@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GFGetRequest } from "../../actions/form.get.action";
 import { GFPostRequest } from "../../actions/form.post.action";
-import Snackbars from "../../components/Snackbar";
 
 import GFAcknowledgement from "./GFAcknowledgement";
 import GFCertificateEmployer from "./GFCertificateEmployer";
@@ -15,20 +14,20 @@ import GFFormNomination from "./GFFormNomination";
 import GFFormNominee from "./GFFormNominee";
 import GFFormStatement from "./GFFormStatement";
 import GratuityAppBar from "./GratuityAppBar";
-//import React, { useEffect } from "react";
 
-function GFFormMain() {
+function GFFormMain({ idFromDashBoard }) {
+    const idFromLocalStorage = localStorage.getItem("id");
+    const id =
+        idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const formState = useForm();
-    const { handleSubmit } = formState;
-
-    const GFState = useSelector((state) => state.GFFormReducer);
-    const { loading, error, userInfo } = GFState;
-
-    const GFGetState = useSelector((state) => state.GFGetReducer);
-    const { loadingGF, userInfoGF, errorGF } = GFGetState;
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { handleSubmit } = formState;
+    const GFState = useSelector((state) => state.GFFormReducer);
+    const { loading } = GFState;
+    const GFGetState = useSelector((state) => state.GFGetReducer);
+    const { loadingGF, userInfoGF, errorGF } = GFGetState;
     const onPreviousClick = () => {
         navigate("/covid-form", { replace: true });
     };
@@ -43,17 +42,15 @@ function GFFormMain() {
             nomination_details: data.nomination_details,
             name_of_the_member: data.name_of_the_member,
             excluded_husband: data.excluded_husband,
-
             // nominee...
             nominee_full_name_and_address: data.nominee_full_name_and_address,
             relationship_with_nominee: data.relationship_with_nominee,
             dob_of_nominee: data.dob_of_nominee,
             shared_proportion: data.shared_proportion,
 
-            id: 1,
+            id: id,
             employee_id: "100",
             sl_no: "string",
-
             // statement..
             employee_full_name: data.employee_full_name,
             gender: data.gender,
@@ -68,18 +65,16 @@ function GFFormMain() {
             sub_division: data.sub_division,
             place: data.place,
             statement_date: data.statement_date,
-            employee_signature: data.employee_signature[0].name,
-
+            //employee_signature: data.employee_signature[0].name,
             // declearation..
             name_of_witnesses: data.name_of_witnesses,
-            signature_of_witnesses: data.signature_of_witnesses[0].name,
+            //signature_of_witnesses: data.signature_of_witnesses[0].name,
             address_of_witnesses: data.address_of_witnesses,
             witnesses_place: data.witnesses_place,
             witnesses_date: data.witnesses_date,
-
             //Certification..
             employer_reference_no: data.employer_reference_no,
-            signature_of_the_employer: data.signature_of_the_employer[0].name,
+            //signature_of_the_employer: data.signature_of_the_employer[0].name,
             certificate_date: data.certificate_date,
             name_of_the_establishment: data.name_of_the_establishment,
             address_of_the_establishment: data.address_of_the_establishment,
@@ -87,16 +82,31 @@ function GFFormMain() {
 
             // acknowledgement...
             acknowledgement_date: data.acknowledgement_date,
-            signature_of_the_employee: data.signature_of_the_employee[0].name,
+            //signature_of_the_employee: data.signature_of_the_employee[0].name,
         };
-        dispatch(GFPostRequest(GFobjectAPI, navigate));
+        const formData = new FormData();
+        formData.append("employee_signature", data.employee_signature[0]);
+        formData.append(
+            "signature_of_witnesses",
+            data.signature_of_witnesses[0]
+        );
+        formData.append(
+            "signature_of_the_employer",
+            data.signature_of_the_employer[0]
+        );
+        formData.append(
+            "signature_of_the_employee",
+            data.signature_of_the_employee[0]
+        );
+        formData.append("data", JSON.stringify(GFobjectAPI));
+        dispatch(GFPostRequest(formData, navigate));
     };
-    React.useEffect(() => {
-        dispatch(GFGetRequest());
+    useEffect(() => {
+        dispatch(GFGetRequest(id));
     }, []);
-    console.log(GFGetState);
+
     return (
-        <div>
+        <div style={{ minWidth: "1000px" }}>
             {loadingGF && (
                 <CircularProgress
                     color="inherit"
@@ -108,7 +118,7 @@ function GFFormMain() {
                 />
             )}
 
-            {true && (
+            {userInfoGF && (
                 <>
                     <GratuityAppBar />
                     <div style={{ backgroundColor: "#F3F3F3" }}>
@@ -120,40 +130,36 @@ function GFFormMain() {
                                 <GFFormDeclaration formState={formState} />
                                 <GFCertificateEmployer formState={formState} />
                                 <GFAcknowledgement formState={formState} />
-                                <Stack
-                                    display={"flex"}
-                                    flexDirection={"row"}
-                                    justifyContent={"space-between"}
-                                >
-                                    <Button
-                                        onClick={onPreviousClick}
-                                        type="button"
-                                        variant="outlined"
+                                {idFromDashBoard !== undefined ? null : (
+                                    <Stack
+                                        display={"flex"}
+                                        flexDirection={"row"}
+                                        justifyContent={"space-between"}
                                     >
-                                        Previous
-                                    </Button>
-                                    <LoadingButton
-                                        loading={loading}
-                                        size="large"
-                                        variant="contained"
-                                        type="submit"
-                                    >
-                                        Submit Form
-                                    </LoadingButton>
-                                    <Button
-                                        onClick={onNextClicked}
-                                        disabled={
-                                            userInfoGF === "" ||
-                                            userInfoGF === null
-                                                ? true
-                                                : false
-                                        }
-                                        type="button"
-                                        variant="outlined"
-                                    >
-                                        Next
-                                    </Button>
-                                </Stack>
+                                        <Button
+                                            onClick={onPreviousClick}
+                                            type="button"
+                                            variant="outlined"
+                                        >
+                                            Previous
+                                        </Button>
+                                        <LoadingButton
+                                            loading={loading}
+                                            size="large"
+                                            variant="contained"
+                                            type="submit"
+                                        >
+                                            Submit Form
+                                        </LoadingButton>
+                                        <Button
+                                            onClick={onNextClicked}
+                                            type="button"
+                                            variant="outlined"
+                                        >
+                                            Next
+                                        </Button>
+                                    </Stack>
+                                )}
                             </form>
                         </div>
                     </div>

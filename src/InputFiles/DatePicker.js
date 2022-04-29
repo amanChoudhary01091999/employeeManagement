@@ -1,35 +1,39 @@
 import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { Controller } from "react-hook-form";
 
 function DatePicker(props) {
     const { formState, name, validation, defaultValue, label } = props;
     const {
-        register,
         formState: { errors },
+        control,
     } = formState;
-    const [value, setValue] = useState(new Date());
-    React.useEffect(() => {
-        if (defaultValue) setValue(defaultValue);
-    }, [defaultValue]);
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DesktopDatePicker
-                label={"date"}
-                id={name}
-                inputFormat="yyyy-MM-dd"
-                mask="____-__-__"
-                value={value}
-                onChange={(newValue) => {
-                    setValue(newValue);
-                }}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        {...register(name, validation)}
-                        error={errors[name] !== undefined}
-                        helperText={errors[name]?.message}
+            <Controller
+                control={control}
+                name={name}
+                defaultValue={defaultValue ? defaultValue : ""}
+                rules={validation}
+                render={({ field: { onChange, value } }) => (
+                    <DesktopDatePicker
+                        label={"date"}
+                        id={name}
+                        inputFormat="yyyy-MM-dd"
+                        mask="____-__-__"
+                        value={value}
+                        onChange={(e) => onChange(e)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                size="small"
+                                id={name}
+                                error={errors[name] !== undefined}
+                                helperText={errors[name]?.message}
+                            />
+                        )}
                     />
                 )}
             />

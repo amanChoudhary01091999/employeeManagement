@@ -32,22 +32,13 @@ import {
     RCAFPostApiRequest,
 } from "../api/form.request";
 
-import BGVPostUrl from "../api/bgvPostRequest";
-import { BGVGetUrl } from "../api/bgvPostRequest";
-import CovidPostUrl, { covidGetData } from "../api/covidRequest";
-import { cocGetData } from "../api/cocPostRequest";
-import CoCPostUrl from "../api/cocPostRequest";
-import RCAFPostUrl, { RCAFGetUrl } from "../api/rcfPostRequest";
-import epfPostRequest, { EPFGetUrl } from "../api/epfPostRequest";
-import GFFormPostUrl, { GFGetUrl } from "../api/gratuityFormRequest";
-
 function* BGVAsync(action) {
     try {
-        const { data } = yield call(BGVPostUrl, action.payload);
+        const { data } = yield call(BGVPostApiRequest, action.payload);
         yield put(BGVPostSuccess(data));
         yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
-        navigate("/covid-form");
+        navigate("/covid-form", { replace: true });
     } catch (error) {
         yield put(BGVPostFail());
         yield put(openToast(getErrorMessage(), "error"));
@@ -56,7 +47,7 @@ function* BGVAsync(action) {
 
 function* CoCAsync(action) {
     try {
-        const { data } = yield call(CoCPostUrl, action.payload);
+        const { data } = yield call(COCPostApiRequest, action.payload);
         yield put(COCPostSuccess(data));
         yield put(openToast("Form Submitted", "success"));
         console.log(data);
@@ -68,11 +59,11 @@ function* CoCAsync(action) {
 
 function* COVIDAsync(action) {
     try {
-        const { data } = yield call(CovidPostUrl, action.payload);
+        const { data } = yield call(COVIDPostApiRequest, action.payload);
         yield put(COVIDPostSuccess(data));
         yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
-        navigate("/gratuity-form");
+        navigate("/gratuity-form", { replace: true });
     } catch (error) {
         yield put(COVIDPostFail());
         yield put(openToast(getErrorMessage(), "error"));
@@ -81,11 +72,11 @@ function* COVIDAsync(action) {
 
 function* EPFAsync(action) {
     try {
-        const { data } = yield call(epfPostRequest, action.payload);
+        const { data } = yield call(EPFPostApiRequest, action.payload);
         yield put(EPFPostSuccess(data));
         yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
-        navigate("/refcheck-form");
+        navigate("/refcheck-form", { replace: true });
     } catch (error) {
         yield put(EPFPostFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -94,11 +85,11 @@ function* EPFAsync(action) {
 
 function* GFFormAsync(action) {
     try {
-        const { data } = yield call(GFFormPostUrl, action.payload);
+        const { data } = yield call(GFPostApiRequest, action.payload);
         yield put(GFPostSuccess(data, action.navigate));
         yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
-        navigate("/epf-form");
+        navigate("/epf-form", { replace: true });
     } catch (error) {
         yield put(GFPostFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -107,11 +98,11 @@ function* GFFormAsync(action) {
 
 function* RCAFAsync(action) {
     try {
-        const { data } = yield call(RCAFPostUrl, action.payload);
+        const { data } = yield call(RCAFPostApiRequest, action.payload);
         yield put(RCAFPostSuccess(data));
         yield put(openToast("Form Submitted", "success"));
         const navigate = action.navigate;
-        navigate("/codeOfConduct-form");
+        navigate("/codeOfConduct-form", { replace: true });
     } catch (error) {
         yield put(RCAFPostFail());
         yield put(openToast(getErrorMessage(error), "error"));

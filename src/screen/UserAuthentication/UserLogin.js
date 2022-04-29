@@ -11,12 +11,13 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
-import TextInput from "../../Input/TextInput";
+import TextInput from "../../components/Input/TextInput";
 import { useSelector, useDispatch } from "react-redux";
-import Snackbars from "../../components/Snackbar";
 import LoginAppBar from "../HRLoginScreen/LoginAppBar";
 import { UserLoginRequest } from "../../actions/user.auth.action";
 import GetUserId from "../../validation/getUserId";
+import { Key } from "@mui/icons-material";
+import Validation from "../../validation/Validations";
 
 const paperStyle = {
     padding: 20,
@@ -45,6 +46,8 @@ function UserLogin() {
     const { loading, error, userInfo } = userloginState;
     const dispatch = useDispatch();
 
+    const validation = Validation().validationDegree;
+
     const OnSubmit = (data) => {
         const LoginApiObj = {
             //id:GetUserId(window.location.href),
@@ -55,7 +58,7 @@ function UserLogin() {
     };
 
     return (
-        <>
+        <div style={{ minWidth: "1000px" }}>
             <LoginAppBar />
             <div style={{ backgroundColor: "#F3F3F3", paddingBottom: "10px" }}>
                 <Grid style={{ padding: "10px" }}>
@@ -75,6 +78,8 @@ function UserLogin() {
                                 formState={formState}
                                 label={"Enter your token"}
                                 id={"token"}
+                                validation={validation}
+                                icon={<Key fontSize="small" />}
                             />
 
                             <LoadingButton
@@ -85,25 +90,11 @@ function UserLogin() {
                             >
                                 <strong>Log In</strong>
                             </LoadingButton>
-                            {error && (
-                                <Snackbars
-                                    value={true}
-                                    severity={"error"}
-                                    message={error}
-                                />
-                            )}
-                            {userInfo && (
-                                <Snackbars
-                                    value={true}
-                                    severity={"success"}
-                                    message={"Login Success"}
-                                />
-                            )}
                         </Stack>
                     </Paper>
                 </Grid>
             </div>
-        </>
+        </div>
     );
 }
 

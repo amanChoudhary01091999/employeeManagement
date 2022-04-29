@@ -19,6 +19,7 @@ function RCAFPart2(props) {
     else if (number === "3") userInfo = userInfoRCAF?.third_degree;
     const validationAddress = Validation().validationAddress;
     const validationDegree = Validation().validationDegree;
+    const validationName = Validation().validationName;
     const {
         formState: { errors },
     } = props.formState;
@@ -90,7 +91,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Name of the Institute"}
                                         name={`institute_name_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.institute_name
                                         }
@@ -117,7 +118,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"University Name"}
                                         name={`university_name_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.university_name
                                         }

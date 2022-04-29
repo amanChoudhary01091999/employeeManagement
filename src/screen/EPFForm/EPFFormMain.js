@@ -9,7 +9,11 @@ import EPFUntrackingDeclaration from "./EPFUntrackingDeclaration";
 import { useNavigate } from "react-router-dom";
 import { Button, CircularProgress, Stack } from "@mui/material";
 
-function EPFFormMain() {
+function EPFFormMain({ idFromDashBoard }) {
+    const idFromLocalStorage = localStorage.getItem("id");
+    const id =
+        idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
+
     const formState = useForm();
     const { handleSubmit } = formState;
     const dispatch = useDispatch();
@@ -27,7 +31,7 @@ function EPFFormMain() {
     };
     const onSubmit = (data) => {
         const EPFobjectAPI = {
-            id: 1,
+            id: id,
             employee_id: "100",
 
             name_of_the_member: data.name_of_the_member,
@@ -61,7 +65,7 @@ function EPFFormMain() {
             pan: data.pan,
 
             date_of_undertaking: data.date_of_undertaking,
-            signature_of_member: data.signature_of_member[0].name,
+            //signature_of_member: data.signature_of_member[0].name,
             place: data.place,
 
             name_of_present_employee: data.name_of_present_employee,
@@ -76,14 +80,17 @@ function EPFFormMain() {
             date: data.employer_date,
             signature_of_employer: data.signature_employer[0].name,
         };
-        dispatch(EPFPostRequest(EPFobjectAPI, navigate));
+        const formData = new FormData();
+        formData.append("signature_of_member", data.signature_of_member[0]);
+        formData.append("data", JSON.stringify(EPFobjectAPI));
+        dispatch(EPFPostRequest(formData, navigate));
     };
     useEffect(() => {
-        dispatch(EPFGetRequest());
+        dispatch(EPFGetRequest(id));
     }, []);
     console.log(userInfoEPF);
     return (
-        <div className="container py-4">
+        <div style={{ minWidth: "1200px" }}>
             {loadingEPF && (
                 <CircularProgress
                     color="inherit"
@@ -94,54 +101,61 @@ function EPFFormMain() {
                     }}
                 />
             )}
-            {userInfoEPF && (
-                <>
-                    <div className="text-center">
-                        <h4 className="mb-0">
-                            EMPLOYEES PROVIDENT FUND ORGANIZATION
-                        </h4>
-                        <p>
-                            Employees Provident Fund Scheme, 1952 (Pragraph 34 &
-                            57) &
-                            <br />
-                            Employees Pension Scheme, 1995 (Paragraph 24)
-                        </p>
-                        <p>
-                            (Declaration by a person taking up employment in any
-                            establishment on which EPF Scheme 1952 and / or EPS,
-                            1995 is applicable)
-                        </p>
-                    </div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <EPFFormDetail formState={formState} />
-                        <EPFUntrackingDeclaration formState={formState} />
-                        <Stack
-                            display={"flex"}
-                            flexDirection={"row"}
-                            justifyContent={"space-between"}
-                            className="py-5"
-                        >
-                            <Button
-                                variant="outlined"
-                                onClick={onPreviousClick}
-                            >
-                                Previous
-                            </Button>
-                            <LoadingButton
-                                loading={loading}
-                                size="large"
-                                variant="contained"
-                                type="submit"
-                            >
-                                Submit Form
-                            </LoadingButton>
-                            <Button variant="outlined" onClick={onNextClick}>
-                                Next
-                            </Button>
-                        </Stack>
-                    </form>
-                </>
-            )}
+            <div className="container py-4">
+                {userInfoEPF && (
+                    <>
+                        <div className="text-center">
+                            <h4 className="mb-0">
+                                EMPLOYEES PROVIDENT FUND ORGANIZATION
+                            </h4>
+                            <p>
+                                Employees Provident Fund Scheme, 1952 (Pragraph
+                                34 & 57) &
+                                <br />
+                                Employees Pension Scheme, 1995 (Paragraph 24)
+                            </p>
+                            <p>
+                                (Declaration by a person taking up employment in
+                                any establishment on which EPF Scheme 1952 and /
+                                or EPS, 1995 is applicable)
+                            </p>
+                        </div>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <EPFFormDetail formState={formState} />
+                            <EPFUntrackingDeclaration formState={formState} />
+                            {idFromDashBoard !== undefined ? null : (
+                                <Stack
+                                    display={"flex"}
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    className="py-5"
+                                >
+                                    <Button
+                                        variant="outlined"
+                                        onClick={onPreviousClick}
+                                    >
+                                        Previous
+                                    </Button>
+                                    <LoadingButton
+                                        loading={loading}
+                                        size="large"
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        Submit Form
+                                    </LoadingButton>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={onNextClick}
+                                    >
+                                        Next
+                                    </Button>
+                                </Stack>
+                            )}
+                        </form>
+                    </>
+                )}
+            </div>
         </div>
     );
 }

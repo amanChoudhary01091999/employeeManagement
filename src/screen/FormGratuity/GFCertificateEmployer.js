@@ -4,7 +4,7 @@ import DatePicker from "../../InputFiles/DatePicker";
 import FilePicker from "../../InputFiles/FileInput";
 import TextAreaInput from "../../InputFiles/TextAreaInput";
 import Validation from "../../validation/Validations";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function GFCertificateEmployer(props) {
     const GFGetState = useSelector((state) => state.GFGetReducer);
@@ -50,7 +50,7 @@ function GFCertificateEmployer(props) {
             </h5>
 
             <div>
-                <DatePicker
+                <FilePicker
                     formState={props.formState}
                     name={"signature_of_the_employer"}
                     type={"file"}

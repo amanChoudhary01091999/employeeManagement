@@ -24,13 +24,12 @@ import {
     userPostData,
     userUpdateData,
     userDeleteData,
-} from "../api/userRequest";
+} from "../api/user.request";
 
 function* uesrGetAsync() {
     try {
         const { data } = yield call(userGetData);
         yield put(userGetSuccess(data));
-        yield put(openToast("Fetch Sucessful", "success"));
     } catch (error) {
         yield put(userGetFail());
         yield put(openToast(getErrorMessage(error), "error"));

@@ -1,11 +1,4 @@
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Stack,
-    TableRow,
-    TextField,
-} from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -18,14 +11,16 @@ import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BGVPostRequest } from "../../actions/form.post.action";
 import { BGVGetRequest } from "../../actions/form.get.action";
-import Snackbars from "../../components/Snackbar";
 import { LoadingButton } from "@mui/lab";
 import TextAreaInput from "../../InputFiles/TextAreaInput";
 import { typography } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
 
-const BackgroundVerification = (props) => {
+const BackgroundVerification = ({ idFromDashBoard }) => {
+    const idFromLocalStorage = localStorage.getItem("id");
+    const id =
+        idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const formState = useForm();
     const { handleSubmit, watch, register } = formState;
     const workEx = watch("workEx", "No");
@@ -38,20 +33,22 @@ const BackgroundVerification = (props) => {
     const bgvGetState = useSelector((state) => state.BGVGetReducer);
     const { loadingBGV, userInfoBGV, errorBGV } = bgvGetState;
 
+    const onNextClick = () => {
+        navigate("/covid-form", { replace: true });
+    };
+
     useEffect(() => {
-        dispatch(BGVGetRequest());
+        dispatch(BGVGetRequest(id));
     }, []);
 
     const onSubmit = (data) => {
-        //history.push('/covid-form')
-        //console.log(data);
         const empBGVobj = {
-            id: 12,
+            id: id,
             gender: data.gender,
             email1: data.email1,
             email2: data.email2,
             place: data.place,
-            signature: data.signature[0].name,
+            //signature: data.signature[0].name,
             date: data.date,
             employee_id: "101",
             first_name: data.first_name,
@@ -290,11 +287,10 @@ const BackgroundVerification = (props) => {
                     : false,
             full_name: data.full_name,
         };
-
-        //console.log(bgvApi(empBGVobj))
-        dispatch(BGVPostRequest(empBGVobj, navigate));
-
-        //console.log(data)
+        const formData = new FormData();
+        formData.append("signature", data.signature[0]);
+        formData.append("data", JSON.stringify(empBGVobj));
+        dispatch(BGVPostRequest(formData, navigate));
     };
 
     const validation = Validation().validationDegree;
@@ -307,7 +303,7 @@ const BackgroundVerification = (props) => {
     const validationDL = Validation().validationDrivingLicence;
     const validationPass = Validation().validationPassport;
     return (
-        <div>
+        <div style={{ minWidth: "1500px" }}>
             {loadingBGV && (
                 <CircularProgress
                     color="inherit"
@@ -319,7 +315,7 @@ const BackgroundVerification = (props) => {
                 />
             )}
 
-            {true && (
+            {userInfoBGV && (
                 <>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div
@@ -2103,33 +2099,35 @@ const BackgroundVerification = (props) => {
                                                     experience
                                                 </Box>
                                                 <table className="table table-bordered table-hover">
-                                                    <tr>
-                                                        <td>
-                                                            <div className="btnSubmitcontainer">
-                                                                <div className="center">
-                                                                    <InputRadioGroup
-                                                                        defaultValue={
-                                                                            userInfoBGV &&
-                                                                            userInfoBGV.workEx
-                                                                        }
-                                                                        formState={
-                                                                            formState
-                                                                        }
-                                                                        name={
-                                                                            "workEx"
-                                                                        }
-                                                                        labelGroup={
-                                                                            null
-                                                                        }
-                                                                        label={[
-                                                                            "Yes",
-                                                                            "No",
-                                                                        ]}
-                                                                    />
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div className="btnSubmitcontainer">
+                                                                    <div className="center">
+                                                                        <InputRadioGroup
+                                                                            defaultValue={
+                                                                                userInfoBGV &&
+                                                                                userInfoBGV.workEx
+                                                                            }
+                                                                            formState={
+                                                                                formState
+                                                                            }
+                                                                            name={
+                                                                                "workEx"
+                                                                            }
+                                                                            labelGroup={
+                                                                                null
+                                                                            }
+                                                                            label={[
+                                                                                "Yes",
+                                                                                "No",
+                                                                            ]}
+                                                                        />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </section>
@@ -3524,32 +3522,30 @@ const BackgroundVerification = (props) => {
                                         </section>
                                     </div>
                                 </div>
+                                {idFromDashBoard !== undefined ? null : (
+                                    <div>
+                                        <LoadingButton
+                                            type="submit"
+                                            variant="contained"
+                                            size="large"
+                                            loading={loading}
+                                        >
+                                            <strong>Submit Form</strong>
+                                        </LoadingButton>
 
-                                <LoadingButton
-                                    type="submit"
-                                    variant="contained"
-                                    size="large"
-                                    loading={loading}
-                                >
-                                    <strong>Submit Form</strong>
-                                </LoadingButton>
-
-                                <Button
-                                    style={{
-                                        float: "right",
-                                        marginRight: "10%",
-                                    }}
-                                    disabled={
-                                        userInfoBGV === "" ||
-                                        userInfoBGV === null
-                                            ? true
-                                            : false
-                                    }
-                                    type="button"
-                                    variant="outlined"
-                                >
-                                    Next
-                                </Button>
+                                        <Button
+                                            style={{
+                                                float: "right",
+                                                marginRight: "10%",
+                                            }}
+                                            onClick={onNextClick}
+                                            type="button"
+                                            variant="outlined"
+                                        >
+                                            Next
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </form>

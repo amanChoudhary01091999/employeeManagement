@@ -1,9 +1,7 @@
-function GetUserId(url)
-  {
-    let user=url.split('?').pop()
-    let id=user.split('=').pop()
+function GetUserId(url) {
+    let user = url.split("?").pop();
+    let id = user.split("=").pop();
     return id;
-  }
+}
 
-
-  export default GetUserId
+export default GetUserId;

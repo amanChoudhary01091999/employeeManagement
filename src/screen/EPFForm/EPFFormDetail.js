@@ -12,7 +12,6 @@ function EPFFormDetail(props) {
     const { loadingEPF, userInfoEPF } = useSelector(
         (state) => state.EPFGetReducer
     );
-    console.log(userInfoEPF);
     const validation = Validation().validationDegree;
     const validationName = Validation().validationName;
     const validationNameNotRequired = Validation().validationNameNotRequired;
@@ -21,6 +20,7 @@ function EPFFormDetail(props) {
     const ifscValidation = Validation().validationIFSC;
     const aadharValidation = Validation().validationAadhar;
     const panValidation = Validation().validationPAN;
+    const validatioBankAccount = Validation().validationBankAccount;
     const { watch } = formState;
     const stateOfProvident = watch("provident_member", "No");
     const stateOfPension = watch("pension_member", "No");
@@ -216,7 +216,7 @@ function EPFFormDetail(props) {
                         </td>
                         <td>
                             <div className="row align-center">
-                                <div className="col-4">
+                                <div className="col-4 align-self-center">
                                     <p
                                         className="mb-0"
                                         style={{ textAlign: "left" }}
@@ -667,7 +667,7 @@ function EPFFormDetail(props) {
                                         formState={formState}
                                         label={"Bank Account No."}
                                         name={"bank_account_no"}
-                                        validation={validation}
+                                        validation={validatioBankAccount}
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.bank_account_no

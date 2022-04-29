@@ -6,7 +6,6 @@ import Validation from "../../validation/Validations";
 import "../BackGroundVerification/index.css";
 import { useSelector, useDispatch } from "react-redux";
 import { LoadingButton } from "@mui/lab";
-import Snackbars from "../../components/Snackbar";
 import CodeOfConductAppBar from "./CodeOfConductAppBar";
 import { Box, textAlign } from "@mui/system";
 import TextAreaInput from "../../InputFiles/TextAreaInput";
@@ -17,8 +16,13 @@ import encodeImageFileAsURL from "../../util/FileToUriConverter";
 import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import { COCGetRequest } from "../../actions/form.get.action";
 import { COCPostRequest } from "../../actions/form.post.action";
+import { id } from "date-fns/locale";
+import axios from "axios";
 
-const CodeOfConduct = (props) => {
+const CodeOfConduct = ({ idFromDashBoard }) => {
+    const idFromLocalStorage = localStorage.getItem("id");
+    const id =
+        idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const [fileInput, setFileInput] = useState("");
 
     const encodeImageFileAsURLHere = (element) => {
@@ -29,7 +33,7 @@ const CodeOfConduct = (props) => {
         };
         reader.readAsDataURL(file);
     };
-
+    const [data, setData] = useState("");
     const formState = useForm();
     const navigate = useNavigate();
     const { handleSubmit } = formState;
@@ -39,35 +43,29 @@ const CodeOfConduct = (props) => {
     const { loadingCOC, userInfoCOC, errorCOC } = useSelector(
         (state) => state.cocGetReducer
     );
-
     useEffect(() => {
-        dispatch(COCGetRequest());
+        dispatch(COCGetRequest(id));
     }, []);
-
     const onPreviousClick = () => {
         navigate("/refcheck-form", { replace: true });
     };
-
-    const onNextClicked = () => {
-        //navigate("/gratuity-form", { replace: true });
-    };
-
     const onSubmit = (data) => {
         const ndhCodeOfConductObj = {
-            id: 1,
+            id: id,
             date: data.date,
-            employee_id: "101",
-            employee_signature: fileInput,
+            //employee_signature: data.signature_employer[0],
             full_name: data.full_name,
         };
-
-        dispatch(COCPostRequest(ndhCodeOfConductObj));
-        console.log(data);
+        const formData = new FormData();
+        formData.append("employee_signature", data.signature_employer[0]);
+        formData.append("data", JSON.stringify(ndhCodeOfConductObj));
+        dispatch(COCPostRequest(formData));
     };
-    const validation = Validation().validationTextInput;
+    const validation = Validation().validationName;
+    const validationDate = Validation().validationAreaInput;
 
     return (
-        <div>
+        <div style={{ minWidth: "1000px" }}>
             {loadingCOC && (
                 <CircularProgress
                     color="inherit"
@@ -79,21 +77,20 @@ const CodeOfConduct = (props) => {
                 />
             )}
 
-            {true && (
-                <>
+            {userInfoCOC && (
+                <div>
+                    {/* <img src={data} alt={""}></img> */}
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CodeOfConductAppBar />
 
-                        <div
-                            style={{ backgroundColor: "#F3F3F3", padding: 30 }}
-                        >
+                        <div style={{ padding: 30 }}>
                             <div>
                                 <Box
                                     sx={{
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -101,7 +98,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -180,7 +177,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -189,7 +186,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                     }}
@@ -232,7 +229,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -290,7 +287,7 @@ const CodeOfConduct = (props) => {
                                     bgcolor: "#cfe8fc",
                                     height: "10vh",
                                     fontSize: "5vh",
-                                    fontFamily: "Muller",
+                                    //fontFamily: "Muller",
                                     textAlign: "center",
                                     marginTop: "2vh",
                                 }}
@@ -304,7 +301,7 @@ const CodeOfConduct = (props) => {
                                             bgcolor: "#cfe8fc",
                                             height: "8vh",
                                             fontSize: "4vh",
-                                            fontFamily: "Muller",
+                                            //fontFamily: "Muller",
                                             textAlign: "center",
                                             marginTop: "2vh",
                                         }}
@@ -313,7 +310,7 @@ const CodeOfConduct = (props) => {
                                     </Box>
                                     <p
                                         style={{
-                                            fontFamily: "roboto",
+                                            //fontFamily: "roboto",
                                             textAlign: "center",
                                             fontSize: "3vh",
                                         }}
@@ -335,7 +332,7 @@ const CodeOfConduct = (props) => {
                                             bgcolor: "#cfe8fc",
                                             height: "8vh",
                                             fontSize: "4vh",
-                                            fontFamily: "Muller",
+                                            //fontFamily: "Muller",
                                             textAlign: "center",
                                             marginTop: "2vh",
                                         }}
@@ -344,7 +341,7 @@ const CodeOfConduct = (props) => {
                                     </Box>
                                     <p
                                         style={{
-                                            fontFamily: "roboto",
+                                            //fontFamily: "roboto",
                                             textAlign: "center",
                                             fontSize: "3vh",
                                         }}
@@ -371,7 +368,7 @@ const CodeOfConduct = (props) => {
                                             bgcolor: "#cfe8fc",
                                             height: "8vh",
                                             fontSize: "4vh",
-                                            fontFamily: "Muller",
+                                            //fontFamily: "Muller",
                                             textAlign: "center",
                                             marginTop: "2vh",
                                         }}
@@ -380,7 +377,7 @@ const CodeOfConduct = (props) => {
                                     </Box>
                                     <p
                                         style={{
-                                            fontFamily: "roboto",
+                                            //fontFamily: "roboto",
                                             textAlign: "CENTER",
                                             fontSize: "3vh",
                                         }}
@@ -467,7 +464,7 @@ const CodeOfConduct = (props) => {
                                             bgcolor: "#cfe8fc",
                                             height: "8vh",
                                             fontSize: "4vh",
-                                            fontFamily: "Muller",
+                                            //fontFamily: "Muller",
                                             textAlign: "center",
                                             marginTop: "2vh",
                                         }}
@@ -477,7 +474,7 @@ const CodeOfConduct = (props) => {
                                     </Box>
                                     <p
                                         style={{
-                                            fontFamily: "roboto",
+                                            //fontFamily: "roboto",
                                             textAlign: "left",
                                             fontSize: "3vh",
                                         }}
@@ -568,7 +565,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -577,7 +574,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                     }}
@@ -697,7 +694,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -706,7 +703,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -741,7 +738,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -751,7 +748,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -790,7 +787,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -800,7 +797,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -850,7 +847,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -859,7 +856,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -887,7 +884,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -896,7 +893,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -936,7 +933,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -945,7 +942,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                     }}
@@ -1038,7 +1035,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1047,7 +1044,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1071,7 +1068,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1080,7 +1077,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1115,7 +1112,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1124,7 +1121,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1205,7 +1202,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1214,7 +1211,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1236,7 +1233,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1245,7 +1242,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1268,7 +1265,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1277,7 +1274,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1300,7 +1297,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1309,7 +1306,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1342,7 +1339,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "8vh",
                                         fontSize: "4vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                         marginTop: "2vh",
                                     }}
@@ -1351,7 +1348,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "CENTER",
                                         fontSize: "3vh",
                                     }}
@@ -1375,7 +1372,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -1384,7 +1381,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -1424,7 +1421,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -1432,7 +1429,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -1454,7 +1451,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -1462,7 +1459,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -1481,7 +1478,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -1489,7 +1486,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -1567,7 +1564,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -1575,7 +1572,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -1603,7 +1600,7 @@ const CodeOfConduct = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "10vh",
                                         fontSize: "5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -1611,7 +1608,7 @@ const CodeOfConduct = (props) => {
                                 </Box>
                                 <p
                                     style={{
-                                        fontFamily: "roboto",
+                                        //fontFamily: "roboto",
                                         textAlign: "left",
                                         fontSize: "3vh",
                                         marginTop: "2vh",
@@ -1633,11 +1630,10 @@ const CodeOfConduct = (props) => {
                                 <table className="table table-borderless table-hover">
                                     <tbody>
                                         <tr>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Full Name:
+                                            <td className="text-center ">
+                                                <label htmlFor="full_name">
+                                                    Full Name :
+                                                </label>
                                             </td>
                                             <td>
                                                 <TextAreaInput
@@ -1655,71 +1651,36 @@ const CodeOfConduct = (props) => {
                                         </tr>
 
                                         <tr>
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Signature:{" "}
+                                            <td className="text-center ">
+                                                <label htmlFor="signature_employer">
+                                                    Signature :
+                                                </label>
                                             </td>
                                             <td>
-                                                <TextField
-                                                    type="file"
-                                                    fullWidth
-                                                    name={"employee_signature"}
-                                                    onChange={(e) =>
-                                                        encodeImageFileAsURLHere(
-                                                            e
-                                                        )
+                                                <FilePicker
+                                                    formState={formState}
+                                                    label={null}
+                                                    name={"signature_employer"}
+                                                    type={"file"}
+                                                    validation={validation}
+                                                    defaultValue={
+                                                        userInfoCOC &&
+                                                        userInfoCOC.employee_signature
                                                     }
-                                                />{" "}
-                                                {userInfoCOC &&
-                                                userInfoCOC.employee_signature !==
-                                                    undefined ? (
-                                                    <>
-                                                        <p
-                                                            style={{
-                                                                align: "left",
-                                                                fontFamily:
-                                                                    "muller",
-                                                            }}
-                                                        >
-                                                            <Box
-                                                                sx={{
-                                                                    bgcolor:
-                                                                        "#cfe8fc",
-                                                                    height: "30",
-                                                                    fontSize:
-                                                                        "20",
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                    textAlign:
-                                                                        "center",
-                                                                }}
-                                                            >
-                                                                Previous File
-                                                                Chosen:
-                                                            </Box>
-
-                                                            {userInfoCOC.employee_signature
-                                                                ? userInfoCOC.employee_signature
-                                                                : ""}
-                                                        </p>
-                                                    </>
-                                                ) : null}
+                                                />
                                             </td>
 
-                                            <td
-                                                className="text-center "
-                                                style={{ fontFamily: "Muller" }}
-                                            >
-                                                Date:{" "}
+                                            <td className="text-center ">
+                                                <label htmlFor="date">
+                                                    Date :
+                                                </label>
                                             </td>
                                             <td>
                                                 <DatePicker
                                                     formState={formState}
                                                     name={"date"}
                                                     label={""}
-                                                    validation={validation}
+                                                    validation={validationDate}
                                                     placeholder={""}
                                                     defaultValue={
                                                         userInfoCOC &&
@@ -1731,44 +1692,40 @@ const CodeOfConduct = (props) => {
                                     </tbody>
                                 </table>
                             </div>
-                            <Stack
-                                display={"flex"}
-                                flexDirection={"row"}
-                                justifyContent={"space-between"}
-                                className="py-5"
-                            >
-                                <Button
-                                    onClick={onPreviousClick}
-                                    type="button"
-                                    variant="outlined"
+                            {idFromDashBoard !== undefined ? null : (
+                                <Stack
+                                    display={"flex"}
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    className="py-5"
                                 >
-                                    Previous
-                                </Button>
-                                <LoadingButton
-                                    loading={loading}
-                                    size="large"
-                                    variant="contained"
-                                    type="submit"
-                                >
-                                    Submit Form
-                                </LoadingButton>
-                                <Button
+                                    <Button
+                                        onClick={onPreviousClick}
+                                        type="button"
+                                        variant="outlined"
+                                    >
+                                        Previous
+                                    </Button>
+                                    <LoadingButton
+                                        loading={loading}
+                                        size="large"
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        Final Submit
+                                    </LoadingButton>
+                                    {/* <Button
                                     onClick={onNextClicked}
-                                    disabled={
-                                        userInfoCOC === "" ||
-                                        userInfoCOC === null
-                                            ? true
-                                            : false
-                                    }
                                     type="button"
                                     variant="outlined"
                                 >
                                     Next
-                                </Button>
-                            </Stack>
+                                </Button> */}
+                                </Stack>
+                            )}
                         </div>
                     </form>
-                </>
+                </div>
             )}
         </div>
     );

@@ -1,5 +1,5 @@
 import { CheckBox } from "@mui/icons-material";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, FormHelperText } from "@mui/material";
 import React from "react";
 
 function InputCkeckBox(props) {
@@ -9,7 +9,7 @@ function InputCkeckBox(props) {
         formState: { errors },
     } = formState;
     return (
-        <div class="form-check">
+        <div className="form-check">
             <FormControlLabel
                 control={
                     <Checkbox
@@ -21,6 +21,9 @@ function InputCkeckBox(props) {
                 }
                 label={label}
             />
+            <FormHelperText error={true}>
+                {errors[name]?.message}
+            </FormHelperText>
         </div>
     );
 }

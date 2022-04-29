@@ -3,16 +3,16 @@ import { Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import TextInput from "../../Input/TextInput";
+import TextInput from "../../components/Input/TextInput";
 import { userPostRequest } from "../../actions/user.action";
 import Validation from "../../validation/Validations";
 import { AlternateEmail, Person, Phone } from "@mui/icons-material";
 
-function AddUserForm(props) {
-    const emailValidation = Validation().validationEmail;
-    const nameValidation = Validation().validationDegree;
-    const phoneValidation = Validation().validationPhone;
+const emailValidation = Validation().validationEmail;
+const nameValidation = Validation().validationName;
+const phoneValidation = Validation().validationPhone;
 
+function AddUserForm(props) {
     const formState = useForm();
     const dispatch = useDispatch();
     let user = { name: "", email: "", mobileNo: "" };
@@ -72,6 +72,7 @@ function AddUserForm(props) {
                 validation={phoneValidation}
                 icon={<Phone fontSize="small" />}
             />
+
             <LoadingButton
                 type="submit"
                 size="large"
@@ -83,7 +84,7 @@ function AddUserForm(props) {
                     fontWeight={"bold"}
                     letterSpacing={2}
                 >
-                    Add User
+                    {update ? "update" : "Add User"}
                 </Typography>
             </LoadingButton>
         </Stack>

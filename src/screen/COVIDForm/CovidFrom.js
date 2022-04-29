@@ -11,7 +11,6 @@ import "../BackGroundVerification/index.css";
 import { COVIDGetRequest } from "../../actions/form.get.action";
 import { COVIDPostRequest } from "../../actions/form.post.action";
 import { LoadingButton } from "@mui/lab";
-import Snackbars from "../../components/Snackbar";
 import CovidFormAppBar from "./CovidFormAppBar";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +18,10 @@ import FilePicker from "../../InputFiles/FileInput";
 import { useEffect } from "react";
 import { Button, CircularProgress, Stack } from "@mui/material";
 
-const CovidForm = (props) => {
+const CovidForm = ({ idFromDashBoard }) => {
+    const idFromLocalStorage = localStorage.getItem("id");
+    const id =
+        idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const navigate = useNavigate();
     const formState = useForm();
     const { handleSubmit, watch } = formState;
@@ -43,15 +45,13 @@ const CovidForm = (props) => {
         navigate("/gratuity-form", { replace: true });
     };
     const onSubmit = (data) => {
-        //history.push("/epf-form")
-
         const covidApiObj = {
-            id: 12,
+            id: id,
             phone: data.phoneNumber,
             dateOfBirth: data.dateOfBirth,
             fever: data.fever == "Yes" ? true : false,
             name: data.firstName,
-            signature: data.confirmSignUser[0].name,
+            //signature: data.confirmSignUser[0].name,
             date: data.confirmDateUser,
             employee_name: data.confirmNameUser,
             employee_id: data.empId,
@@ -78,11 +78,13 @@ const CovidForm = (props) => {
             out_of_containment_zone:
                 data.out_of_containment_zone == "Yes" ? true : false,
         };
-        //dispatch(BGVRequest(empBGVobj))
-        dispatch(COVIDPostRequest(covidApiObj, navigate));
+        const formData = new FormData();
+        formData.append("confirmSignUser", data.confirmSignUser[0]);
+        formData.append("data", JSON.stringify(covidApiObj));
+        dispatch(COVIDPostRequest(formData, navigate));
     };
     useEffect(() => {
-        dispatch(COVIDGetRequest());
+        dispatch(COVIDGetRequest(id));
     }, []);
     console.log(userInfoCovid);
 
@@ -91,7 +93,7 @@ const CovidForm = (props) => {
     const validationName = Validation().validationName;
 
     return (
-        <div>
+        <div style={{ minWidth: "1000px" }}>
             {loadingCovid && (
                 <CircularProgress
                     color="inherit"
@@ -102,7 +104,7 @@ const CovidForm = (props) => {
                     }}
                 />
             )}
-            {true && (
+            {userInfoCovid && (
                 <>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CovidFormAppBar />
@@ -113,7 +115,7 @@ const CovidForm = (props) => {
                                 <Box>
                                     <p
                                         style={{
-                                            fontFamily: "muller",
+                                            //fontFamily: "muller",
                                             textAlign: "center",
                                             fontSize: "3vh",
                                             marginTop: "2vh",
@@ -134,7 +136,7 @@ const CovidForm = (props) => {
                                 <Box>
                                     <p
                                         style={{
-                                            fontFamily: "muller",
+                                            //fontFamily: "muller",
                                             fontSize: "3vh",
                                             marginTop: "2vh",
                                             textAlign: "center",
@@ -151,7 +153,7 @@ const CovidForm = (props) => {
                                 <Box>
                                     <p
                                         style={{
-                                            fontFamily: "muller",
+                                            //fontFamily: "muller",
                                             fontSize: "3vh",
                                             marginTop: "2vh",
                                             textAlign: "center",
@@ -173,7 +175,7 @@ const CovidForm = (props) => {
                                     bgcolor: "#cfe8fc",
                                     height: "5vh",
                                     fontSize: "4vh",
-                                    fontFamily: "Muller",
+                                    //fontFamily: "Muller",
                                     textAlign: "center",
                                 }}
                             >
@@ -186,7 +188,7 @@ const CovidForm = (props) => {
                                         <tr>
                                             <td
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 Name –
                                             </td>
@@ -206,7 +208,7 @@ const CovidForm = (props) => {
 
                                             <td
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 Employee ID{" "}
                                             </td>
@@ -229,7 +231,7 @@ const CovidForm = (props) => {
                                         <tr>
                                             <td
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 Phone –
                                             </td>
@@ -250,7 +252,7 @@ const CovidForm = (props) => {
 
                                             <td
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 DoB-
                                             </td>
@@ -271,31 +273,30 @@ const CovidForm = (props) => {
                             </div>
                             <div>
                                 <br />
-                                <p>
-                                    <div>
-                                        {/* Do you have any symptoms from the below given list in the last 15 days – */}
-                                        <Box
-                                            sx={{
-                                                bgcolor: "#cfe8fc",
-                                                height: "5vh",
-                                                fontSize: "3vh",
-                                                fontFamily: "Muller",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            {" "}
-                                            Do you have any symptoms from the
-                                            below given list in the last 15 days
-                                            –
-                                        </Box>
-                                    </div>
-                                </p>
+
+                                <div>
+                                    {/* Do you have any symptoms from the below given list in the last 15 days – */}
+                                    <Box
+                                        sx={{
+                                            bgcolor: "#cfe8fc",
+                                            height: "5vh",
+                                            fontSize: "3vh",
+                                            //fontFamily: "Muller",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {" "}
+                                        Do you have any symptoms from the below
+                                        given list in the last 15 days –
+                                    </Box>
+                                </div>
+
                                 <ul style={{ listStyleType: "none" }}>
                                     <li>
                                         <div className="contactEmp">
                                             <p
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 a. Dry Cough –
                                             </p>
@@ -323,7 +324,7 @@ const CovidForm = (props) => {
                                         <div className="contactEmp">
                                             <p
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 {" "}
                                                 b. Sore Throat –
@@ -353,7 +354,7 @@ const CovidForm = (props) => {
                                         <div className="contactEmp">
                                             <p
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 c. Breathing problem -
                                             </p>
@@ -381,7 +382,7 @@ const CovidForm = (props) => {
                                         <div className="contactEmp">
                                             <p
                                                 className="text-center "
-                                                style={{ fontFamily: "Muller" }}
+                                                //style={{ fontFamily: "Muller" }}
                                             >
                                                 {" "}
                                                 d. Fever{" "}
@@ -427,7 +428,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -437,29 +438,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"conCovid"}
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.conCovid
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "conCovid"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.conCovid
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -468,7 +475,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -478,29 +485,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"conCovidFam"}
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.conCovidFam
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "conCovidFam"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.conCovidFam
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -511,7 +524,7 @@ const CovidForm = (props) => {
                                         <p
                                             className="text-center "
                                             style={{
-                                                fontFamily: "Muller",
+                                                //fontFamily: "Muller",
                                                 fontSize: "20px",
                                                 fontWeight: "700",
                                             }}
@@ -551,7 +564,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -560,31 +573,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "respirtoryDisease"
-                                                            }
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.respirtoryDisease
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "respirtoryDisease"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.respirtoryDisease
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -594,7 +611,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -603,31 +620,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "heartDisease"
-                                                            }
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.heartDisease
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "heartDisease"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.heartDisease
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -649,7 +670,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -658,29 +679,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"diabetes"}
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.diabetes
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "diabetes"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.diabetes
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -702,7 +729,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -711,31 +738,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "medicalConditions"
-                                                            }
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.medicalConditions
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "medicalConditions"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.medicalConditions
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -757,7 +788,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -766,29 +797,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={"vaccinated"}
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.vaccinated
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "vaccinated"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.vaccinated
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -899,7 +936,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -908,31 +945,35 @@ const CovidForm = (props) => {
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
-                                        <tr>
-                                            <td>
-                                                <div className="btnSubmitcontainer">
-                                                    <div className="center">
-                                                        <InputRadioGroup
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "containmentZoneDetail"
-                                                            }
-                                                            labelGroup={null}
-                                                            label={[
-                                                                "Yes",
-                                                                "No",
-                                                            ]}
-                                                            defaultValue={
-                                                                userInfoCovid &&
-                                                                userInfoCovid.containmentZoneDetail
-                                                            }
-                                                        />
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div className="btnSubmitcontainer">
+                                                        <div className="center">
+                                                            <InputRadioGroup
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "containmentZoneDetail"
+                                                                }
+                                                                labelGroup={
+                                                                    null
+                                                                }
+                                                                label={[
+                                                                    "Yes",
+                                                                    "No",
+                                                                ]}
+                                                                defaultValue={
+                                                                    userInfoCovid &&
+                                                                    userInfoCovid.containmentZoneDetail
+                                                                }
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -942,9 +983,11 @@ const CovidForm = (props) => {
                                             <tr>
                                                 <td
                                                     className="text-center "
-                                                    style={{
-                                                        fontFamily: "Muller",
-                                                    }}
+                                                    style={
+                                                        {
+                                                            //fontFamily: "Muller",
+                                                        }
+                                                    }
                                                 >
                                                     My mode of travel to work
                                                     everyday is{" "}
@@ -954,7 +997,9 @@ const CovidForm = (props) => {
                                                         formState={formState}
                                                         name={"travelMode"}
                                                         label={"Mode of travel"}
-                                                        validation={validation}
+                                                        validation={
+                                                            validationName
+                                                        }
                                                         placeholder={""}
                                                         defaultValue={
                                                             userInfoCovid &&
@@ -971,7 +1016,7 @@ const CovidForm = (props) => {
                                         bgcolor: "#cfe8fc",
                                         height: "5vh",
                                         fontSize: "3.5vh",
-                                        fontFamily: "Muller",
+                                        //fontFamily: "Muller",
                                         textAlign: "center",
                                     }}
                                 >
@@ -996,7 +1041,9 @@ const CovidForm = (props) => {
                                                         formState={formState}
                                                         name={"confirmNameUser"}
                                                         label={"Full Name"}
-                                                        validation={validation}
+                                                        validation={
+                                                            validationName
+                                                        }
                                                         placeholder={""}
                                                         defaultValue={
                                                             userInfoCovid &&
@@ -1006,9 +1053,11 @@ const CovidForm = (props) => {
                                                 </td>
                                                 <td
                                                     className="text-center "
-                                                    style={{
-                                                        fontFamily: "Muller",
-                                                    }}
+                                                    style={
+                                                        {
+                                                            //fontFamily: "Muller",
+                                                        }
+                                                    }
                                                 >
                                                     Signature{" "}
                                                 </td>
@@ -1018,14 +1067,19 @@ const CovidForm = (props) => {
                                                         name={"confirmSignUser"}
                                                         validation={validation}
                                                         placeholder={""}
-                                                        defaultValue={null}
+                                                        defaultValue={
+                                                            userInfoCovid &&
+                                                            userInfoCovid.confirmSignUser
+                                                        }
                                                     />
                                                 </td>
                                                 <td
                                                     className="text-center "
-                                                    style={{
-                                                        fontFamily: "Muller",
-                                                    }}
+                                                    style={
+                                                        {
+                                                            //fontFamily: "Muller",
+                                                        }
+                                                    }
                                                 >
                                                     Date{" "}
                                                 </td>
@@ -1050,41 +1104,37 @@ const CovidForm = (props) => {
                             </div>
 
                             <br />
-                            <Stack
-                                display={"flex"}
-                                flexDirection={"row"}
-                                justifyContent={"space-between"}
-                                className="py-5"
-                            >
-                                <Button
-                                    onClick={onPreviousClick}
-                                    type="button"
-                                    variant="outlined"
+                            {idFromDashBoard !== undefined ? null : (
+                                <Stack
+                                    display={"flex"}
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    className="py-5"
                                 >
-                                    Previous
-                                </Button>
-                                <LoadingButton
-                                    loading={loading}
-                                    size="large"
-                                    variant="contained"
-                                    type="submit"
-                                >
-                                    Submit Form
-                                </LoadingButton>
-                                <Button
-                                    onClick={onNextClicked}
-                                    disabled={
-                                        userInfoCovid === "" ||
-                                        userInfoCovid === null
-                                            ? true
-                                            : false
-                                    }
-                                    type="button"
-                                    variant="outlined"
-                                >
-                                    Next
-                                </Button>
-                            </Stack>
+                                    <Button
+                                        onClick={onPreviousClick}
+                                        type="button"
+                                        variant="outlined"
+                                    >
+                                        Previous
+                                    </Button>
+                                    <LoadingButton
+                                        loading={loading}
+                                        size="large"
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        Submit Form
+                                    </LoadingButton>
+                                    <Button
+                                        onClick={onNextClicked}
+                                        type="button"
+                                        variant="outlined"
+                                    >
+                                        Next
+                                    </Button>
+                                </Stack>
+                            )}
                         </div>
                     </form>
                 </>

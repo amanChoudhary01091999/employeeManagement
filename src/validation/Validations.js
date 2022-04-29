@@ -1,5 +1,3 @@
-import React from "react";
-
 function Validation() {
     const validation = {
         validationAddress: {
@@ -9,7 +7,7 @@ function Validation() {
             },
             minLength: {
                 value: 3,
-                message: "min",
+                message: "min 3 character is required",
             },
         },
         validationName: {
@@ -19,21 +17,21 @@ function Validation() {
             },
             minLength: {
                 value: 3,
-                message: "min",
+                message: "min 3 character is required",
             },
             pattern: {
                 value: new RegExp(/^[a-zA-Z ]*$/),
-                message: "name is Not Valid",
+                message: "Not Valid",
             },
         },
         validationNameNotRequired: {
             minLength: {
                 value: 3,
-                message: "min",
+                message: "min 3 character is required",
             },
             pattern: {
                 value: new RegExp(/^[a-zA-Z ]*$/),
-                message: "name is Not Valid",
+                message: "Not Valid",
             },
         },
         validationDegree: {
@@ -49,7 +47,7 @@ function Validation() {
             },
             minLength: {
                 value: 3,
-                message: "Min length is 3",
+                message: "Min length should be 3",
             },
             maxLength: {
                 value: 100,
@@ -63,11 +61,11 @@ function Validation() {
             },
             minLength: {
                 value: 3,
-                message: "Min length is 3",
+                message: "Min length should be 3",
             },
             maxLength: {
                 value: 300,
-                message: "Max length is 300",
+                message: "Max length should be 300",
             },
         },
         validationPhone: {
@@ -144,7 +142,7 @@ function Validation() {
                 message: "this field is required",
             },
             pattern: {
-                value: new RegExp(/^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$/),
+                value: new RegExp(/^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/),
                 message: "Aadhar Number is Not Valid",
             },
         },
@@ -156,6 +154,16 @@ function Validation() {
             pattern: {
                 value: new RegExp(/[A-Z]{5}[0-9]{4}[A-Z]{1}/),
                 message: "PAN Number is Not Valid",
+            },
+        },
+        validationBankAccount: {
+            required: {
+                value: true,
+                message: "this field is required",
+            },
+            pattern: {
+                value: new RegExp(/^\d{9,18}$/),
+                message: "Bank Account Number is Not Valid",
             },
         },
     };
