@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GFGetRequest } from "../../actions/form.get.action";
 import { GFPostRequest } from "../../actions/form.post.action";
+import Spinner from "../../components/spinner/Spinner";
 
 import GFAcknowledgement from "./GFAcknowledgement";
 import GFCertificateEmployer from "./GFCertificateEmployer";
@@ -29,11 +30,11 @@ function GFFormMain({ idFromDashBoard }) {
     const GFGetState = useSelector((state) => state.GFGetReducer);
     const { loadingGF, userInfoGF, errorGF } = GFGetState;
     const onPreviousClick = () => {
-        navigate("/covid-form", { replace: true });
+        navigate("/form/covid-form", { replace: true });
     };
 
     const onNextClicked = () => {
-        navigate("/epf-form", { replace: true });
+        navigate("/form/epf-form", { replace: true });
     };
 
     const onSubmit = (data) => {
@@ -48,8 +49,8 @@ function GFFormMain({ idFromDashBoard }) {
             dob_of_nominee: data.dob_of_nominee,
             shared_proportion: data.shared_proportion,
 
-            id: id,
-            employee_id: "100",
+            user_id: id,
+            //employee_id: "100",
             sl_no: "string",
             // statement..
             employee_full_name: data.employee_full_name,
@@ -78,26 +79,19 @@ function GFFormMain({ idFromDashBoard }) {
             certificate_date: data.certificate_date,
             name_of_the_establishment: data.name_of_the_establishment,
             address_of_the_establishment: data.address_of_the_establishment,
-            rubber_stamp_there_of: data.rubber_stamp_there_of,
+            //rubber_stamp_there_of: data.rubber_stamp_there_of,
 
             // acknowledgement...
             acknowledgement_date: data.acknowledgement_date,
             //signature_of_the_employee: data.signature_of_the_employee[0].name,
         };
+        console.log(GFobjectAPI);
         const formData = new FormData();
-        formData.append("employee_signature", data.employee_signature[0]);
-        formData.append(
-            "signature_of_witnesses",
-            data.signature_of_witnesses[0]
-        );
-        formData.append(
-            "signature_of_the_employer",
-            data.signature_of_the_employer[0]
-        );
-        formData.append(
-            "signature_of_the_employee",
-            data.signature_of_the_employee[0]
-        );
+        formData.append("file1", data.employee_signature[0]);
+        formData.append("file2", data.signature_of_witnesses[0]);
+        formData.append("file3", data.signature_of_the_employer[0]);
+        formData.append("file5", data.rubber_stamp_there_of[0]);
+        formData.append("file4", data.signature_of_the_employee[0]);
         formData.append("data", JSON.stringify(GFobjectAPI));
         dispatch(GFPostRequest(formData, navigate));
     };
@@ -107,21 +101,12 @@ function GFFormMain({ idFromDashBoard }) {
 
     return (
         <div style={{ minWidth: "1000px" }}>
-            {loadingGF && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+            {loadingGF && <Spinner />}
 
             {userInfoGF && (
                 <>
                     <GratuityAppBar />
-                    <div style={{ backgroundColor: "#F3F3F3" }}>
+                    <div>
                         <div className="container py-4">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <GFFormNomination formState={formState} />

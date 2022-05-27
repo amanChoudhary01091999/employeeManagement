@@ -7,7 +7,7 @@ import TextInput from "../../components/Input/TextInput";
 import { useSelector, useDispatch } from "react-redux";
 import { loginRequest } from "../../actions/login.action";
 import Validation from "../../validation/Validations";
-import { AlternateEmail, LockRounded } from "@mui/icons-material";
+import { AlternateEmail, Email, LockRounded } from "@mui/icons-material";
 
 const currencies = [
     {
@@ -15,7 +15,7 @@ const currencies = [
         label: "HR",
     },
     {
-        value: "adminm",
+        value: "mod",
         label: "Moderator",
     },
 ];
@@ -44,7 +44,7 @@ function LoginForm() {
     const dispatch = useDispatch();
     const OnSubmit = (data) => {
         const LoginApiObj = {
-            role: ["admin"],
+            role: [currency],
             email: data.user_name,
             password: data.password,
         };
@@ -69,7 +69,7 @@ function LoginForm() {
                 label={"email"}
                 id={"user_name"}
                 validation={validationEmail}
-                icon={<AlternateEmail fontSize="small" />}
+                icon={<Email fontSize="small" />}
             />
             <TextField
                 id="role"

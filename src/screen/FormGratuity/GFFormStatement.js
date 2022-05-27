@@ -12,6 +12,7 @@ function GFFormStatement(props) {
 
     const validation = Validation().validationDegree;
     const validationName = Validation().validationName;
+    const validationNumber = Validation().validationNumber;
 
     return (
         <div>
@@ -87,7 +88,7 @@ function GFFormStatement(props) {
                                 formState={props.formState}
                                 name={"religion"}
                                 label={"Religion"}
-                                validation={validation}
+                                validation={validationName}
                                 defaultValue={userInfoGF && userInfoGF.religion}
                                 placeholder={""}
                             />
@@ -147,7 +148,7 @@ function GFFormStatement(props) {
                                 defaultValue={
                                     userInfoGF && userInfoGF.department
                                 }
-                                validation={validation}
+                                validation={validationName}
                                 placeholder={""}
                             />
                         </div>
@@ -171,7 +172,7 @@ function GFFormStatement(props) {
                                 formState={props.formState}
                                 name={"ticket_no"}
                                 label={"Ticket Number"}
-                                validation={validation}
+                                validation={validationNumber}
                                 defaultValue={
                                     userInfoGF && userInfoGF.ticket_no
                                 }
@@ -254,7 +255,7 @@ function GFFormStatement(props) {
                                             userInfoGF && userInfoGF.village
                                         }
                                         label={"Village"}
-                                        validation={validation}
+                                        validation={validationName}
                                         placeholder={""}
                                     />
                                 </div>
@@ -281,7 +282,7 @@ function GFFormStatement(props) {
                                         defaultValue={
                                             userInfoGF && userInfoGF.thana
                                         }
-                                        validation={validation}
+                                        validation={validationName}
                                         placeholder={""}
                                     />
                                 </div>
@@ -308,7 +309,7 @@ function GFFormStatement(props) {
                                         formState={props.formState}
                                         name={"sub_division"}
                                         label={"Sub Division"}
-                                        validation={validation}
+                                        validation={validationName}
                                         placeholder={""}
                                     />
                                 </div>
@@ -324,7 +325,7 @@ function GFFormStatement(props) {
                     name={"place"}
                     label={"Place"}
                     defaultValue={userInfoGF && userInfoGF.place}
-                    validation={validation}
+                    validation={validationName}
                     placeholder={""}
                 />
             </div>

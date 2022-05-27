@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import BackgroundVerification from "../BackGroundVerification/BackGroundVerification";
 import CodeOfConduct from "../CodeOfConductForm/CodeOfConduct";
 import CovidForm from "../COVIDForm/CovidFrom";
@@ -9,11 +9,13 @@ import RCAFForm from "../RefCheckAuthForm/RCAFForm";
 import UserDetailBGV from "./user.detail.bgv";
 
 function UserDetailMain() {
-    const { state } = useLocation();
-    console.log(state);
-
-    const { id } = state === null ? {} : state;
+    const { id } = useParams();
     console.log(id);
+    // const { state } = useLocation();
+    // console.log(state);
+
+    // const { id } = state === null ? {} : state;
+    // console.log(id);
 
     return (
         <div style={{ margin: 0 }}>

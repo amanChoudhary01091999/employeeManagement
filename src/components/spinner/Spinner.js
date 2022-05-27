@@ -3,23 +3,15 @@ import React from "react";
 
 function Spinner() {
     return (
-        <div
+        <CircularProgress
+            color="inherit"
+            disableShrink
             style={{
-                width: "100vw",
-                height: "100vh",
-                position: "fixed",
-                backgroundColor: "transparent",
+                color: "indigo",
+                position: "absolute",
+                bottom: "50%",
             }}
-        >
-            <CircularProgress
-                color="inherit"
-                style={{
-                    color: "indigo",
-                    position: "fixed",
-                    bottom: "50%",
-                }}
-            />
-        </div>
+        />
     );
 }
 

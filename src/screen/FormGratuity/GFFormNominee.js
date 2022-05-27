@@ -12,6 +12,7 @@ function GFFormNominee(props) {
 
     const validation = Validation().validationDegree;
     const validationName = Validation().validationName;
+    const validationNumber = Validation().validationNumber;
     return (
         <div>
             <h5 style={{ fontFamily: "Muller", textAlign: "center" }}>
@@ -127,8 +128,8 @@ function GFFormNominee(props) {
                             <TextAreaInput
                                 formState={props.formState}
                                 name={"shared_proportion"}
-                                label={"Shared Proposition"}
-                                validation={validation}
+                                label={"Shared Proposition in %"}
+                                validation={validationNumber}
                                 defaultValue={
                                     userInfoGF && userInfoGF.shared_proportion
                                 }

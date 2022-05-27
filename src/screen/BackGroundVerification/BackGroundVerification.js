@@ -1,11 +1,9 @@
-import { Box, Button, CircularProgress } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import { Box, Button, Stack } from "@mui/material";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "../../InputFiles/DatePicker";
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
 import Validation from "../../validation/Validations";
-import DashBoardAppBar from "../HRDashboard/DashBoardAppBar";
 import BGVAppBar from "./BGVAppBar";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,28 +11,35 @@ import { BGVPostRequest } from "../../actions/form.post.action";
 import { BGVGetRequest } from "../../actions/form.get.action";
 import { LoadingButton } from "@mui/lab";
 import TextAreaInput from "../../InputFiles/TextAreaInput";
-import { typography } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
+import Spinner from "../../components/spinner/Spinner";
 
 const BackgroundVerification = ({ idFromDashBoard }) => {
     const idFromLocalStorage = localStorage.getItem("id");
     const id =
         idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const formState = useForm();
-    const { handleSubmit, watch, register } = formState;
+    const { handleSubmit, watch } = formState;
     const workEx = watch("workEx", "No");
+    const isPassport = watch("isPassport", "No");
+    const employment_start_dateE1 = watch("employment_start_dateE1");
+    const employment_start_dateE2 = watch("employment_start_dateE2");
+    const employment_start_dateE3 = watch("employment_start_dateE3");
+    const employment_end_dateE1 = watch("employment_end_dateE1");
+    const employment_end_dateE2 = watch("employment_end_dateE2");
+    const employment_end_dateE3 = watch("employment_end_dateE3");
 
     const bgvState = useSelector((state) => state.BGVReducer);
-    const { loading, error, userInfo } = bgvState;
+    const { loading, userInfo } = bgvState;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const bgvGetState = useSelector((state) => state.BGVGetReducer);
-    const { loadingBGV, userInfoBGV, errorBGV } = bgvGetState;
+    const { loadingBGV, userInfoBGV } = bgvGetState;
 
     const onNextClick = () => {
-        navigate("/covid-form", { replace: true });
+        navigate("/form/covid-form", { replace: true });
     };
 
     useEffect(() => {
@@ -43,14 +48,13 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
 
     const onSubmit = (data) => {
         const empBGVobj = {
-            id: id,
+            user_id: id,
             gender: data.gender,
             email1: data.email1,
             email2: data.email2,
             place: data.place,
             //signature: data.signature[0].name,
             date: data.date,
-            employee_id: "101",
             first_name: data.first_name,
             middle_name: data.middle_name === undefined ? "" : data.middle_name,
             last_name: data.last_name,
@@ -58,13 +62,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
             fathers_middle_name:
                 data.fathers_middle_name === undefined
                     ? ""
-                    : data.fathers.middle_name,
-            fathers_last_Name: data.fathers_last_Name,
+                    : data.fathers_middle_name,
+            fathers_last_Name: data.fathers_last_name,
             date_of_birth: data.date_of_birth,
             driving_license_no:
                 data.driving_license_no === undefined
                     ? ""
                     : data.driving_license_no,
+            has_passport: data.isPassport === "Yes" ? true : false,
             passport_no: data.passport_no === undefined ? "" : data.passport_no,
             passport_valid_until:
                 data.passport_valid_until === undefined
@@ -87,13 +92,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                 data.contact2_Land_Line_No === undefined
                     ? ""
                     : data.contact2_Land_Line_No,
+            work_experience: data.workEx === "Yes" ? true : false,
             first_reference: {
                 designation: data.designation_first,
                 company: data.company_first,
                 mobile: data.mobile_first,
                 email: data.email_first,
                 capacity: data.capacity_first,
-                current_address: data.name_first,
+                name: data.name_first,
             },
             second_reference: {
                 designation: data.designation_second,
@@ -101,7 +107,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                 mobile: data.mobile_second,
                 email: data.email_second,
                 capacity: data.capacity_second,
-                current_address: data.name_second,
+                name: data.name_second,
             },
             pg_degree: {
                 location: data.locationPG === undefined ? "" : data.locationPG,
@@ -287,8 +293,9 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                     : false,
             full_name: data.full_name,
         };
+        console.log(empBGVobj);
         const formData = new FormData();
-        formData.append("signature", data.signature[0]);
+        formData.append("file", data.signature[0]);
         formData.append("data", JSON.stringify(empBGVobj));
         dispatch(BGVPostRequest(formData, navigate));
     };
@@ -302,18 +309,13 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
     const validationLand = Validation().validationLandline;
     const validationDL = Validation().validationDrivingLicence;
     const validationPass = Validation().validationPassport;
+    const validationPhoneNotRequired = Validation().validationPhoneNotRequired;
+    const validationNumberNotRequired =
+        Validation().validationNumberNotRequired;
+    const validationNumber = Validation().validationNumber;
     return (
         <div style={{ minWidth: "1500px" }}>
-            {loadingBGV && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+            {loadingBGV && <Spinner />}
 
             {userInfoBGV && (
                 <>
@@ -495,7 +497,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                 formState
                                                             }
                                                             name={
-                                                                " first_middle_name"
+                                                                "fathers_middle_name"
                                                             }
                                                             label={
                                                                 "Father's middle name"
@@ -505,7 +507,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                             }
                                                             defaultValue={
                                                                 userInfoBGV &&
-                                                                userInfoBGV.first_middle_name
+                                                                userInfoBGV.fathers_middle_name
                                                             }
                                                         />
                                                     </td>
@@ -534,7 +536,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                             }
                                                             defaultValue={
                                                                 userInfoBGV &&
-                                                                userInfoBGV.fathers_last_name
+                                                                userInfoBGV.fathers_last_Name
                                                             }
                                                         />
                                                     </td>
@@ -630,7 +632,6 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                         />
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td
                                                         className="text-center "
@@ -639,54 +640,88 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                 "Muller",
                                                         }}
                                                     >
-                                                        Passport Number
+                                                        Do you have a passport
                                                     </td>
                                                     <td>
-                                                        <TextAreaInput
+                                                        <InputRadioGroup
                                                             formState={
                                                                 formState
                                                             }
-                                                            name={"passport_no"}
-                                                            label={
-                                                                "Passport Number"
-                                                            }
-                                                            validation={
-                                                                validationPass
-                                                            }
+                                                            name={"isPassport"}
+                                                            labelGroup={null}
+                                                            label={[
+                                                                "Yes",
+                                                                "No",
+                                                            ]}
                                                             defaultValue={
                                                                 userInfoBGV &&
-                                                                userInfoBGV.passport_no
+                                                                userInfoBGV.has_passport
                                                             }
                                                         />
                                                     </td>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Valid until
-                                                    </td>
-                                                    <td>
-                                                        <DatePicker
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "passport_valid_until"
-                                                            }
-                                                            label={""}
-                                                            type={"date"}
-                                                            validation={
-                                                                validation
-                                                            }
-                                                            defaultValue={
-                                                                userInfoBGV &&
-                                                                userInfoBGV.passport_valid_until
-                                                            }
-                                                        />
-                                                        {/* <input
+                                                </tr>
+                                                {isPassport === "Yes" ? (
+                                                    <tr>
+                                                        <td
+                                                            className="text-center "
+                                                            style={{
+                                                                fontFamily:
+                                                                    "Muller",
+                                                            }}
+                                                        >
+                                                            Passport Number
+                                                        </td>
+                                                        <td>
+                                                            <TextAreaInput
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "passport_no"
+                                                                }
+                                                                label={
+                                                                    "Passport Number"
+                                                                }
+                                                                validation={
+                                                                    validationPass
+                                                                }
+                                                                defaultValue={
+                                                                    userInfoBGV &&
+                                                                    userInfoBGV.passport_no
+                                                                }
+                                                            />
+                                                        </td>
+                                                        <td
+                                                            className="text-center "
+                                                            style={{
+                                                                fontFamily:
+                                                                    "Muller",
+                                                            }}
+                                                        >
+                                                            Valid until
+                                                        </td>
+                                                        <td>
+                                                            <DatePicker
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "passport_valid_until"
+                                                                }
+                                                                label={""}
+                                                                type={"date"}
+                                                                minDate={
+                                                                    new Date()
+                                                                }
+                                                                validation={
+                                                                    validation
+                                                                }
+                                                                defaultValue={
+                                                                    userInfoBGV &&
+                                                                    userInfoBGV.passport_valid_until
+                                                                }
+                                                            />
+                                                            {/* <input
                                                     type="date"
                                                     min="1950-01-01"
                                                     max="2050-01-01"
@@ -697,33 +732,37 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                     )}
                                                     defaultValue=
                                                 /> */}
-                                                    </td>
-                                                    <td
-                                                        className="text-center "
-                                                        style={{
-                                                            fontFamily:
-                                                                "Muller",
-                                                        }}
-                                                    >
-                                                        Place of issue passport
-                                                    </td>
-                                                    <td>
-                                                        <TextAreaInput
-                                                            formState={
-                                                                formState
-                                                            }
-                                                            name={
-                                                                "passport_issue_place"
-                                                            }
-                                                            label={"Place"}
-                                                            //validation={validation}
-                                                            defaultValue={
-                                                                userInfoBGV &&
-                                                                userInfoBGV.passport_issue_place
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td
+                                                            className="text-center "
+                                                            style={{
+                                                                fontFamily:
+                                                                    "Muller",
+                                                            }}
+                                                        >
+                                                            Place of issue
+                                                            passport
+                                                        </td>
+                                                        <td>
+                                                            <TextAreaInput
+                                                                formState={
+                                                                    formState
+                                                                }
+                                                                name={
+                                                                    "passport_issue_place"
+                                                                }
+                                                                label={"Place"}
+                                                                validation={
+                                                                    validationName
+                                                                }
+                                                                defaultValue={
+                                                                    userInfoBGV &&
+                                                                    userInfoBGV.passport_issue_place
+                                                                }
+                                                            />
+                                                        </td>
+                                                    </tr>
+                                                ) : null}
                                             </tbody>
                                         </table>
                                     </section>
@@ -1078,14 +1117,17 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "name_first"
                                                                     }
                                                                     label={
-                                                                        "Name"
+                                                                        "Name of first ref."
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.name_first
+                                                                        userInfoBGV.first_reference &&
+                                                                        userInfoBGV
+                                                                            .first_reference
+                                                                            .name
                                                                     }
                                                                 />
                                                             </td>
@@ -1098,14 +1140,17 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "name_second"
                                                                     }
                                                                     label={
-                                                                        "Name"
+                                                                        "Name of 2nd ref."
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.name_second
+                                                                        userInfoBGV.second_reference &&
+                                                                        userInfoBGV
+                                                                            .second_reference
+                                                                            .name
                                                                     }
                                                                 />
                                                             </td>
@@ -1132,11 +1177,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Designation"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.designation_first
+                                                                        userInfoBGV.first_reference &&
+                                                                        userInfoBGV
+                                                                            .first_reference
+                                                                            .designation
                                                                     }
                                                                 />
                                                             </td>
@@ -1153,11 +1201,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Designation"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.designation_second
+                                                                        userInfoBGV.second_reference &&
+                                                                        userInfoBGV
+                                                                            .second_reference
+                                                                            .designation
                                                                     }
                                                                 />
                                                             </td>
@@ -1184,11 +1235,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "1st Company "
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.company_first
+                                                                        userInfoBGV.first_reference &&
+                                                                        userInfoBGV
+                                                                            .first_reference
+                                                                            .company
                                                                     }
                                                                 />
                                                             </td>
@@ -1204,11 +1258,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "2nd Company"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.company_second
+                                                                        userInfoBGV.second_reference &&
+                                                                        userInfoBGV
+                                                                            .second_reference
+                                                                            .company
                                                                     }
                                                                 />
                                                             </td>
@@ -1239,7 +1296,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.mobile_first
+                                                                        userInfoBGV.first_reference &&
+                                                                        userInfoBGV
+                                                                            .first_reference
+                                                                            .mobile
                                                                     }
                                                                 />
                                                             </td>
@@ -1259,7 +1319,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.mobile_second
+                                                                        userInfoBGV.second_reference &&
+                                                                        userInfoBGV
+                                                                            .second_reference
+                                                                            .mobile
                                                                     }
                                                                 />
                                                             </td>
@@ -1290,7 +1353,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.email_first
+                                                                        userInfoBGV.first_reference &&
+                                                                        userInfoBGV
+                                                                            .first_reference
+                                                                            .email
                                                                     }
                                                                 />
                                                             </td>
@@ -1311,7 +1377,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.email_second
+                                                                        userInfoBGV.second_reference &&
+                                                                        userInfoBGV
+                                                                            .second_reference
+                                                                            .email
                                                                     }
                                                                 />
                                                             </td>
@@ -1344,7 +1413,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.capacity_first
+                                                                        userInfoBGV.first_reference &&
+                                                                        userInfoBGV
+                                                                            .first_reference
+                                                                            .capacity
                                                                     }
                                                                 />
                                                             </td>
@@ -1364,7 +1436,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.capacity_second
+                                                                        userInfoBGV.second_reference &&
+                                                                        userInfoBGV
+                                                                            .second_reference
+                                                                            .capacity
                                                                     }
                                                                 />
                                                             </td>
@@ -1467,14 +1542,20 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "collegeOrInstitutePG"
+                                                                        "college_or_institutePG"
                                                                     }
                                                                     label={
-                                                                        "Institue Name"
+                                                                        "Institute Name"
+                                                                    }
+                                                                    validation={
+                                                                        validationNameNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.collegeOrInstitutePG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .college_or_institute
                                                                     }
                                                                 />
                                                             </td>
@@ -1484,17 +1565,20 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "collegeOrInstituteUG"
+                                                                        "college_or_instituteUG"
                                                                     }
                                                                     label={
-                                                                        "Institue Name"
+                                                                        "Institute Name"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.collegeOrInstituteUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .college_or_institute
                                                                     }
                                                                 />
                                                             </td>
@@ -1504,17 +1588,20 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "collegeOrInstituteTWELVE"
+                                                                        "college_or_instituteTWELVE"
                                                                     }
                                                                     label={
-                                                                        "Institue Name"
+                                                                        "Institute Name"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNameNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.collegeOrInstituteTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .college_or_institute
                                                                     }
                                                                 />
                                                             </td>
@@ -1541,9 +1628,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     label={
                                                                         "Location"
                                                                     }
+                                                                    validation={
+                                                                        validationNameNotRequired
+                                                                    }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.locationPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .location
                                                                     }
                                                                 />
                                                             </td>
@@ -1560,11 +1653,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Location"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.locationUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .location
                                                                     }
                                                                 />{" "}
                                                             </td>
@@ -1580,11 +1676,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Location"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNameNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.locationTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .location
                                                                     }
                                                                 />{" "}
                                                             </td>
@@ -1607,14 +1706,20 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "affiliatedUniversityPG"
+                                                                        "affiliated_universityPG"
                                                                     }
                                                                     label={
                                                                         "Affiliated University"
                                                                     }
+                                                                    validation={
+                                                                        validationNameNotRequired
+                                                                    }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.affiliatedUniversityPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .affiliated_university
                                                                     }
                                                                 />
                                                             </td>
@@ -1624,17 +1729,20 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "affiliatedUniversityUG"
+                                                                        "affiliated_universityUG"
                                                                     }
                                                                     label={
                                                                         "Affiliated University"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.affiliatedUniversityUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .affiliated_university
                                                                     }
                                                                 />
                                                             </td>
@@ -1644,17 +1752,20 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         formState
                                                                     }
                                                                     name={
-                                                                        "affiliatedUniversityTWELVE"
+                                                                        "affiliated_universityTWELVE"
                                                                     }
                                                                     label={
                                                                         "Affiliated University"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNameNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.affiliatedUniversityTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .affiliated_university
                                                                     }
                                                                 />
                                                             </td>
@@ -1681,9 +1792,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     label={
                                                                         "Contact Number"
                                                                     }
+                                                                    validation={
+                                                                        validationPhoneNotRequired
+                                                                    }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.contact_detailsPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .contact_details
                                                                     }
                                                                 />
                                                             </td>
@@ -1703,7 +1820,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.contact_detailsUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .contact_details
                                                                     }
                                                                 />
                                                             </td>
@@ -1719,11 +1839,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Contact Number"
                                                                     }
                                                                     validation={
-                                                                        validationPh
+                                                                        validationPhoneNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.contact_detailsTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .contact_details
                                                                     }
                                                                 />
                                                             </td>
@@ -1750,9 +1873,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     label={
                                                                         "Qualification"
                                                                     }
+                                                                    validation={
+                                                                        validationNameNotRequired
+                                                                    }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.qualificationPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .qualification
                                                                     }
                                                                 />
                                                             </td>
@@ -1768,11 +1897,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Qualification"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.qualificationUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .qualification
                                                                     }
                                                                 />
                                                             </td>
@@ -1788,11 +1920,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Qualification"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNameNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.qualificationTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .qualification
                                                                     }
                                                                 />
                                                             </td>
@@ -1819,9 +1954,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     label={
                                                                         "Specialization"
                                                                     }
+                                                                    validation={
+                                                                        validationNameNotRequired
+                                                                    }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.specializationPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .specialization
                                                                     }
                                                                 />
                                                             </td>
@@ -1837,11 +1978,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Specialization"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.specializationUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .specialization
                                                                     }
                                                                 />{" "}
                                                             </td>
@@ -1857,11 +2001,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Specialization"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNameNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.specializationTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .specialization
                                                                     }
                                                                 />{" "}
                                                             </td>
@@ -1875,7 +2022,6 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                 }}
                                                             >
                                                                 Dates Attended
-                                                                (DD/MM/YYYY)
                                                             </td>
                                                             <td>
                                                                 <DatePicker
@@ -1891,7 +2037,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.ates_attendedPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .dates_attended
                                                                     }
                                                                 />
                                                             </td>
@@ -1912,7 +2061,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.ates_attendedUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .dates_attended
                                                                     }
                                                                 />
                                                             </td>
@@ -1928,12 +2080,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     type={
                                                                         "date"
                                                                     }
-                                                                    validation={
-                                                                        validation
-                                                                    }
+                                                                    // validation={
+                                                                    //     validation
+                                                                    // }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.dates_attendedTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .dates_attended
                                                                     }
                                                                 />
                                                             </td>
@@ -1961,9 +2116,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     label={
                                                                         "Enrollment Number"
                                                                     }
+                                                                    validation={
+                                                                        validationNumberNotRequired
+                                                                    }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.registration_no_or_enrollment_noPG
+                                                                        userInfoBGV.pg_degree &&
+                                                                        userInfoBGV
+                                                                            .pg_degree
+                                                                            .registration_no_or_enrollment_no
                                                                     }
                                                                 />{" "}
                                                             </td>
@@ -1979,11 +2140,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Enrollment Number"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNumber
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.registration_no_or_enrollment_noUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .registration_no_or_enrollment_no
                                                                     }
                                                                 />
                                                             </td>
@@ -1999,11 +2163,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Enrollment Number"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNumberNotRequired
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.registration_no_or_enrollment_noTWELVE
+                                                                        userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                        userInfoBGV
+                                                                            .twelve_or_puc_or_diploma
+                                                                            .registration_no_or_enrollment_no
                                                                     }
                                                                 />
                                                             </td>
@@ -2020,21 +2187,33 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                 Class Obtained
                                                             </td>
                                                             <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
+                                                                <Stack
+                                                                    direction={
+                                                                        "column"
                                                                     }
-                                                                    name={
-                                                                        "marks_obtained_or_class_obtainedPG"
-                                                                    }
-                                                                    label={
-                                                                        "Marks Obtained"
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV &&
-                                                                        userInfoBGV.marks_obtained_or_class_obtainedPG
-                                                                    }
-                                                                />
+                                                                >
+                                                                    <TextAreaInput
+                                                                        formState={
+                                                                            formState
+                                                                        }
+                                                                        name={
+                                                                            "marks_obtained_or_class_obtainedPG"
+                                                                        }
+                                                                        label={
+                                                                            "Marks Obtained in %"
+                                                                        }
+                                                                        validation={
+                                                                            validationNumberNotRequired
+                                                                        }
+                                                                        defaultValue={
+                                                                            userInfoBGV &&
+                                                                            userInfoBGV.pg_degree &&
+                                                                            userInfoBGV
+                                                                                .pg_degree
+                                                                                .marks_obtained_or_class_obtained
+                                                                        }
+                                                                    />
+                                                                </Stack>
                                                             </td>
                                                             <td>
                                                                 <TextAreaInput
@@ -2045,36 +2224,54 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "marks_obtained_or_class_obtainedUG"
                                                                     }
                                                                     label={
-                                                                        "Marks Obtained"
+                                                                        "Marks Obtained in %"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationNumber
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
-                                                                        userInfoBGV.marks_obtained_or_class_obtainedUG
+                                                                        userInfoBGV.ug_degree &&
+                                                                        userInfoBGV
+                                                                            .ug_degree
+                                                                            .marks_obtained_or_class_obtained
                                                                     }
                                                                 />{" "}
                                                             </td>
                                                             <td>
-                                                                <TextAreaInput
-                                                                    formState={
-                                                                        formState
+                                                                <Stack
+                                                                    direction={
+                                                                        "column"
                                                                     }
-                                                                    name={
-                                                                        "marks_obtained_or_class_obtainedTWELVE"
-                                                                    }
-                                                                    label={
-                                                                        "Marks Obtained"
-                                                                    }
-                                                                    validation={
-                                                                        validation
-                                                                    }
-                                                                    defaultValue={
-                                                                        userInfoBGV &&
-                                                                        userInfoBGV.marks_obtained_or_class_obtainedTWELVE
-                                                                    }
-                                                                />
+                                                                >
+                                                                    <TextAreaInput
+                                                                        formState={
+                                                                            formState
+                                                                        }
+                                                                        name={
+                                                                            "marks_obtained_or_class_obtainedTWELVE"
+                                                                        }
+                                                                        label={
+                                                                            "Marks Obtained in %"
+                                                                        }
+                                                                        validation={
+                                                                            validationNumberNotRequired
+                                                                        }
+                                                                        defaultValue={
+                                                                            userInfoBGV &&
+                                                                            userInfoBGV.twelve_or_puc_or_diploma &&
+                                                                            userInfoBGV
+                                                                                .twelve_or_puc_or_diploma
+                                                                                .marks_obtained_or_class_obtained
+                                                                        }
+                                                                    />
+                                                                    <span>
+                                                                        [Note:
+                                                                        Percentage
+                                                                        = CGPA *
+                                                                        9.5]
+                                                                    </span>
+                                                                </Stack>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -2107,7 +2304,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         <InputRadioGroup
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.workEx
+                                                                                userInfoBGV.work_experience
                                                                             }
                                                                             formState={
                                                                                 formState
@@ -2238,14 +2435,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Details"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationName
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.agency_detailsE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .agency_details
                                                                             }
                                                                         />
                                                                     </td>
@@ -2260,14 +2461,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Details"
                                                                             }
-                                                                            //validation={validation}
-
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.agency_detailsE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .agency_details
                                                                             }
                                                                         />
                                                                     </td>
@@ -2282,15 +2484,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Details"
                                                                             }
-                                                                            validation={
-                                                                                validation
-                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.agency_detailsE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .agency_details
                                                                             }
                                                                         />
                                                                     </td>
@@ -2320,14 +2522,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Location"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationName
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.locationE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .location
                                                                             }
                                                                         />
                                                                     </td>
@@ -2342,14 +2548,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Location"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationNameNotRequired
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.locationE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .location
                                                                             }
                                                                         />
                                                                     </td>
@@ -2365,14 +2575,17 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                                 "Location"
                                                                             }
                                                                             validation={
-                                                                                validation
+                                                                                validationNameNotRequired
                                                                             }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.locationE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .location
                                                                             }
                                                                         />
                                                                     </td>
@@ -2400,14 +2613,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Contact Details"
                                                                             }
-                                                                            //validation={validation, validationPh}
-
+                                                                            validation={
+                                                                                validationPh
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.contact_detailsE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .contact_details
                                                                             }
                                                                         />
                                                                     </td>
@@ -2422,14 +2639,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Contact Details"
                                                                             }
-                                                                            //validation={validationPh}
-
+                                                                            validation={
+                                                                                validationPhoneNotRequired
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.contact_detailsE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .contact_details
                                                                             }
                                                                         />
                                                                     </td>
@@ -2446,14 +2667,17 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                                 "Contact Details"
                                                                             }
                                                                             validation={
-                                                                                validationPh
+                                                                                validationPhoneNotRequired
                                                                             }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.contact_detailsE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .contact_details
                                                                             }
                                                                         />
                                                                     </td>
@@ -2482,14 +2706,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Employee Code"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validation
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employee_codeE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .employee_code
                                                                             }
                                                                         />
                                                                     </td>
@@ -2512,7 +2740,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employee_codeE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .employee_code
                                                                             }
                                                                         />
                                                                     </td>
@@ -2528,15 +2759,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Employee Code"
                                                                             }
-                                                                            validation={
-                                                                                validation
-                                                                            }
+                                                                            // validation={
+                                                                            //     validation
+                                                                            // }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employee_codeE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .employee_code
                                                                             }
                                                                         />
                                                                     </td>
@@ -2584,14 +2818,23 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             type={
                                                                                 "date"
                                                                             }
-                                                                            // validation={validation}
-
+                                                                            validation={
+                                                                                validation
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
+                                                                            disabled={
+                                                                                employment_end_dateE1
+                                                                                    ? true
+                                                                                    : false
+                                                                            }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employment_start_dateE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .employment_start_date
                                                                             }
                                                                         />
                                                                         <Box
@@ -2615,7 +2858,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                                 formState
                                                                             }
                                                                             name={
-                                                                                " employment_end_dateE1"
+                                                                                "employment_end_dateE1"
                                                                             }
                                                                             label={
                                                                                 ""
@@ -2623,12 +2866,29 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             type={
                                                                                 "date"
                                                                             }
+                                                                            minDate={
+                                                                                employment_start_dateE1
+                                                                            }
+                                                                            disabled={
+                                                                                employment_start_dateE1 ===
+                                                                                    undefined ||
+                                                                                employment_start_dateE1 ===
+                                                                                    null ||
+                                                                                employment_start_dateE1 ===
+                                                                                    ""
+                                                                                    ? true
+                                                                                    : false
+                                                                            }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employment_end_dateE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .employment_end_date
                                                                             }
-                                                                            //  validation={validation}
-
+                                                                            validation={
+                                                                                validation
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
@@ -2664,9 +2924,17 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             type={
                                                                                 "date"
                                                                             }
+                                                                            disabled={
+                                                                                employment_end_dateE2
+                                                                                    ? true
+                                                                                    : false
+                                                                            }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employment_start_dateE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .employment_start_date
                                                                             }
                                                                             //validation={validation}
 
@@ -2699,7 +2967,23 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employment_end_dateE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .employment_end_date
+                                                                            }
+                                                                            minDate={
+                                                                                employment_start_dateE2
+                                                                            }
+                                                                            disabled={
+                                                                                employment_start_dateE2 ===
+                                                                                    undefined ||
+                                                                                employment_start_dateE2 ===
+                                                                                    null ||
+                                                                                employment_start_dateE2 ===
+                                                                                    ""
+                                                                                    ? true
+                                                                                    : false
                                                                             }
                                                                             label={
                                                                                 ""
@@ -2741,16 +3025,24 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 ""
                                                                             }
+                                                                            disabled={
+                                                                                employment_end_dateE3
+                                                                                    ? true
+                                                                                    : false
+                                                                            }
                                                                             type={
                                                                                 "date"
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employment_start_dateE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .employment_start_date
                                                                             }
-                                                                            validation={
-                                                                                validation
-                                                                            }
+                                                                            // validation={
+                                                                            //     validation
+                                                                            // }
                                                                             placeholder={
                                                                                 ""
                                                                             }
@@ -2780,7 +3072,23 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.employment_end_dateE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .employment_end_date
+                                                                            }
+                                                                            minDate={
+                                                                                employment_start_dateE3
+                                                                            }
+                                                                            disabled={
+                                                                                employment_start_dateE3 ===
+                                                                                    undefined ||
+                                                                                employment_start_dateE3 ===
+                                                                                    null ||
+                                                                                employment_start_dateE3 ===
+                                                                                    ""
+                                                                                    ? true
+                                                                                    : false
                                                                             }
                                                                             label={
                                                                                 ""
@@ -2788,9 +3096,9 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             type={
                                                                                 "date"
                                                                             }
-                                                                            validation={
-                                                                                validation
-                                                                            }
+                                                                            // validation={
+                                                                            //     validation
+                                                                            // }
                                                                             placeholder={
                                                                                 ""
                                                                             }
@@ -2820,10 +3128,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.designationE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .designation
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validation
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
@@ -2843,7 +3155,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             //validation={validation}
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.designationE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .designation
                                                                             }
                                                                             placeholder={
                                                                                 ""
@@ -2861,15 +3176,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Designation"
                                                                             }
-                                                                            validation={
-                                                                                validation
-                                                                            }
+                                                                            // validation={
+                                                                            //     validation
+                                                                            // }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.designationE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .designation
                                                                             }
                                                                         />
                                                                     </td>
@@ -2899,14 +3217,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Last Salary"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationNumber
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.last_salary_drawnE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .last_salary_drawn
                                                                             }
                                                                         />
                                                                     </td>
@@ -2921,14 +3243,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Last Salary"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationNumberNotRequired
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.last_salary_drawnE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .last_salary_drawn
                                                                             }
                                                                         />
                                                                     </td>
@@ -2944,11 +3270,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                                 "Last Salary"
                                                                             }
                                                                             validation={
-                                                                                validation
+                                                                                validationNumberNotRequired
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.last_salary_drawnE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .last_salary_drawn
                                                                             }
                                                                             placeholder={
                                                                                 ""
@@ -2979,14 +3308,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Reason for leaving"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validation
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.reason_for_leavingE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .reason_for_leaving
                                                                             }
                                                                         />
                                                                     </td>
@@ -3003,7 +3336,10 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.reason_for_leavingE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .reason_for_leaving
                                                                             }
                                                                             //validation={validation}
 
@@ -3025,11 +3361,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.reason_for_leavingE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .reason_for_leaving
                                                                             }
-                                                                            validation={
-                                                                                validation
-                                                                            }
+                                                                            // validation={
+                                                                            //     validation
+                                                                            // }
                                                                             placeholder={
                                                                                 ""
                                                                             }
@@ -3058,14 +3397,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Reporting Manager"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationName
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.reporting_managerE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .reporting_manager
                                                                             }
                                                                         />
                                                                     </td>
@@ -3080,11 +3423,15 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "Reporting Manager"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationNameNotRequired
+                                                                            }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.reporting_managerE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .reporting_manager
                                                                             }
                                                                             placeholder={
                                                                                 ""
@@ -3104,10 +3451,13 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.reporting_managerE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .reporting_manager
                                                                             }
                                                                             validation={
-                                                                                validation
+                                                                                validationNameNotRequired
                                                                             }
                                                                             placeholder={
                                                                                 ""
@@ -3137,14 +3487,18 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             label={
                                                                                 "HR MANAGER"
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationName
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.hr_managerE1
+                                                                                userInfoBGV.employer_first &&
+                                                                                userInfoBGV
+                                                                                    .employer_first
+                                                                                    .hr_manager
                                                                             }
                                                                         />
                                                                     </td>
@@ -3161,10 +3515,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.hr_managerE2
+                                                                                userInfoBGV.employer_second &&
+                                                                                userInfoBGV
+                                                                                    .employer_second
+                                                                                    .hr_manager
                                                                             }
-                                                                            //validation={validation}
-
+                                                                            validation={
+                                                                                validationNameNotRequired
+                                                                            }
                                                                             placeholder={
                                                                                 ""
                                                                             }
@@ -3183,10 +3541,13 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                             }
                                                                             defaultValue={
                                                                                 userInfoBGV &&
-                                                                                userInfoBGV.hr_managerE3
+                                                                                userInfoBGV.employer_third &&
+                                                                                userInfoBGV
+                                                                                    .employer_third
+                                                                                    .hr_manager
                                                                             }
                                                                             validation={
-                                                                                validation
+                                                                                validationNameNotRequired
                                                                             }
                                                                             placeholder={
                                                                                 ""
@@ -3306,20 +3667,14 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                     textAlign: "center",
                                                 }}
                                             >
-                                                Thankyou
+                                                Thank you
                                             </Box>
 
                                             <div className="table-responsive">
                                                 <table className="table table-borderless table-hover">
                                                     <tbody>
                                                         <tr>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
+                                                            <td className="text-center ">
                                                                 Full Name:
                                                             </td>
                                                             <td>
@@ -3342,13 +3697,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                 />
                                                             </td>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
+                                                            <td className="text-center ">
                                                                 Place:{" "}
                                                             </td>
                                                             <td>
@@ -3363,7 +3712,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                         "Place"
                                                                     }
                                                                     validation={
-                                                                        validation
+                                                                        validationName
                                                                     }
                                                                     defaultValue={
                                                                         userInfoBGV &&
@@ -3373,13 +3722,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
+                                                            <td className="text-center ">
                                                                 Signature:{" "}
                                                             </td>
                                                             <td>
@@ -3405,13 +3748,7 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                                                                     }
                                                                 />
                                                             </td>
-                                                            <td
-                                                                className="text-center "
-                                                                style={{
-                                                                    fontFamily:
-                                                                        "Muller",
-                                                                }}
-                                                            >
+                                                            <td className="text-center ">
                                                                 Date:{" "}
                                                             </td>
                                                             <td>

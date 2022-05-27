@@ -8,6 +8,7 @@ import getErrorMessage from "../util/ErrorHandle";
 function* loginAsync(action) {
     try {
         const { data } = yield call(adminLoginApiRequest, action.payload);
+        console.log(data);
         localStorage.setItem("authToken", data.accessToken);
         yield put(loginSuccess(data));
         yield put(openToast("Login Success", "success"));

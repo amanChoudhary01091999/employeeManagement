@@ -5,33 +5,52 @@ function Validation() {
                 value: true,
                 message: "this field is required",
             },
-            minLength: {
-                value: 3,
-                message: "min 3 character is required",
-            },
         },
         validationName: {
             required: {
                 value: true,
                 message: "this field is required",
             },
-            minLength: {
-                value: 3,
-                message: "min 3 character is required",
-            },
+
             pattern: {
-                value: new RegExp(/^[a-zA-Z ]*$/),
+                value: new RegExp(/^[A-Za-z]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/),
                 message: "Not Valid",
             },
         },
         validationNameNotRequired: {
+            pattern: {
+                value: new RegExp(/^[A-Za-z]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/),
+                message: "Not Valid",
+            },
+        },
+        validationPhoneNotRequired: {
+            pattern: {
+                value: new RegExp(/^[0-9\b]+$/),
+                message: "Enter the valid input",
+            },
             minLength: {
-                value: 3,
-                message: "min 3 character is required",
+                value: 10,
+                message: "phone No is Not Valid",
+            },
+            maxLength: {
+                value: 10,
+                message: "phone No is Not Valid",
+            },
+        },
+        validationNumber: {
+            required: {
+                value: true,
+                message: "This field is required",
             },
             pattern: {
-                value: new RegExp(/^[a-zA-Z ]*$/),
-                message: "Not Valid",
+                value: new RegExp(/^[0-9]*$/),
+                message: "Enter the valid input",
+            },
+        },
+        validationNumberNotRequired: {
+            pattern: {
+                value: new RegExp(/^[0-9]*$/),
+                message: "Enter the valid input",
             },
         },
         validationDegree: {
@@ -107,6 +126,10 @@ function Validation() {
             },
         },
         validationPassport: {
+            required: {
+                value: true,
+                message: "This Field is Required",
+            },
             pattern: {
                 value: new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$"),
                 message: "Please enter valid passport number ",

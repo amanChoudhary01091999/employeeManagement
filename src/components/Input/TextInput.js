@@ -3,7 +3,8 @@ import { InputAdornment, TextField } from "@mui/material";
 import React from "react";
 
 function TextInput(props) {
-    const { label, id, formState, value, validation, icon, type } = props;
+    const { label, id, formState, value, validation, icon, type, disabled } =
+        props;
     const {
         register,
         formState: { errors },
@@ -12,7 +13,9 @@ function TextInput(props) {
         <TextField
             label={label}
             id={id}
+            disabled={disabled}
             type={type}
+            autoComplete={"off"}
             defaultValue={value}
             variant="outlined"
             InputProps={{

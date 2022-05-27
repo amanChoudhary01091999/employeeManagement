@@ -12,6 +12,7 @@ function RAFCHeading(props) {
     const { loadingRCAF, errorRCAF, userInfoRCAF } = RCAFGetState;
 
     const validation = Validation().validationName;
+    const validationReq = Validation().validationDegree;
 
     return (
         <>
@@ -146,7 +147,7 @@ function RAFCHeading(props) {
                                     type={"file"}
                                     validation={validation}
                                     defaultValue={
-                                        userInfoRCAF && userInfoRCAF.signed
+                                        userInfoRCAF && userInfoRCAF.signature
                                     }
                                 />
                             </td>
@@ -179,7 +180,7 @@ function RAFCHeading(props) {
                                     name={"candidateDate"}
                                     type={"date"}
                                     label={null}
-                                    validation={validation}
+                                    validation={validationReq}
                                     defaultValue={
                                         userInfoRCAF && userInfoRCAF.date
                                     }

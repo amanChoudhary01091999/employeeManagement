@@ -10,6 +10,7 @@ import Validation from "../../validation/Validations";
 function EPFUntrackingDeclaration(props) {
     const formState = props.formState;
     const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
     const {
         formState: { errors },
         watch,
@@ -102,7 +103,7 @@ function EPFUntrackingDeclaration(props) {
                                         formState={formState}
                                         label={"Place"}
                                         name={"place"}
-                                        validation={validation}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfoEPF && userInfoEPF.place
                                         }
@@ -150,7 +151,7 @@ function EPFUntrackingDeclaration(props) {
                                         formState={formState}
                                         label={"Name of the present Employee"}
                                         name={"name_of_present_employee"}
-                                        validation={validation}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfoEPF &&
                                             userInfoEPF.name_of_present_employee
@@ -321,19 +322,23 @@ function EPFUntrackingDeclaration(props) {
                         </td>
                         <td colSpan="2">
                             <div className="row align-center">
-                                <div className="col-7 align-self-center">
+                                <div className="col-3 align-self-center">
                                     <p className="mb-0">
                                         Signature of Employer with Seal of
-                                        Establishment
+                                        Establishment :
                                     </p>
                                 </div>
-                                <div className="col-5">
+                                <div className="col-9">
                                     <FilePicker
                                         formState={formState}
                                         label={null}
                                         name={"signature_employer"}
                                         type={"file"}
                                         validation={validation}
+                                        defaultValue={
+                                            userInfoEPF &&
+                                            userInfoEPF.signature_of_employer
+                                        }
                                     />
                                 </div>
                             </div>

@@ -34,7 +34,11 @@ const LoginAppBar = () => {
         <AppBar position="static" color="inherit" elevation={1}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Typography
+                    <img
+                        height={35}
+                        src="https://www.ndhgo.com/wp-content/uploads/2021/05/NDHGO-Logo-2021-01-1024x339.png"
+                    ></img>
+                    {/* <Typography
                         variant="h6"
                         noWrap
                         component="div"
@@ -45,7 +49,7 @@ const LoginAppBar = () => {
                         }}
                     >
                         NDHGO
-                    </Typography>
+                    </Typography> */}
 
                     <Box
                         sx={{
@@ -91,7 +95,7 @@ const LoginAppBar = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <Typography
+                    {/* <Typography
                         variant="h6"
                         noWrap
                         component="div"
@@ -101,7 +105,7 @@ const LoginAppBar = () => {
                         }}
                     >
                         LOGO
-                    </Typography>
+                    </Typography> */}
                 </Toolbar>
             </Container>
         </AppBar>

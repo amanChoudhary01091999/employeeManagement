@@ -11,6 +11,7 @@ function GFCertificateEmployer(props) {
     const { loadingGF, userInfoGF, errorGF } = GFGetState;
 
     const validation = Validation().validationDegree;
+    const validationName = Validation().validationName;
 
     return (
         <div>
@@ -90,7 +91,7 @@ function GFCertificateEmployer(props) {
                         formState={props.formState}
                         name={"name_of_the_establishment"}
                         label={"Name of the establishment"}
-                        validation={validation}
+                        validation={validationName}
                         placeholder={""}
                         defaultValue={
                             userInfoGF && userInfoGF.name_of_the_establishment
@@ -121,12 +122,14 @@ function GFCertificateEmployer(props) {
                 <div>
                     <FilePicker
                         formState={props.formState}
-                        name={"rubberStamp"}
+                        name={"rubber_stamp_there_of"}
                         type={"file"}
                         label={"rubber_stamp_there_of"}
                         validation={validation}
                         placeholder={""}
-                        defaultValue={userInfoGF && userInfoGF.rubberStamp}
+                        defaultValue={
+                            userInfoGF && userInfoGF.rubber_stamp_there_of
+                        }
                     />
                 </div>
                 <br />

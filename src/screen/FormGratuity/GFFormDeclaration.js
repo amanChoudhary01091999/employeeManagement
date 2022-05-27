@@ -77,7 +77,7 @@ function GFFormDeclaration(props) {
                         formState={props.formState}
                         name={"witnesses_place"}
                         label={"Place"}
-                        validation={validation}
+                        validation={validationName}
                         defaultValue={userInfoGF && userInfoGF.witnesses_place}
                         placeholder={""}
                     />
@@ -89,7 +89,7 @@ function GFFormDeclaration(props) {
                         formState={props.formState}
                         name={"witnesses_date"}
                         label={"Date"}
-                        defaultValue={userInfoGF && userInfoGF.witnesses_place}
+                        defaultValue={userInfoGF && userInfoGF.witnesses_date}
                         type={"date"}
                         validation={validation}
                         placeholder={""}

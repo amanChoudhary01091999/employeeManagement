@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call, delay } from "redux-saga/effects";
 import getErrorMessage from "../util/ErrorHandle";
 import { openToast } from "../actions/toast.action";
 import {
@@ -35,7 +35,13 @@ import {
 function* BGVGetAsync(action) {
     try {
         const { data } = yield call(BGVGetApiRequest, action.payload);
-        yield put(BGVGetSuccess(data));
+        if (data && data.id === undefined) {
+            yield put(BGVGetSuccess(data));
+            yield put(openToast("Form not filled", "error"));
+        } else {
+            yield put(BGVGetSuccess(data));
+            yield put(openToast("Form filled", "success"));
+        }
     } catch (error) {
         yield put(BGVGetError());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -44,7 +50,13 @@ function* BGVGetAsync(action) {
 function* cocGetAsync(action) {
     try {
         const { data } = yield call(COCGetApiRequest, action.payload);
-        yield put(COCGetSuccess(data));
+        if (data && data.id === undefined) {
+            yield put(COCGetSuccess(data));
+            yield put(openToast("Form not filled", "error"));
+        } else {
+            yield put(COCGetSuccess(data));
+            yield put(openToast("Form filled", "success"));
+        }
     } catch (error) {
         yield put(COCGetFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -54,7 +66,13 @@ function* cocGetAsync(action) {
 function* COVIDGetAsync(action) {
     try {
         const { data } = yield call(COVIDGetApiRequest, action.payload);
-        yield put(COVIDGetSuccess(data));
+        if (data && data.id === undefined) {
+            yield put(COVIDGetSuccess(data));
+            yield put(openToast("Form not filled", "error"));
+        } else {
+            yield put(COVIDGetSuccess(data));
+            yield put(openToast("Form filled", "success"));
+        }
     } catch (error) {
         yield put(COVIDGetError());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -64,6 +82,13 @@ function* COVIDGetAsync(action) {
 function* EPFGetAsync(action) {
     try {
         const { data } = yield call(EPFGetApiRequest, action.payload);
+        if (data && data.id === undefined) {
+            yield put(EPFGetSuccess(data));
+            yield put(openToast("Form not filled", "error"));
+        } else {
+            yield put(EPFGetSuccess(data));
+            yield put(openToast("Form filled", "success"));
+        }
         yield put(EPFGetSuccess(data));
     } catch (error) {
         yield put(EPFGetError());
@@ -73,8 +98,13 @@ function* EPFGetAsync(action) {
 function* GFGetAsync(action) {
     try {
         const { data } = yield call(GFGetApiRequest, action.payload);
-        yield put(GFGetSuccess(data));
-        yield put(openToast("success", "success"));
+        if (data && data.id === undefined) {
+            yield put(GFGetSuccess(data));
+            yield put(openToast("Form not filled", "error"));
+        } else {
+            yield put(GFGetSuccess(data));
+            yield put(openToast("Form filled", "success"));
+        }
     } catch (error) {
         yield put(GFGetError());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -83,7 +113,15 @@ function* GFGetAsync(action) {
 function* RCAFGetAsync(action) {
     try {
         const { data } = yield call(RCAFGetApiRequest, action.payload);
-        yield put(RCAFGetSuccess(data));
+        //const data = {};
+        //yield delay(5000);
+        if (data && data.id === undefined) {
+            yield put(RCAFGetSuccess(data));
+            yield put(openToast("Form not filled", "error"));
+        } else {
+            yield put(RCAFGetSuccess(data));
+            yield put(openToast("Form filled", "success"));
+        }
     } catch (error) {
         yield put(RCAFGetError());
         yield put(openToast(getErrorMessage(error), "error"));

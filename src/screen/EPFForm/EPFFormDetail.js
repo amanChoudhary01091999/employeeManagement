@@ -409,11 +409,13 @@ function EPFFormDetail(props) {
                                                 label={
                                                     "Previous PF Account Number"
                                                 }
-                                                name={"pfaccNumber"}
+                                                name={
+                                                    "previous_pf_account_number"
+                                                }
                                                 validation={validation}
                                                 defaultValue={
                                                     userInfoEPF &&
-                                                    userInfoEPF.pfaccNumber
+                                                    userInfoEPF.previous_pf_account_number
                                                 }
                                             />
                                         </div>
@@ -441,6 +443,10 @@ function EPFFormDetail(props) {
                                                 }
                                                 type={"date"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.date_of_exit_from_previous_employment
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -620,6 +626,10 @@ function EPFFormDetail(props) {
                                                 name={"passport_valid_from"}
                                                 type={"date"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.passport_valid_from
+                                                }
                                             />
                                         </div>
                                         <div className="col-1 align-self-center">
@@ -634,6 +644,10 @@ function EPFFormDetail(props) {
                                                 name={"passport_valid_to"}
                                                 type={"date"}
                                                 validation={validation}
+                                                defaultValue={
+                                                    userInfoEPF &&
+                                                    userInfoEPF.passport_valid_to
+                                                }
                                             />
                                         </div>
                                     </div>

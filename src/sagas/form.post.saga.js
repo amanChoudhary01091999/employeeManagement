@@ -35,10 +35,15 @@ import {
 function* BGVAsync(action) {
     try {
         const { data } = yield call(BGVPostApiRequest, action.payload);
-        yield put(BGVPostSuccess(data));
-        yield put(openToast("Form Submitted", "success"));
-        const navigate = action.navigate;
-        navigate("/covid-form", { replace: true });
+        if (data === "User not present") {
+            yield put(BGVPostFail());
+            yield put(openToast(getErrorMessage(), "error"));
+        } else {
+            yield put(BGVPostSuccess(data));
+            yield put(openToast("Form Submitted", "success"));
+            const navigate = action.navigate;
+            navigate("/form/covid-form");
+        }
     } catch (error) {
         yield put(BGVPostFail());
         yield put(openToast(getErrorMessage(), "error"));
@@ -50,7 +55,11 @@ function* CoCAsync(action) {
         const { data } = yield call(COCPostApiRequest, action.payload);
         yield put(COCPostSuccess(data));
         yield put(openToast("Form Submitted", "success"));
-        console.log(data);
+        // if (data === "User not present") {
+        //     yield put(COCPostFail());
+        //     yield put(openToast("User Not Present", "error"));
+        // } else {
+        // }
     } catch (error) {
         yield put(COCPostFail());
         yield put(openToast(getErrorMessage(), "error"));
@@ -60,10 +69,15 @@ function* CoCAsync(action) {
 function* COVIDAsync(action) {
     try {
         const { data } = yield call(COVIDPostApiRequest, action.payload);
-        yield put(COVIDPostSuccess(data));
-        yield put(openToast("Form Submitted", "success"));
-        const navigate = action.navigate;
-        navigate("/gratuity-form", { replace: true });
+        if (data === "User not present") {
+            yield put(COVIDPostFail());
+            yield put(openToast(getErrorMessage(), "error"));
+        } else {
+            yield put(COVIDPostSuccess(data));
+            yield put(openToast("Form Submitted", "success"));
+            const navigate = action.navigate;
+            navigate("/form/gratuity-form");
+        }
     } catch (error) {
         yield put(COVIDPostFail());
         yield put(openToast(getErrorMessage(), "error"));
@@ -73,10 +87,15 @@ function* COVIDAsync(action) {
 function* EPFAsync(action) {
     try {
         const { data } = yield call(EPFPostApiRequest, action.payload);
-        yield put(EPFPostSuccess(data));
-        yield put(openToast("Form Submitted", "success"));
-        const navigate = action.navigate;
-        navigate("/refcheck-form", { replace: true });
+        if (data === "User not present") {
+            yield put(EPFPostFail());
+            yield put(openToast("User not present", "error"));
+        } else {
+            yield put(EPFPostSuccess(data));
+            yield put(openToast("Form Submitted", "success"));
+            const navigate = action.navigate;
+            navigate("/form/refcheck-form");
+        }
     } catch (error) {
         yield put(EPFPostFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -86,10 +105,15 @@ function* EPFAsync(action) {
 function* GFFormAsync(action) {
     try {
         const { data } = yield call(GFPostApiRequest, action.payload);
-        yield put(GFPostSuccess(data, action.navigate));
-        yield put(openToast("Form Submitted", "success"));
-        const navigate = action.navigate;
-        navigate("/epf-form", { replace: true });
+        if (data === "User not present") {
+            yield put(GFPostFail());
+            yield put(openToast("User not present", "error"));
+        } else {
+            yield put(GFPostSuccess(data, action.navigate));
+            yield put(openToast("Form Submitted", "success"));
+            const navigate = action.navigate;
+            navigate("/form/epf-form");
+        }
     } catch (error) {
         yield put(GFPostFail());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -99,10 +123,15 @@ function* GFFormAsync(action) {
 function* RCAFAsync(action) {
     try {
         const { data } = yield call(RCAFPostApiRequest, action.payload);
-        yield put(RCAFPostSuccess(data));
-        yield put(openToast("Form Submitted", "success"));
-        const navigate = action.navigate;
-        navigate("/codeOfConduct-form", { replace: true });
+        if (data === "User not present") {
+            yield put(RCAFPostFail());
+            yield put(openToast("User not present", "error"));
+        } else {
+            yield put(RCAFPostSuccess(data));
+            yield put(openToast("Form Submitted", "success"));
+            const navigate = action.navigate;
+            navigate("/form/codeofconduct-form");
+        }
     } catch (error) {
         yield put(RCAFPostFail());
         yield put(openToast(getErrorMessage(error), "error"));

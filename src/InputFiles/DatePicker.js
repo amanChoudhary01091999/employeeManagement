@@ -5,7 +5,16 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { Controller } from "react-hook-form";
 
 function DatePicker(props) {
-    const { formState, name, validation, defaultValue, label } = props;
+    const {
+        formState,
+        name,
+        validation,
+        defaultValue,
+        label,
+        disabled,
+        maxDate,
+        minDate,
+    } = props;
     const {
         formState: { errors },
         control,
@@ -21,6 +30,9 @@ function DatePicker(props) {
                     <DesktopDatePicker
                         label={"date"}
                         id={name}
+                        disabled={disabled}
+                        minDate={minDate}
+                        maxDate={maxDate}
                         inputFormat="yyyy-MM-dd"
                         mask="____-__-__"
                         value={value}

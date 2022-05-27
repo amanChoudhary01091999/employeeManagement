@@ -11,6 +11,7 @@ function RAFCPart3(props) {
     const validationPhone = Validation().validationPhone;
     const validation = Validation().validationDegree;
     const validationName = Validation().validationName;
+    const validationNumber = Validation().validationNumber;
     const number = props.number;
     const stateOfEmployer = props.stateOfEmployer;
     const { loadingRCAF, errorRCAF, userInfoRCAF } = useSelector(
@@ -142,7 +143,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Telephone"}
                                         name={`telephone_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationPhone}
                                         defaultValue={
                                             userInfo && userInfo.telephone
                                         }
@@ -447,7 +448,7 @@ function RAFCPart3(props) {
                                         formState={props.formState}
                                         label={"Remunarations"}
                                         name={`remunerations_${number}`}
-                                        validation={validation}
+                                        validation={validationNumber}
                                         defaultValue={
                                             userInfo && userInfo.remunerations
                                         }
@@ -486,7 +487,7 @@ function RAFCPart3(props) {
                                                 name={"conduct_discussion"}
                                                 defaultValue={
                                                     userInfo &&
-                                                    userInfo.conduct_discussion
+                                                    userInfo.reason_for_leaving
                                                 }
                                             />
                                         </div>

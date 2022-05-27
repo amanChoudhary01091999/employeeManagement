@@ -16,6 +16,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
 import { useEffect } from "react";
+import Spinner from "../../components/spinner/Spinner";
 import { Button, CircularProgress, Stack } from "@mui/material";
 
 const CovidForm = ({ idFromDashBoard }) => {
@@ -24,6 +25,8 @@ const CovidForm = ({ idFromDashBoard }) => {
         idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
     const navigate = useNavigate();
     const formState = useForm();
+    const covidGetState = useSelector((state) => state.COVIDGetReducer);
+    const { loadingCovid, userInfoCovid } = covidGetState;
     const { handleSubmit, watch } = formState;
     const contactedCovid = watch("conCovid", "No");
     const contactedCovidFam = watch("conCovidFam", "No");
@@ -34,21 +37,18 @@ const CovidForm = ({ idFromDashBoard }) => {
     const { loading, error, userInfo } = CovidState;
     const dispatch = useDispatch();
 
-    const covidGetState = useSelector((state) => state.COVIDGetReducer);
-    const { loadingCovid, userInfoCovid } = covidGetState;
-
     const onPreviousClick = () => {
-        navigate("/bgv-form", { replace: true });
+        navigate("/form/bgv-form", { replace: true });
     };
 
     const onNextClicked = () => {
-        navigate("/gratuity-form", { replace: true });
+        navigate("/form/gratuity-form", { replace: true });
     };
     const onSubmit = (data) => {
         const covidApiObj = {
-            id: id,
+            user_id: id,
             phone: data.phoneNumber,
-            dateOfBirth: data.dateOfBirth,
+            date_of_birth: data.dateOfBirth,
             fever: data.fever == "Yes" ? true : false,
             name: data.firstName,
             //signature: data.confirmSignUser[0].name,
@@ -79,14 +79,13 @@ const CovidForm = ({ idFromDashBoard }) => {
                 data.out_of_containment_zone == "Yes" ? true : false,
         };
         const formData = new FormData();
-        formData.append("confirmSignUser", data.confirmSignUser[0]);
+        formData.append("file", data.confirmSignUser[0]);
         formData.append("data", JSON.stringify(covidApiObj));
         dispatch(COVIDPostRequest(formData, navigate));
     };
     useEffect(() => {
         dispatch(COVIDGetRequest(id));
     }, []);
-    console.log(userInfoCovid);
 
     const validation = Validation().validationDegree;
     const validationPh = Validation().validationPhone;
@@ -94,16 +93,7 @@ const CovidForm = ({ idFromDashBoard }) => {
 
     return (
         <div style={{ minWidth: "1000px" }}>
-            {loadingCovid && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+            {loadingCovid && <Spinner />}
             {userInfoCovid && (
                 <>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -201,7 +191,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                     validation={validationName}
                                                     defaultValue={
                                                         userInfoCovid &&
-                                                        userInfoCovid.firstName
+                                                        userInfoCovid.name
                                                     }
                                                 />
                                             </td>
@@ -223,7 +213,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                     placeholder={""}
                                                     defaultValue={
                                                         userInfoCovid &&
-                                                        userInfoCovid.empId
+                                                        userInfoCovid.employee_id
                                                     }
                                                 />
                                             </td>
@@ -245,7 +235,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                     validation={validationPh}
                                                     defaultValue={
                                                         userInfoCovid &&
-                                                        userInfoCovid.phoneNumber
+                                                        userInfoCovid.phone
                                                     }
                                                 />
                                             </td>
@@ -264,7 +254,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                 validation={validation}
                                                 defaultValue={
                                                     userInfoCovid &&
-                                                    userInfoCovid.dateOfBirth
+                                                    userInfoCovid.date_of_birth
                                                 }
                                             />
                                         </tr>
@@ -314,7 +304,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                     label={["Yes", "No"]}
                                                     defaultValue={
                                                         userInfoCovid &&
-                                                        userInfoCovid.dryCough
+                                                        userInfoCovid.dry_cough
                                                     }
                                                 />
                                             </div>
@@ -343,7 +333,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                     label={["Yes", "No"]}
                                                     defaultValue={
                                                         userInfoCovid &&
-                                                        userInfoCovid.soreThroat
+                                                        userInfoCovid.sore_throat
                                                     }
                                                 />
                                             </div>
@@ -372,7 +362,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                     label={["Yes", "No"]}
                                                     defaultValue={
                                                         userInfoCovid &&
-                                                        userInfoCovid.breathingProblem
+                                                        userInfoCovid.breathing_problem
                                                     }
                                                 />
                                             </div>
@@ -459,7 +449,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.conCovid
+                                                                    userInfoCovid.covid_positive_person
                                                                 }
                                                             />
                                                         </div>
@@ -480,8 +470,9 @@ const CovidForm = ({ idFromDashBoard }) => {
                                     }}
                                 >
                                     {" "}
-                                    Did you get in contact with a Covid+ person
-                                    in last 15 days in your knowledge
+                                    Have you had contact with any person who had
+                                    Covid in past 15 days in his/her family in
+                                    your knowledge
                                 </Box>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-hover">
@@ -506,7 +497,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.conCovidFam
+                                                                    userInfoCovid.covid_positive_family_member
                                                                 }
                                                             />
                                                         </div>
@@ -541,7 +532,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                             placeholder={""}
                                             defaultValue={
                                                 userInfoCovid &&
-                                                userInfoCovid.covidConDate
+                                                userInfoCovid.covid_contact_date
                                             }
                                         />
                                     </div>
@@ -583,7 +574,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                     formState
                                                                 }
                                                                 name={
-                                                                    "respirtoryDisease"
+                                                                    "chronic_respiratory"
                                                                 }
                                                                 labelGroup={
                                                                     null
@@ -594,7 +585,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.respirtoryDisease
+                                                                    userInfoCovid.chronic_respiratory
                                                                 }
                                                             />
                                                         </div>
@@ -630,7 +621,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                     formState
                                                                 }
                                                                 name={
-                                                                    "heartDisease"
+                                                                    "chronic_heart_disease"
                                                                 }
                                                                 labelGroup={
                                                                     null
@@ -641,7 +632,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.heartDisease
+                                                                    userInfoCovid.chronic_heart_disease
                                                                 }
                                                             />
                                                         </div>
@@ -748,7 +739,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                     formState
                                                                 }
                                                                 name={
-                                                                    "medicalConditions"
+                                                                    "other_medical_conditions"
                                                                 }
                                                                 labelGroup={
                                                                     null
@@ -759,7 +750,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.medicalConditions
+                                                                    userInfoCovid.other_medical_conditions
                                                                 }
                                                             />
                                                         </div>
@@ -818,7 +809,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.vaccinated
+                                                                    userInfoCovid.covid_vaccinated
                                                                 }
                                                             />
                                                         </div>
@@ -851,7 +842,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 }
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.firstDose
+                                                                    userInfoCovid.first_dose
                                                                 }
                                                             />
                                                         </td>
@@ -872,7 +863,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 placeholder={""}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.secondDose
+                                                                    userInfoCovid.second_dose
                                                                 }
                                                             />
                                                         </td>
@@ -898,7 +889,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 placeholder={""}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.vaccineName
+                                                                    userInfoCovid.vaccine_name
                                                                 }
                                                             />
                                                         </td>
@@ -955,7 +946,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                     formState
                                                                 }
                                                                 name={
-                                                                    "containmentZoneDetail"
+                                                                    "out_of_containment_zone"
                                                                 }
                                                                 labelGroup={
                                                                     null
@@ -966,7 +957,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                                 ]}
                                                                 defaultValue={
                                                                     userInfoCovid &&
-                                                                    userInfoCovid.containmentZoneDetail
+                                                                    userInfoCovid.out_of_containment_zone
                                                                 }
                                                             />
                                                         </div>
@@ -1003,7 +994,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                         placeholder={""}
                                                         defaultValue={
                                                             userInfoCovid &&
-                                                            userInfoCovid.travelMode
+                                                            userInfoCovid.mode_of_travel
                                                         }
                                                     />
                                                 </td>
@@ -1047,7 +1038,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                         placeholder={""}
                                                         defaultValue={
                                                             userInfoCovid &&
-                                                            userInfoCovid.confirmNameUser
+                                                            userInfoCovid.employee_name
                                                         }
                                                     />{" "}
                                                 </td>
@@ -1069,7 +1060,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                         placeholder={""}
                                                         defaultValue={
                                                             userInfoCovid &&
-                                                            userInfoCovid.confirmSignUser
+                                                            userInfoCovid.signature
                                                         }
                                                     />
                                                 </td>
@@ -1093,7 +1084,7 @@ const CovidForm = ({ idFromDashBoard }) => {
                                                         placeholder={""}
                                                         defaultValue={
                                                             userInfoCovid &&
-                                                            userInfoCovid.confirmDateUser
+                                                            userInfoCovid.date
                                                         }
                                                     />
                                                 </td>

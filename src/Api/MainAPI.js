@@ -2,11 +2,22 @@ import axios from "axios";
 const apiKey = `${process.env.REACT_APP_API_URL}`;
 
 export const executeAPI = (httpMethod, basePath) => {
-    const axiosConfig = {
+    function getAxiosConfig() {
+        const accessToken = localStorage.getItem("accessToken")
+            ? localStorage.getItem("accessToken")
+            : null;
+        return {
+            headers: {
+                Authorization: accessToken,
+                "Access-Control-Allow-Origin": "*",
+            },
+        };
+    }
+    let axiosConfig = {
         headers: {
             Authorization: localStorage.getItem("accessToken")
                 ? localStorage.getItem("accessToken")
-                : null,
+                : undefined,
             "Access-Control-Allow-Origin": "*",
         },
     };
@@ -21,30 +32,66 @@ export const executeAPI = (httpMethod, basePath) => {
     };
     let response = null;
     let url = apiKey + basePath;
-    // axios.post("", {}, {
-    //     headers: {
-    //         'Content-type' : ''
-    //     }
-    // })
     switch (httpMethod) {
         case "GET":
-            response = () => axios.get(url);
+            response = () =>
+                axios.get(url, {
+                    headers: {
+                        Authorization: localStorage.getItem("accessToken")
+                            ? localStorage.getItem("accessToken")
+                            : null,
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
             return response;
             break;
         case "GET_BY_ID":
-            response = (id) => axios.get(url + id);
+            response = (id) =>
+                axios.get(url + id, {
+                    headers: {
+                        Authorization: localStorage.getItem("accessToken")
+                            ? localStorage.getItem("accessToken")
+                            : null,
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
             return response;
             break;
         case "POST":
-            response = (data) => axios.post(url, data, fileConfig);
+            response = (data) => {
+                return axios.post(url, data, {
+                    headers: {
+                        Authorization: localStorage.getItem("accessToken")
+                            ? localStorage.getItem("accessToken")
+                            : null,
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
+            };
             return response;
             break;
         case "PUT":
-            response = (data) => axios.put(url, data, axiosConfig);
+            response = (data) =>
+                axios.put(url, data, {
+                    headers: {
+                        Authorization: localStorage.getItem("accessToken")
+                            ? localStorage.getItem("accessToken")
+                            : null,
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
             return response;
             break;
         case "DELETE":
-            response = (id) => axios.delete(url + id, axiosConfig);
+            response = (id) =>
+                axios.delete(url + id, {
+                    headers: {
+                        Authorization: localStorage.getItem("accessToken")
+                            ? localStorage.getItem("accessToken")
+                            : null,
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
             return response;
             break;
         case "POST_FILE":

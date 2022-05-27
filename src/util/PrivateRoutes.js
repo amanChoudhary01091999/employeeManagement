@@ -19,15 +19,15 @@ export const PrivateRoutes = ({ children }) => {
 };
 
 export const PrivateFormRoutes = ({ children }) => {
-    if (getUserAccessToken() === null) {
+    if (getUserAccessToken() === null || getUserId() === null) {
         return <Navigate to="/user-login" replace />;
     }
     return children;
 };
 
 export const PrivateUserLoginRoutes = ({ children }) => {
-    if (getUserAccessToken() !== null) {
-        return <Navigate to="/bgv-form" replace />;
+    if (getUserAccessToken() !== null && getUserId() !== null) {
+        return <Navigate to="/form/bgv-form" replace />;
     }
     return children;
 };

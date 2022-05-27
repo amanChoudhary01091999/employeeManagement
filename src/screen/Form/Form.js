@@ -1,354 +1,249 @@
-// import { Button } from "@mui/material";
-// import React, { useEffect, useState } from "react";
-// import EPFFormMain from "../EPFForm/EPFFormMain";
-// import { gapi } from "gapi-script";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import { useNavigate, Outlet } from "react-router-dom";
+import { ArrowRightAlt, Logout } from "@mui/icons-material";
 
-// function Form() {
-//     const [state, setState] = useState({
-//         name: "",
-//         googleAuth: "",
-//     });
-//     const REACT_APP_GOOGLE_DRIVE_API_KEY =
-//         "AIzaSyDdrj2NGuKslgsN7Vwjjv9Ij34dFBHjzxk";
-//     const REACT_APP_GOOGLE_DRIVE_CLIENT_ID =
-//         "405736218824-hngba78bcl0evq2mkn9atkhoub1sho4d.apps.googleusercontent.com";
-//     const DISCOVERY_DOCS = [
-//         "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
-//     ];
-//     const SCOPES = "https://www.googleapis.com/auth/drive.metadata.readonly";
-//     // const signin = () => {
-//     //     signInFunction();
-//     // };
-//     // const signup = () => {
-//     //     signOutFunction();
-//     // };
+const pages = [
+    "Background verification",
+    "Covid Form",
+    "Gratuity Form",
+    "Employees provident fund",
+    "Reference Check Form",
+    "Code of conduct",
+];
 
-//     const initClient = () => {
-//         try {
-//             gapi.client
-//                 .init({
-//                     apiKey: REACT_APP_GOOGLE_DRIVE_API_KEY,
-//                     clientId: REACT_APP_GOOGLE_DRIVE_CLIENT_ID,
-//                     scope: SCOPES,
-//                     discoveryDocs: DISCOVERY_DOCS,
-//                 })
-//                 .then(() => {
-//                     setState({
-//                         googleAuth: gapi.auth2.getAuthInstance(),
-//                     });
-//                     state.googleAuth.isSignedIn.listen(updateSigninStatus);
-//                     document
-//                         .getElementById("signin-btn")
-//                         .addEventListener("click", signInFunction);
-//                     document
-//                         .getElementById("signout-btn")
-//                         .addEventListener("click", signOutFunction);
-//                 });
-//         } catch (e) {
-//             console.log(e);
-//         }
-//     };
+const links = [
+    "bgv-form",
+    "covid-form",
+    "gratuity-form",
+    "epf-form",
+    "refcheck-form",
+    "codeofconduct-form",
+];
 
-//     const signInFunction = () => {
-//         state.googleAuth.signIn();
-//         updateSigninStatus();
-//     };
+const ResponsiveAppBar = () => {
+    const navigate = useNavigate();
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const link = window.location.href.split("/").pop();
 
-//     const signOutFunction = () => {
-//         state.googleAuth.signOut();
-//         updateSigninStatus();
-//     };
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
 
-//     const updateSigninStatus = () => {
-//         setSigninStatus();
-//     };
+    const handleCloseNavMenu = (page) => {
+        setAnchorElNav(null);
+        switch (page) {
+            case pages[0]:
+                onClickBGV();
+                break;
+            case pages[1]:
+                onClickCovid();
+                break;
+            case pages[2]:
+                onClickGF();
+                break;
+            case pages[3]:
+                onClickEPF();
+                break;
+            case pages[4]:
+                onClickRCAF();
+                break;
+            case pages[5]:
+                onClickCOC();
+                break;
+            default:
+        }
+    };
 
-//     const setSigninStatus = async () => {
-//         var user = state.googleAuth.currentUser.get();
-//         console.log(user);
-//         if (user.wc == null) {
-//             setState({
-//                 name: "",
-//             });
-//         } else {
-//             var isAuthorized = user.hasGrantedScopes(SCOPES);
-//             if (isAuthorized) {
-//                 setState({
-//                     name: user.Ot.Cd,
-//                 });
-//                 const boundary = "foo_bar_baz";
-//                 const delimiter = "\r\n--" + boundary + "\r\n";
-//                 const close_delim = "\r\n--" + boundary + "--";
-//                 var fileName = "mychat123";
-//                 var fileData = "this is a sample data";
-//                 var contentType = "text/plain";
-//                 var metadata = {
-//                     name: fileName,
-//                     mimeType: contentType,
-//                 };
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
-//                 var multipartRequestBody =
-//                     delimiter +
-//                     "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
-//                     JSON.stringify(metadata) +
-//                     delimiter +
-//                     "Content-Type: " +
-//                     contentType +
-//                     "\r\n\r\n" +
-//                     fileData +
-//                     "\r\n" +
-//                     close_delim;
+    const onClickBGV = () => {
+        navigate("/form/bgv-form");
+    };
+    const onClickCovid = () => {
+        navigate("/form/covid-form");
+    };
+    const onClickEPF = () => {
+        navigate("/form/epf-form");
+    };
+    const onClickRCAF = () => {
+        navigate("/form/refcheck-form");
+    };
+    const onClickGF = () => {
+        navigate("/form/gratuity-form");
+    };
+    const onClickCOC = () => {
+        navigate("/form/codeofconduct-form");
+    };
 
-//                 console.log(multipartRequestBody);
-//                 var request = gapi.client.request({
-//                     path: "https://www.googleapis.com/upload/drive/v3/files",
-//                     method: "POST",
-//                     params: { uploadType: "multipart" },
-//                     headers: {
-//                         "Content-Type":
-//                             "multipart/related; boundary=" + boundary + "",
-//                     },
-//                     body: multipartRequestBody,
-//                 });
-//                 request.execute(function (file) {
-//                     console.log(file);
-//                 });
-//             }
-//         }
-//     };
+    const handleLogout = () => {
+        const id = localStorage.getItem("id");
+        navigate("/user-login/" + id);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("id");
+    };
 
-//     const handleClientLoad = () => {
-//         gapi.load("client:auth2", initClient);
-//     };
+    return (
+        <div>
+            <AppBar position="sticky" color="inherit" elevation={0}>
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            sx={{
+                                mr: 2,
+                                padding: 4,
+                                borderRadius: 1,
+                                ml: 0,
+                                backgroundColor: "#1976d2",
+                                display: { xs: "none", md: "flex" },
+                                fontFamily: "monospace",
+                                fontWeight: 1000,
+                                letterSpacing: ".1rem",
+                                color: "white",
+                                textDecoration: "none",
+                            }}
+                        >
+                            Form Navigator
+                        </Typography>
 
-//     useEffect(() => {
-//         var script = document.createElement("script");
-//         script.onload = handleClientLoad;
-//         script.src = "https://apis.google.com/js/api.js";
-//         document.body.appendChild(script);
-//     });
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: "flex", md: "none" },
+                            }}
+                        >
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{
+                                    display: { xs: "block", md: "none" },
+                                }}
+                            >
+                                {pages.map((page) => (
+                                    <MenuItem
+                                        key={page}
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <Typography textAlign="center">
+                                            {page}
+                                        </Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
 
-//     return (
-//         <div>
-//             <div>
-//                 UserName: <strong>{state.name}</strong>
-//             </div>
-//             <button id="signin-btn">Sign In</button>
-//             <button id="signout-btn">Sign Out</button>
-//         </div>
-//     );
-// }
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            sx={{
+                                mr: 2,
+                                display: { xs: "flex", md: "none" },
+                                flexGrow: 1,
+                                fontFamily: "monospace",
+                                fontWeight: 700,
+                                letterSpacing: ".3rem",
+                                color: "inherit",
+                                textDecoration: "none",
+                            }}
+                        >
+                            NDHGO
+                        </Typography>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: "none", md: "flex" },
+                            }}
+                        >
+                            {pages.map((page, index) => (
+                                <Button
+                                    key={page}
+                                    onClick={() => handleCloseNavMenu(page)}
+                                    variant={
+                                        link === links[index]
+                                            ? "contained"
+                                            : "outlined"
+                                    }
+                                    sx={
+                                        link === links[index]
+                                            ? {
+                                                  my: 2,
+                                                  color: "white",
+                                                  fontSize: 15,
+                                                  display: "block",
+                                                  textTransform: "none",
+                                              }
+                                            : {
+                                                  my: 2,
+                                                  color: "black",
+                                                  fontSize: 15,
+                                                  display: "block",
+                                                  textTransform: "none",
+                                              }
+                                    }
+                                >
+                                    {page}
+                                    {index !== 5 && (
+                                        <ArrowRightAlt
+                                            style={{ marginLeft: 10 }}
+                                        />
+                                    )}
+                                </Button>
+                            ))}
+                        </Box>
 
-// export default Form;
-
-// import React, { Component } from "react";
-
-// var SCOPE = "https://www.googleapis.com/auth/drive.file";
-// var discoveryUrl = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
-
-// class Form extends Component {
-//     state = {
-//         name: "",
-//         googleAuth: "",
-//     };
-//     componentDidMount() {
-//         var script = document.createElement("script");
-//         script.onload = this.handleClientLoad;
-//         script.src = "https://apis.google.com/js/api.js";
-//         document.body.appendChild(script);
-//     }
-
-//     initClient = () => {
-//         try {
-//             window.gapi.client
-//                 .init({
-//                     apiKey: "AIzaSyDdrj2NGuKslgsN7Vwjjv9Ij34dFBHjzxk",
-//                     clientId:
-//                         "405736218824-hngba78bcl0evq2mkn9atkhoub1sho4d.apps.googleusercontent.com",
-//                     scope: SCOPE,
-//                     discoveryDocs: [discoveryUrl],
-//                 })
-//                 .then(() => {
-//                     this.setState({
-//                         googleAuth: window.gapi.auth2.getAuthInstance(),
-//                     });
-//                     this.state.googleAuth.isSignedIn.listen(
-//                         this.updateSigninStatus
-//                     );
-//                     document
-//                         .getElementById("signin-btn")
-//                         .addEventListener("click", this.signInFunction);
-//                     document
-//                         .getElementById("signout-btn")
-//                         .addEventListener("click", this.signOutFunction);
-//                 });
-//         } catch (e) {
-//             console.log(e);
-//         }
-//     };
-
-//     signInFunction = () => {
-//         this.state.googleAuth.signIn();
-//         this.updateSigninStatus();
-//     };
-
-//     signOutFunction = () => {
-//         this.state.googleAuth.signOut();
-//         this.updateSigninStatus();
-//     };
-
-//     updateSigninStatus = () => {
-//         this.setSigninStatus();
-//     };
-
-//     setSigninStatus = async () => {
-//         var user = this.state.googleAuth.currentUser.get();
-//         console.log(user);
-//         if (user.wc == null) {
-//             this.setState({
-//                 name: "",
-//             });
-//         } else {
-//             var isAuthorized = user.hasGrantedScopes(SCOPE);
-//             if (isAuthorized) {
-//                 this.setState({
-//                     name: user.Ot.Cd,
-//                 });
-//                 const boundary = "foo_bar_baz";
-//                 const delimiter = "\r\n--" + boundary + "\r\n";
-//                 const close_delim = "\r\n--" + boundary + "--";
-//                 var fileName = "mychat123";
-//                 var fileData = "this is a sample data";
-//                 var contentType = "text/plain";
-//                 var metadata = {
-//                     name: fileName,
-//                     mimeType: contentType,
-//                 };
-
-//                 var multipartRequestBody =
-//                     delimiter +
-//                     "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
-//                     JSON.stringify(metadata) +
-//                     delimiter +
-//                     "Content-Type: " +
-//                     contentType +
-//                     "\r\n\r\n" +
-//                     fileData +
-//                     "\r\n" +
-//                     close_delim;
-
-//                 console.log(multipartRequestBody);
-//                 var request = window.gapi.client.request({
-//                     path: "https://www.googleapis.com/upload/drive/v3/files",
-//                     method: "POST",
-//                     params: { uploadType: "multipart" },
-//                     headers: {
-//                         "Content-Type":
-//                             "multipart/related; boundary=" + boundary + "",
-//                     },
-//                     body: multipartRequestBody,
-//                 });
-//                 request.execute(function (file) {
-//                     console.log(file);
-//                 });
-//             }
-//         }
-//     };
-
-//     handleClientLoad = () => {
-//         window.gapi.load("client:auth2", this.initClient);
-//     };
-//     render() {
-//         return (
-//             <div className="App">
-//                 <div>
-//                     UserName: <strong>{this.state.name}</strong>
-//                 </div>
-//                 <button id="signin-btn">Sign In</button>
-//                 <button id="signout-btn">Sign Out</button>
-//             </div>
-//         );
-//     }
-// }
-
-// export default Form;
-
-// import { Stack } from "@mui/material";
-// import React, { useState } from "react";
-// import { executeAPI } from "../../api/MainAPI";
-
-// function Form() {
-//     const image = localStorage.getItem("image");
-
-//     const [value, setValue] = useState(image);
-//     // function _base64ToArrayBuffer(base64) {
-//     //     var binary_string = window.atob(base64);
-//     //     var len = binary_string.length;
-//     //     var bytes = new Uint8Array(len);
-//     //     for (var i = 0; i < len; i++) {
-//     //         bytes[i] = binary_string.charCodeAt(i);
-//     //     }
-//     //     return bytes.buffer;
-//     // }
-//     const apiRequest = executeAPI("POST_FILE", "/api/users");
-//     const handleSubmit = (event) => {
-//         localStorage.setItem("image", value);
-
-//         event.preventDefault();
-//     };
-//     const handleDelete = () => {
-//         localStorage.removeItem("image");
-//     };
-
-//     const handleChange = (element) => {
-//         var file = element.target.files[0];
-//         apiRequest(file)
-//             .then(({ data }) => console.log(data))
-//             .catch((error) => console.log(error));
-//         var reader = new FileReader();
-//         reader.onloadend = function () {
-//             setValue(reader.result);
-//             //console.log(reader.result);
-//         };
-//         reader.readAsDataURL(file);
-//         console.log(element.target.files);
-//     };
-//     return (
-//         <div>
-//             <Stack
-//                 component={"form"}
-//                 direction={"column"}
-//                 display={"flex"}
-//                 alignItems={"center"}
-//             >
-//                 <input
-//                     type="file"
-//                     onChange={handleChange}
-//                     accept={"image/*"}
-//                 ></input>
-//                 <button type="submit" onClick={handleSubmit}>
-//                     Submit
-//                 </button>
-//                 <button type="button" onClick={handleDelete}>
-//                     Delete
-//                 </button>
-//                 <img
-//                     alt=""
-//                     src={value}
-//                     style={{
-//                         width: "10vw",
-//                         height: "10vh",
-//                         border: "2px solid #000000",
-//                         imageResolution: "100dpi",
-//                     }}
-//                 ></img>
-//             </Stack>
-//         </div>
-//     );
-// }
-
-// export default Form;
-
-const Form = () => {};
-
-export default Form;
+                        <Box sx={{ flexGrow: 0, paddingLeft: 4 }}>
+                            <Button variant="outlined" onClick={handleLogout}>
+                                Logout
+                                <span style={{ marginLeft: 5 }}>
+                                    <Logout />
+                                </span>
+                            </Button>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+            <Outlet />
+        </div>
+    );
+};
+export default ResponsiveAppBar;

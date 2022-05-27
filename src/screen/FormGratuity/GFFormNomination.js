@@ -18,15 +18,14 @@ function GFFormNomination(props) {
             <div className="text-center">
                 <Box
                     sx={{
-                        bgcolor: "#cfe8fc",
+                        //bgcolor: "#1976d2",
                         height: "10vh",
-                        fontSize: "3vh",
-                        fontFamily: "Muller",
+                        fontSize: "20px",
+                        //fontFamily: "Muller",
                         textAlign: "center",
                     }}
                 >
                     <p style={{ color: "black", fontWeight: "bold" }}>
-                        {" "}
                         FORM-F
                         <br />
                         See sub-rule (1) of Rule 6
@@ -133,6 +132,9 @@ function GFFormNomination(props) {
                                 label={""}
                                 validation={validation}
                                 placeholder={""}
+                                defaultValue={
+                                    userInfoGF && userInfoGF.excluded_husband
+                                }
                             />
                         </div>
 

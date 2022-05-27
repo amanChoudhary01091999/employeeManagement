@@ -8,6 +8,7 @@ import EPFFormDetail from "./EPFFormDetail";
 import EPFUntrackingDeclaration from "./EPFUntrackingDeclaration";
 import { useNavigate } from "react-router-dom";
 import { Button, CircularProgress, Stack } from "@mui/material";
+import Spinner from "../../components/spinner/Spinner";
 
 function EPFFormMain({ idFromDashBoard }) {
     const idFromLocalStorage = localStorage.getItem("id");
@@ -24,15 +25,14 @@ function EPFFormMain({ idFromDashBoard }) {
     const navigate = useNavigate();
 
     const onPreviousClick = () => {
-        navigate("/gratuity-form", { replace: true });
+        navigate("/form/gratuity-form", { replace: true });
     };
     const onNextClick = () => {
-        navigate("/refcheck-form", { replace: true });
+        navigate("/form/refcheck-form", { replace: true });
     };
     const onSubmit = (data) => {
         const EPFobjectAPI = {
-            id: id,
-            employee_id: "100",
+            user_id: id,
 
             name_of_the_member: data.name_of_the_member,
             fathers_name: data.fathers_name,
@@ -78,10 +78,11 @@ function EPFFormMain({ idFromDashBoard }) {
             dsc_approved: data.dsc_approved ? true : false,
 
             date: data.employer_date,
-            signature_of_employer: data.signature_employer[0].name,
+            //signature_of_employer: data.signature_employer[0].name,
         };
         const formData = new FormData();
-        formData.append("signature_of_member", data.signature_of_member[0]);
+        formData.append("file1", data.signature_of_member[0]);
+        formData.append("file2", data.signature_employer[0]);
         formData.append("data", JSON.stringify(EPFobjectAPI));
         dispatch(EPFPostRequest(formData, navigate));
     };
@@ -90,30 +91,32 @@ function EPFFormMain({ idFromDashBoard }) {
     }, []);
     console.log(userInfoEPF);
     return (
-        <div style={{ minWidth: "1200px" }}>
-            {loadingEPF && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+        <div>
+            {loadingEPF && <Spinner />}
+            <div
+                style={{
+                    backgroundColor: "#1976d2",
+                    textAlign: "center",
+                    color: "white",
+                }}
+                className="p-3"
+            >
+                <div className="text-center">
+                    <h4 className="mb-0">
+                        EMPLOYEES PROVIDENT FUND ORGANIZATION
+                    </h4>
+                    <p>
+                        Employees Provident Fund Scheme, 1952 (Pragraph 34 & 57)
+                        &
+                        <br />
+                        Employees Pension Scheme, 1995 (Paragraph 24)
+                    </p>
+                </div>
+            </div>
             <div className="container py-4">
                 {userInfoEPF && (
                     <>
-                        <div className="text-center">
-                            <h4 className="mb-0">
-                                EMPLOYEES PROVIDENT FUND ORGANIZATION
-                            </h4>
-                            <p>
-                                Employees Provident Fund Scheme, 1952 (Pragraph
-                                34 & 57) &
-                                <br />
-                                Employees Pension Scheme, 1995 (Paragraph 24)
-                            </p>
+                        <div>
                             <p>
                                 (Declaration by a person taking up employment in
                                 any establishment on which EPF Scheme 1952 and /

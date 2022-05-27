@@ -43,7 +43,7 @@ function SampleUser({ row }) {
         dispatch(openDialog(row));
     };
     const onView = (id) => {
-        naviagte("/user-detail", {
+        naviagte(`/user-detail/${id}`, {
             state: { id },
         });
     };
@@ -83,19 +83,35 @@ function SampleUser({ row }) {
                     justifyContent={"center"}
                     gap={1}
                 >
-                    <CheckCircleOutlined color={"success"} />
-                    <CheckCircleOutlined color={"warning"} />
-                    <CheckCircleOutlined />
-                    <CheckCircleOutlined />
-                    <CheckCircleOutlined />
-                    <CheckCircleOutlined />
+                    <CheckCircleOutlined
+                        color={
+                            row.backgroundVerificationForm
+                                ? "success"
+                                : "warning"
+                        }
+                    />
+                    <CheckCircleOutlined
+                        color={row.covidForm ? "success" : "warning"}
+                    />
+                    <CheckCircleOutlined
+                        color={row.nomination ? "success" : "warning"}
+                    />
+                    <CheckCircleOutlined
+                        color={row.epfForm ? "success" : "warning"}
+                    />
+                    <CheckCircleOutlined
+                        color={row.refCheckForm ? "success" : "warning"}
+                    />
+                    <CheckCircleOutlined
+                        color={row.codeOfConductForm ? "success" : "warning"}
+                    />
                 </Stack>
             </TableCell>
-            {/* <TableCell align="center" className={classes.tableBody}>
+            <TableCell align="center" className={classes.tableBody}>
                 <IconButton color="primary" onClick={() => onUpdate(row)}>
                     <Edit />
                 </IconButton>
-            </TableCell> */}
+            </TableCell>
             <TableCell align="center" className={classes.tableBody}>
                 <LoadingButton
                     loading={false}

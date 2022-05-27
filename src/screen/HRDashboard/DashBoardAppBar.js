@@ -51,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function DashBoardAppBar() {
     let navigate = useNavigate();
     const onLogoutClick = () => {
-        localStorage.clear();
+        localStorage.removeItem("authToken");
         navigate("/login", { replace: true });
     };
     return (

@@ -1,63 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "../../InputFiles/DatePicker";
-import InputForm from "../../InputFiles/InputForm";
 import Validation from "../../validation/Validations";
 import "../BackGroundVerification/index.css";
 import { useSelector, useDispatch } from "react-redux";
 import { LoadingButton } from "@mui/lab";
 import CodeOfConductAppBar from "./CodeOfConductAppBar";
-import { Box, textAlign } from "@mui/system";
+import { Box } from "@mui/system";
 import TextAreaInput from "../../InputFiles/TextAreaInput";
 import { useNavigate } from "react-router-dom";
 import FilePicker from "../../InputFiles/FileInput";
-import { type } from "@testing-library/user-event/dist/type";
-import encodeImageFileAsURL from "../../util/FileToUriConverter";
-import { Button, CircularProgress, Stack, TextField } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { COCGetRequest } from "../../actions/form.get.action";
 import { COCPostRequest } from "../../actions/form.post.action";
-import { id } from "date-fns/locale";
-import axios from "axios";
+import Spinner from "../../components/spinner/Spinner";
 
 const CodeOfConduct = ({ idFromDashBoard }) => {
     const idFromLocalStorage = localStorage.getItem("id");
     const id =
         idFromDashBoard === undefined ? idFromLocalStorage : idFromDashBoard;
-    const [fileInput, setFileInput] = useState("");
-
-    const encodeImageFileAsURLHere = (element) => {
-        var file = element.target.files[0];
-        var reader = new FileReader();
-        reader.onloadend = function () {
-            setFileInput(reader.result);
-        };
-        reader.readAsDataURL(file);
-    };
-    const [data, setData] = useState("");
     const formState = useForm();
     const navigate = useNavigate();
     const { handleSubmit } = formState;
     const CoCState = useSelector((state) => state.CoCReducer);
-    const { loading, error, userInfo } = CoCState;
+    const { loading } = CoCState;
     const dispatch = useDispatch();
-    const { loadingCOC, userInfoCOC, errorCOC } = useSelector(
+    const { loadingCOC, userInfoCOC } = useSelector(
         (state) => state.cocGetReducer
     );
     useEffect(() => {
         dispatch(COCGetRequest(id));
     }, []);
     const onPreviousClick = () => {
-        navigate("/refcheck-form", { replace: true });
+        navigate("/form/refcheck-form", { replace: true });
     };
     const onSubmit = (data) => {
         const ndhCodeOfConductObj = {
-            id: id,
+            user_id: id,
             date: data.date,
-            //employee_signature: data.signature_employer[0],
             full_name: data.full_name,
         };
         const formData = new FormData();
-        formData.append("employee_signature", data.signature_employer[0]);
+        formData.append("file", data.signature_employer[0]);
         formData.append("data", JSON.stringify(ndhCodeOfConductObj));
         dispatch(COCPostRequest(formData));
     };
@@ -66,23 +50,13 @@ const CodeOfConduct = ({ idFromDashBoard }) => {
 
     return (
         <div style={{ minWidth: "1000px" }}>
-            {loadingCOC && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+            {loadingCOC && <Spinner />}
 
             {userInfoCOC && (
                 <div>
-                    {/* <img src={data} alt={""}></img> */}
+                    <CodeOfConductAppBar />
+                    {/* <h4 className="mb-0">CODE OF CONDUCT</h4> */}
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <CodeOfConductAppBar />
-
                         <div style={{ padding: 30 }}>
                             <div>
                                 <Box
@@ -1665,7 +1639,7 @@ const CodeOfConduct = ({ idFromDashBoard }) => {
                                                     validation={validation}
                                                     defaultValue={
                                                         userInfoCOC &&
-                                                        userInfoCOC.employee_signature
+                                                        userInfoCOC.employeeSignature
                                                     }
                                                 />
                                             </td>

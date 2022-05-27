@@ -13,7 +13,7 @@ function* userLoginAsync(action) {
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("id", data.id);
         const navigate = action.navigate;
-        navigate("/bgv-form");
+        navigate("/form/bgv-form");
     } catch (error) {
         const errorMessage = getErrorMessage(error);
         yield put(UserLoginFail());

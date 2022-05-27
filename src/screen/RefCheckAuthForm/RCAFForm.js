@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import RefCheckAppBar from "./RefCheckAppBar";
 import { RCAFGetRequest } from "../../actions/form.get.action";
 import { Button, CircularProgress, Stack } from "@mui/material";
+import Spinner from "../../components/spinner/Spinner";
 
 function RCAFForm({ idFromDashBoard }) {
     const idFromLocalStorage = localStorage.getItem("id");
@@ -28,18 +29,18 @@ function RCAFForm({ idFromDashBoard }) {
     const { loadingRCAF, errorRCAF, userInfoRCAF } = RCAFGetState;
 
     const onPreviousClick = () => {
-        navigate("/epf-form", { replace: true });
+        navigate("/form/epf-form", { replace: true });
     };
     const onNextClick = () => {
-        navigate("/codeOfConduct-form", { replace: true });
+        navigate("/form/codeOfConduct-form", { replace: true });
     };
 
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
         const RCAFobjectAPI = {
-            id: id,
-            employee_id: "100",
+            user_id: id,
+            //employee_id: "100",
 
             //signed: data.candidateSingnature[0].name,
             capital_name: data.candidateName,
@@ -51,12 +52,12 @@ function RCAFForm({ idFromDashBoard }) {
             permanent_address: data.permanent_Address,
 
             first_degree: {
-                // degree miss
+                degree_earned: data.degree_earned_1,
                 graduated: data.graduated_1,
                 program: data.programm_1,
                 institute_name: data.institute_name_1,
                 university_name: data.university_name_1,
-                Institute_details: data.institute_address_1,
+                institute_details: data.institute_address_1,
                 university_details: data.university_address_1,
                 from_date: data.degree_period_to_1,
                 to_date: data.degree_period_from_1,
@@ -69,11 +70,12 @@ function RCAFForm({ idFromDashBoard }) {
                 major_subject: data.major_subject_1,
             },
             second_degree: {
+                degree_earned: data.degree_earned_2,
                 graduated: data.graduated_2,
                 program: data.programm_2,
                 institute_name: data.institute_name_2,
                 university_name: data.university_name_2,
-                Institute_details: data.institute_address_2,
+                institute_details: data.institute_address_2,
                 university_details: data.university_address_2,
                 from_date: data.degree_period_to_2,
                 to_date: data.degree_period_from_2,
@@ -86,11 +88,12 @@ function RCAFForm({ idFromDashBoard }) {
                 major_subject: data.major_subject_2,
             },
             third_degree: {
+                degree_earned: data.degree_earned_3,
                 graduated: data.graduated_3,
                 program: data.programm_3,
                 institute_name: data.institute_name_3,
                 university_name: data.university_name_3,
-                Institute_details: data.institute_address_3,
+                institute_details: data.institute_address_3,
                 university_details: data.university_address_3,
                 from_date: data.degree_period_to_3,
                 to_date: data.degree_period_from_3,
@@ -117,7 +120,7 @@ function RCAFForm({ idFromDashBoard }) {
                 position: data.RD_position_0,
                 contact_no: data.RD_contactNo_0,
                 remunerations: data.remunerations_0,
-                conduct_discussion: data.conduct_discussion,
+                reason_for_leaving: data.conduct_discussion,
             },
             second_comapny: {
                 company_name: data.company_name_1,
@@ -157,7 +160,7 @@ function RCAFForm({ idFromDashBoard }) {
                 data.contact_current_employer === "Yes" ? true : false,
         };
         const formData = new FormData();
-        formData.append("signed", data.candidateSingnature[0]);
+        formData.append("file", data.candidateSingnature[0]);
         formData.append("data", JSON.stringify(RCAFobjectAPI));
         dispatch(RCAFPostRequest(formData, navigate));
     };
@@ -168,16 +171,7 @@ function RCAFForm({ idFromDashBoard }) {
 
     return (
         <div style={{ minWidth: "1300px" }}>
-            {loadingRCAF && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+            {loadingRCAF && <Spinner />}
 
             {userInfoRCAF && (
                 <>

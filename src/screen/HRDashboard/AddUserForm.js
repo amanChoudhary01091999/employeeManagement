@@ -4,7 +4,7 @@ import { LoadingButton } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import TextInput from "../../components/Input/TextInput";
-import { userPostRequest } from "../../actions/user.action";
+import { userPostRequest, userUpdateRequest } from "../../actions/user.action";
 import Validation from "../../validation/Validations";
 import { AlternateEmail, Person, Phone } from "@mui/icons-material";
 
@@ -18,11 +18,24 @@ function AddUserForm(props) {
     let user = { name: "", email: "", mobileNo: "" };
     const { update } = props;
     const { loading } = useSelector((state) => state.userPostReducer);
+    const updateReducer = useSelector((state) => state.userUpdateReducer);
+    const updateLoading = updateReducer.loading;
+
     if (update !== undefined) {
         user = update;
     }
     const { handleSubmit } = formState;
-    function onClick(data) {
+
+    function onUpdateClick(data) {
+        const obj = {
+            id: update.id,
+            name: data.name,
+            email: data.email,
+            mobileNo: data.phoneNumber,
+        };
+        dispatch(userUpdateRequest(obj));
+    }
+    function addUserClick(data) {
         const addUsersApiObj = {
             name: data.name,
             email: data.email,
@@ -32,7 +45,11 @@ function AddUserForm(props) {
         };
         dispatch(userPostRequest(addUsersApiObj));
     }
-    const OnSubmit = (data) => onClick(data);
+
+    const OnSubmit = (data) => {
+        if (update === undefined) addUserClick(data);
+        else onUpdateClick(data);
+    };
     return (
         <Stack
             direction={"column"}
@@ -52,6 +69,7 @@ function AddUserForm(props) {
                 formState={formState}
                 value={user.email}
                 label={"Email-id"}
+                disabled={false}
                 id={"email"}
                 validation={emailValidation}
                 icon={<AlternateEmail fontSize="small" />}
@@ -76,7 +94,7 @@ function AddUserForm(props) {
             <LoadingButton
                 type="submit"
                 size="large"
-                loading={loading}
+                loading={update ? updateLoading : loading}
                 variant="contained"
             >
                 <Typography
@@ -84,7 +102,7 @@ function AddUserForm(props) {
                     fontWeight={"bold"}
                     letterSpacing={2}
                 >
-                    {update ? "update" : "Add User"}
+                    {update ? "Update" : "Add User"}
                 </Typography>
             </LoadingButton>
         </Stack>

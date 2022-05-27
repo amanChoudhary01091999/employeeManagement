@@ -40,7 +40,6 @@ function* uesrPostAsync(action) {
     try {
         const password = yield call(passwordGenerator);
         action.payload.token = password.data.token;
-        console.log(password.data.token);
         const { data } = yield call(userPostData, action.payload);
         yield put(userPostSuccess(data));
         yield put(closeDialog());

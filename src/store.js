@@ -45,21 +45,13 @@ import {
 } from "./sagas/form.post.saga";
 import { userAuthReducer } from "./reducers/user.auth.reducer";
 
-// import { reducerEPF, EPFGetReducer } from "./reducers/EPFReducer";
-// import { BGVReducer, BGVGetReducer } from "./reducers/bgvReducer";
-// import { CoCReducer, cocGetReducer } from "./reducers/codeOfConductReducer";
-// import { COVIDReducer, COVIDGetReducer } from "./reducers/covidReducer";
-// import { GFFormReducer, GFGetReducer } from "./reducers/GFFormReducer";
-// import { RCAFReducer, RCAFGetReducer } from "./reducers/rcfCheckReducer";
+import {
+    userGetSaga,
+    userPostSaga,
+    userDeleteSaga,
+    userUpdateSaga,
+} from "./sagas/user.saga";
 
-import { userGetSaga, userPostSaga, userDeleteSaga } from "./sagas/user.saga";
-
-// import { bgvSaga, BGVGetSaga } from "./sagas/bgvSaga";
-// import { CoCSaga, CoCGetSaga } from "./sagas/codeOfConductSaga";
-// import { COVIDSaga, COVIDGetSaga } from "./sagas/covidSaga";
-// import { EPFSaga, EPFGetSaga } from "./sagas/EPFSaga";
-// import { GFFormSaga, GFGetSaga } from "./sagas/GFFormSaga";
-// import { rcfSaga, RCAFGetSaga } from "./sagas/rcfSaga";
 import { userAuthSaga } from "./sagas/user.auth.saga";
 
 const createSagaMiddleware = createSaga();
@@ -93,6 +85,7 @@ function* rootSaga() {
     yield spawn(userPostSaga);
     yield spawn(userAuthSaga);
     yield spawn(userDeleteSaga);
+    yield spawn(userUpdateSaga);
 
     yield spawn(bgvSaga);
     yield spawn(BGVGetSaga);

@@ -5,6 +5,7 @@ import Validation from "../../validation/Validations";
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
+import { validateDateTime } from "@mui/lab/internal/pickers/date-time-utils";
 
 function RCAFPart2(props) {
     const number = props.number;
@@ -13,13 +14,12 @@ function RCAFPart2(props) {
         (state) => state.RCAFGetReducer
     );
     let userInfo = null;
-    console.log(userInfoRCAF);
     if (number === "1") userInfo = userInfoRCAF?.first_degree;
     else if (number === "2") userInfo = userInfoRCAF?.second_degree;
     else if (number === "3") userInfo = userInfoRCAF?.third_degree;
-    const validationAddress = Validation().validationAddress;
-    const validationDegree = Validation().validationDegree;
     const validationName = Validation().validationName;
+    const validationDegree = Validation().validationDegree;
+
     const {
         formState: { errors },
     } = props.formState;
@@ -62,9 +62,9 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Title"}
                                         name={`degree_earned_${number}`}
-                                        validation={validationDegree}
+                                        validation={validationName}
                                         defaultValue={
-                                            userInfo && userInfo.institute_name
+                                            userInfo && userInfo.degree_earned
                                         }
                                     />
                                 </div>
@@ -148,10 +148,10 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Institute Address"}
                                         name={`institute_address_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo &&
-                                            userInfo.Institute_details
+                                            userInfo.institute_details
                                         }
                                     />
                                 </div>
@@ -178,7 +178,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"University Address"}
                                         name={`university_address_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo &&
                                             userInfo.university_details
@@ -209,7 +209,7 @@ function RCAFPart2(props) {
                                         label={null}
                                         type={"date"}
                                         name={`degree_period_to_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.to_date
                                         }
@@ -237,7 +237,7 @@ function RCAFPart2(props) {
                                         label={null}
                                         type={"date"}
                                         name={`degree_period_from_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.from_date
                                         }
@@ -322,7 +322,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Type of degree"}
                                         name={`type_of_degree_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.degree_type
                                         }
@@ -351,7 +351,7 @@ function RCAFPart2(props) {
                                         label={null}
                                         type={"date"}
                                         name={`graduation_date_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.graduation_date
                                         }
@@ -380,7 +380,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Major subject"}
                                         name={`major_subject_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationName}
                                         defaultValue={
                                             userInfo && userInfo.major_subject
                                         }
@@ -407,7 +407,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Roll Number"}
                                         name={`roll_no_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.roll_no
                                         }
@@ -436,7 +436,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Enrollment Number"}
                                         name={`enrolment_no_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.enrollment_no
                                         }
@@ -463,7 +463,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"Hall ticket number"}
                                         name={`hall_ticket_no_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.hall_ticket_no
                                         }
@@ -492,7 +492,7 @@ function RCAFPart2(props) {
                                         formState={props.formState}
                                         label={"registration Number"}
                                         name={`registration_no_${number}`}
-                                        validation={validationAddress}
+                                        validation={validationDegree}
                                         defaultValue={
                                             userInfo && userInfo.registration_no
                                         }

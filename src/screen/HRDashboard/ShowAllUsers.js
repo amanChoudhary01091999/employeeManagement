@@ -159,9 +159,10 @@ export default function ShowAllUsers() {
 
     const postData = useSelector((state) => state.userPostReducer);
     const deleleData = useSelector((state) => state.userDeleteReducer);
+    const updateData = useSelector((state) => state.userUpdateReducer);
     React.useEffect(() => {
         dispatch(userGetRequest());
-    }, [postData.userInfo, deleleData.userInfo]);
+    }, [postData.userInfo, deleleData.userInfo, updateData.userInfo]);
 
     return (
         <div>
@@ -215,12 +216,12 @@ export default function ShowAllUsers() {
                             >
                                 status
                             </TableCell>
-                            {/* <TableCell
+                            <TableCell
                                 align="center"
                                 className={classes.tableHead}
                             >
                                 Edit
-                            </TableCell> */}
+                            </TableCell>
                             <TableCell
                                 align="center"
                                 className={classes.tableHead}
