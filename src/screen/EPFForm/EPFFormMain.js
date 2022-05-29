@@ -89,7 +89,7 @@ function EPFFormMain({ idFromDashBoard }) {
     useEffect(() => {
         dispatch(EPFGetRequest(id));
     }, []);
-    console.log(userInfoEPF);
+
     return (
         <div>
             {loadingEPF && <Spinner />}

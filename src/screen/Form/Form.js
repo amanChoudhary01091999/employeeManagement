@@ -109,7 +109,8 @@ const ResponsiveAppBar = () => {
                             component="a"
                             sx={{
                                 mr: 2,
-                                padding: 4,
+                                px: 4,
+                                py: 2,
                                 borderRadius: 1,
                                 ml: 0,
                                 backgroundColor: "#1976d2",

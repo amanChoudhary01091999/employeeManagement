@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import DatePicker from "../../InputFiles/DatePicker";
 import InputForm from "../../InputFiles/TextAreaInput";
 import InputRadioGroup from "../../InputFiles/InputRadioGroup";
 import Validation from "../../validation/Validations";
 import "../BackGroundVerification/index.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function EPFFormDetail(props) {
     const { formState } = props;
-    const dispatch = useDispatch();
-    const { loadingEPF, userInfoEPF } = useSelector(
-        (state) => state.EPFGetReducer
-    );
+    const { userInfoEPF } = useSelector((state) => state.EPFGetReducer);
     const validation = Validation().validationDegree;
     const validationName = Validation().validationName;
     const validationNameNotRequired = Validation().validationNameNotRequired;

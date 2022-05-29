@@ -11,13 +11,10 @@ function TextAreaInput(props) {
         <div className="form-group">
             <TextField
                 label={label}
-                //autoComplete={false}
-                //placeholder={label}
                 type="text"
                 variant="outlined"
                 id={name}
                 size={"small"}
-                multiline
                 fullWidth
                 defaultValue={defaultValue}
                 {...register(`${name}`, validation)}

@@ -19,7 +19,7 @@ function TextInput(props) {
             defaultValue={value}
             variant="outlined"
             InputProps={{
-                startAdornment: (
+                endAdornment: (
                     <InputAdornment position="start">{icon}</InputAdornment>
                 ),
             }}

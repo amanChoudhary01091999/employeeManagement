@@ -293,7 +293,6 @@ const BackgroundVerification = ({ idFromDashBoard }) => {
                     : false,
             full_name: data.full_name,
         };
-        console.log(empBGVobj);
         const formData = new FormData();
         formData.append("file", data.signature[0]);
         formData.append("data", JSON.stringify(empBGVobj));

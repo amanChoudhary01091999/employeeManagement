@@ -85,7 +85,6 @@ function GFFormMain({ idFromDashBoard }) {
             acknowledgement_date: data.acknowledgement_date,
             //signature_of_the_employee: data.signature_of_the_employee[0].name,
         };
-        console.log(GFobjectAPI);
         const formData = new FormData();
         formData.append("file1", data.employee_signature[0]);
         formData.append("file2", data.signature_of_witnesses[0]);

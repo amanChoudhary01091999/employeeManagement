@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import TextInput from "../../components/Input/TextInput";
 import { userPostRequest, userUpdateRequest } from "../../actions/user.action";
 import Validation from "../../validation/Validations";
-import { AlternateEmail, Person, Phone } from "@mui/icons-material";
+import { Email, Person, Phone } from "@mui/icons-material";
 
 const emailValidation = Validation().validationEmail;
 const nameValidation = Validation().validationName;
@@ -68,11 +68,11 @@ function AddUserForm(props) {
             <TextInput
                 formState={formState}
                 value={user.email}
-                label={"Email-id"}
+                label={"Email"}
                 disabled={false}
                 id={"email"}
                 validation={emailValidation}
-                icon={<AlternateEmail fontSize="small" />}
+                icon={<Email fontSize="small" />}
             />
             <TextInput
                 formState={formState}
@@ -84,7 +84,7 @@ function AddUserForm(props) {
             />
             <TextInput
                 formState={formState}
-                label={"PhoneNo"}
+                label={"Phone No."}
                 id={"phoneNumber"}
                 value={user.mobileNo}
                 validation={phoneValidation}
@@ -97,11 +97,7 @@ function AddUserForm(props) {
                 loading={update ? updateLoading : loading}
                 variant="contained"
             >
-                <Typography
-                    fontFamily={"Rubik"}
-                    fontWeight={"bold"}
-                    letterSpacing={2}
-                >
+                <Typography fontFamily={"Rubik"} letterSpacing={1}>
                     {update ? "Update" : "Add User"}
                 </Typography>
             </LoadingButton>

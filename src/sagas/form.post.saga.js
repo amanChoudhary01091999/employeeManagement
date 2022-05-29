@@ -53,13 +53,13 @@ function* BGVAsync(action) {
 function* CoCAsync(action) {
     try {
         const { data } = yield call(COCPostApiRequest, action.payload);
-        yield put(COCPostSuccess(data));
-        yield put(openToast("Form Submitted", "success"));
-        // if (data === "User not present") {
-        //     yield put(COCPostFail());
-        //     yield put(openToast("User Not Present", "error"));
-        // } else {
-        // }
+        if (data === "User not present") {
+            yield put(COCPostFail());
+            yield put(openToast("User Not Present", "error"));
+        } else {
+            yield put(COCPostSuccess(data));
+            yield put(openToast("Form Submitted", "success"));
+        }
     } catch (error) {
         yield put(COCPostFail());
         yield put(openToast(getErrorMessage(), "error"));

@@ -66,7 +66,7 @@ function LoginForm() {
             ></img>
             <TextInput
                 formState={formState}
-                label={"email"}
+                label={"Email"}
                 id={"user_name"}
                 validation={validationEmail}
                 icon={<Email fontSize="small" />}
@@ -97,9 +97,13 @@ function LoginForm() {
                 type="submit"
                 variant="contained"
                 size="large"
+                disableElevation
                 loading={loading}
+                sx={{
+                    height: 45,
+                }}
             >
-                <strong>Log In</strong>
+                Log In
             </LoadingButton>
         </Stack>
     );

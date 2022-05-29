@@ -113,8 +113,6 @@ function* GFGetAsync(action) {
 function* RCAFGetAsync(action) {
     try {
         const { data } = yield call(RCAFGetApiRequest, action.payload);
-        //const data = {};
-        //yield delay(5000);
         if (data && data.id === undefined) {
             yield put(RCAFGetSuccess(data));
             yield put(openToast("Form not filled", "error"));
