@@ -46,6 +46,7 @@ function SampleUser({ row }) {
         naviagte(`/user-detail/${id}`, {
             state: { id },
         });
+        window.location.reload();
     };
     return (
         <TableRow key={row.name}>

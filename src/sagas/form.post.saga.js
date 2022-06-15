@@ -43,6 +43,7 @@ function* BGVAsync(action) {
             yield put(openToast("Form Submitted", "success"));
             const navigate = action.navigate;
             navigate("/form/covid-form");
+            window.location.reload();
         }
     } catch (error) {
         yield put(BGVPostFail());
@@ -59,6 +60,7 @@ function* CoCAsync(action) {
         } else {
             yield put(COCPostSuccess(data));
             yield put(openToast("Form Submitted", "success"));
+            window.location.reload();
         }
     } catch (error) {
         yield put(COCPostFail());
@@ -77,6 +79,7 @@ function* COVIDAsync(action) {
             yield put(openToast("Form Submitted", "success"));
             const navigate = action.navigate;
             navigate("/form/gratuity-form");
+            window.location.reload();
         }
     } catch (error) {
         yield put(COVIDPostFail());
@@ -95,6 +98,7 @@ function* EPFAsync(action) {
             yield put(openToast("Form Submitted", "success"));
             const navigate = action.navigate;
             navigate("/form/refcheck-form");
+            window.location.reload();
         }
     } catch (error) {
         yield put(EPFPostFail());
@@ -113,6 +117,7 @@ function* GFFormAsync(action) {
             yield put(openToast("Form Submitted", "success"));
             const navigate = action.navigate;
             navigate("/form/epf-form");
+            window.location.reload();
         }
     } catch (error) {
         yield put(GFPostFail());
@@ -131,6 +136,7 @@ function* RCAFAsync(action) {
             yield put(openToast("Form Submitted", "success"));
             const navigate = action.navigate;
             navigate("/form/codeofconduct-form");
+            window.location.reload();
         }
     } catch (error) {
         yield put(RCAFPostFail());

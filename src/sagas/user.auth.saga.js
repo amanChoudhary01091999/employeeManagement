@@ -14,10 +14,11 @@ function* userLoginAsync(action) {
         localStorage.setItem("id", data.id);
         const navigate = action.navigate;
         navigate("/form/bgv-form");
+        window.location.reload();
     } catch (error) {
         const errorMessage = getErrorMessage(error);
         yield put(UserLoginFail());
-        yield put(openToast(errorMessage, "error"));
+        yield put(openToast("User not found", "error"));
     }
 }
 export function* userAuthSaga() {

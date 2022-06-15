@@ -10,16 +10,8 @@ import UserDetailBGV from "./user.detail.bgv";
 
 function UserDetailMain() {
     const { id } = useParams();
-    console.log(id);
-    // const { state } = useLocation();
-    // console.log(state);
-
-    // const { id } = state === null ? {} : state;
-    // console.log(id);
-
     return (
         <div style={{ margin: 0 }}>
-            {/* <UserDetailBGV /> */}
             {id === undefined ? (
                 <p>Error</p>
             ) : (

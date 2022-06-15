@@ -39,7 +39,7 @@ function UserLogin() {
                 xs={12}
                 md={7}
                 xl={7}
-                display={"flex"}
+                display={{ xs: "none", md: "flex" }}
                 alignItems={"center"}
                 justifyContent={"center"}
                 style={{ backgroundColor: "#1976d2" }}

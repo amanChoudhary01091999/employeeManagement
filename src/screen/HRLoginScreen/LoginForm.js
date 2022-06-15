@@ -14,10 +14,10 @@ const currencies = [
         value: "admin",
         label: "HR",
     },
-    {
-        value: "mod",
-        label: "Moderator",
-    },
+    // {
+    //     value: "mod",
+    //     label: "Moderator",
+    // },
 ];
 const validation = Validation().validationDegree;
 const validationEmail = Validation().validationEmail;

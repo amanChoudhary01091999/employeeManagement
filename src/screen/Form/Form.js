@@ -74,21 +74,27 @@ const ResponsiveAppBar = () => {
 
     const onClickBGV = () => {
         navigate("/form/bgv-form");
+        window.location.reload();
     };
     const onClickCovid = () => {
         navigate("/form/covid-form");
+        window.location.reload();
     };
     const onClickEPF = () => {
         navigate("/form/epf-form");
+        window.location.reload();
     };
     const onClickRCAF = () => {
         navigate("/form/refcheck-form");
+        window.location.reload();
     };
     const onClickGF = () => {
         navigate("/form/gratuity-form");
+        window.location.reload();
     };
     const onClickCOC = () => {
         navigate("/form/codeofconduct-form");
+        window.location.reload();
     };
 
     const handleLogout = () => {
@@ -105,11 +111,11 @@ const ResponsiveAppBar = () => {
                     <Toolbar disableGutters>
                         <Typography
                             variant="h6"
-                            noWrap
+                            //noWrap
                             component="a"
                             sx={{
                                 mr: 2,
-                                px: 4,
+                                px: 2,
                                 py: 2,
                                 borderRadius: 1,
                                 ml: 0,

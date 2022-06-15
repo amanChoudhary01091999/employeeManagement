@@ -32,7 +32,7 @@ function RCAFForm({ idFromDashBoard }) {
         navigate("/form/epf-form", { replace: true });
     };
     const onNextClick = () => {
-        navigate("/form/codeOfConduct-form", { replace: true });
+        navigate("/form/codeofconduct-form", { replace: true });
     };
 
     const dispatch = useDispatch();

@@ -22,6 +22,8 @@ function EPFFormDetail(props) {
     const stateOfProvident = watch("provident_member", "No");
     const stateOfPension = watch("pension_member", "No");
     const stateOfWorker = watch("international_worker", "No");
+    console.log(stateOfPension);
+    console.log(stateOfWorker);
 
     return (
         <div style={{ textAlign: "left" }}>

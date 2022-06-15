@@ -28,10 +28,6 @@ const CovidForm = ({ idFromDashBoard }) => {
     const covidGetState = useSelector((state) => state.COVIDGetReducer);
     const { loadingCovid, userInfoCovid } = covidGetState;
     const { handleSubmit, watch } = formState;
-    const contactedCovid = watch("conCovid", "No");
-    const contactedCovidFam = watch("conCovidFam", "No");
-
-    const vaccinated = watch("vaccinated", "No");
 
     const CovidState = useSelector((state) => state.COVIDReducer);
     const { loading, error, userInfo } = CovidState;
@@ -86,6 +82,13 @@ const CovidForm = ({ idFromDashBoard }) => {
     useEffect(() => {
         dispatch(COVIDGetRequest(id));
     }, []);
+
+    const contactedCovid = watch("conCovid", "No");
+    const contactedCovidFam = watch("conCovidFam", "No");
+
+    let vaccinated = undefined;
+    if (userInfoCovid) vaccinated = watch("vaccinated", "No");
+    console.log(vaccinated);
 
     const validation = Validation().validationDegree;
     const validationPh = Validation().validationPhone;
@@ -511,7 +514,6 @@ const CovidForm = ({ idFromDashBoard }) => {
                                 {contactedCovidFam === "Yes" ||
                                 contactedCovid === "Yes" ? (
                                     <div>
-                                        {" "}
                                         <p
                                             className="text-center "
                                             style={{
