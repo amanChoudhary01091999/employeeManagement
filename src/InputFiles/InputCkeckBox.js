@@ -15,7 +15,7 @@ function InputCkeckBox(props) {
                     <Checkbox
                         value={label}
                         id={label}
-                        defaultChecked={defaultValue}
+                        defaultChecked={defaultValue ? true : false}
                         {...register(`${name}`, validation)}
                     />
                 }

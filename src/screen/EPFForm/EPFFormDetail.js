@@ -15,6 +15,7 @@ function EPFFormDetail(props) {
     const phoneValidation = Validation().validationPhone;
     const emailValidation = Validation().validationEmail;
     const ifscValidation = Validation().validationIFSC;
+    const passportValidation = Validation().validationPassport;
     const aadharValidation = Validation().validationAadhar;
     const panValidation = Validation().validationPAN;
     const validatioBankAccount = Validation().validationBankAccount;
@@ -22,8 +23,6 @@ function EPFFormDetail(props) {
     const stateOfProvident = watch("provident_member", "No");
     const stateOfPension = watch("pension_member", "No");
     const stateOfWorker = watch("international_worker", "No");
-    console.log(stateOfPension);
-    console.log(stateOfWorker);
 
     return (
         <div style={{ textAlign: "left" }}>
@@ -597,7 +596,7 @@ function EPFFormDetail(props) {
                                                 formState={formState}
                                                 label={"Passport Number"}
                                                 name={"passport_number"}
-                                                validation={validation}
+                                                validation={passportValidation}
                                                 defaultValue={
                                                     userInfoEPF &&
                                                     userInfoEPF.passport_number

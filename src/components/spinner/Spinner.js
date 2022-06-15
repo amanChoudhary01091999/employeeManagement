@@ -9,7 +9,8 @@ function Spinner() {
             style={{
                 color: "indigo",
                 position: "absolute",
-                bottom: "50%",
+                bottom: "50vh",
+                left: "50vw",
             }}
         />
     );

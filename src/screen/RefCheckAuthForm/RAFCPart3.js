@@ -21,7 +21,7 @@ function RAFCPart3(props) {
     if (number === "0") userInfo = userInfoRCAF?.first_company;
     else if (number === "1") userInfo = userInfoRCAF?.second_comapny;
     else if (number === "2") userInfo = userInfoRCAF?.third_company;
-    console.log(userInfo);
+
     return (
         <div>
             <hr className="my-5"></hr>

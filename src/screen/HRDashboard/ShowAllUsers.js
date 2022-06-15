@@ -21,6 +21,7 @@ import SampleUser from "./SampleUser";
 import { useDispatch, useSelector } from "react-redux";
 import { userGetRequest } from "../../actions/user.action";
 import { makeStyles } from "@mui/styles";
+import Spinner from "../../components/spinner/Spinner";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -166,16 +167,7 @@ export default function ShowAllUsers() {
 
     return (
         <div>
-            {(loading || deleleData.loading) && (
-                <CircularProgress
-                    color="inherit"
-                    style={{
-                        color: "indigo",
-                        position: "fixed",
-                        bottom: "50%",
-                    }}
-                />
-            )}
+            {(loading || deleleData.loading) && <Spinner />}
             <TableContainer
                 component={Paper}
                 elevation={0}

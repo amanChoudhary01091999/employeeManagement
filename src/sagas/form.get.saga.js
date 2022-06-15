@@ -42,6 +42,7 @@ function* BGVGetAsync(action) {
             yield put(BGVGetSuccess(data));
             yield put(openToast("Form filled", "success"));
         }
+        yield put(BGVGetSuccess(data));
     } catch (error) {
         yield put(BGVGetError());
         yield put(openToast(getErrorMessage(error), "error"));
@@ -73,6 +74,7 @@ function* COVIDGetAsync(action) {
             yield put(COVIDGetSuccess(data));
             yield put(openToast("Form filled", "success"));
         }
+        yield put(COVIDGetSuccess(data));
     } catch (error) {
         yield put(COVIDGetError());
         yield put(openToast(getErrorMessage(error), "error"));

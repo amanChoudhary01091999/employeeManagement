@@ -74,7 +74,7 @@ export default function DashBoardAppBar() {
                 style={{ marginBottom: 30, marginTop: 30 }}
                 gap={4}
             >
-                <TextField
+                {/* <TextField
                     variant="outlined"
                     label="Search"
                     size="small"
@@ -86,7 +86,7 @@ export default function DashBoardAppBar() {
                             </InputAdornment>
                         ),
                     }}
-                ></TextField>
+                ></TextField> */}
 
                 <Button
                     style={{ marginLeft: "auto" }}

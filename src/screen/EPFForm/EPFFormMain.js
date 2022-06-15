@@ -19,9 +19,8 @@ function EPFFormMain({ idFromDashBoard }) {
     const { handleSubmit } = formState;
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.reducerEPF);
-    const { loadingEPF, userInfoEPF } = useSelector(
-        (state) => state.EPFGetReducer
-    );
+    const state = useSelector((state) => state.EPFGetReducer);
+    const { loadingEPF, userInfoEPF } = state;
     const navigate = useNavigate();
 
     const onPreviousClick = () => {
@@ -91,7 +90,7 @@ function EPFFormMain({ idFromDashBoard }) {
     }, []);
 
     return (
-        <div>
+        <div style={{ minWidth: "1000px" }}>
             {loadingEPF && <Spinner />}
             <div
                 style={{
@@ -163,4 +162,16 @@ function EPFFormMain({ idFromDashBoard }) {
     );
 }
 
+// export default EPFFormMain;
+
+// function EPFFormMain() {
+//     const dispatch = useDispatch();
+//     const state = useSelector((state) => state.EPFGetReducer);
+//     const { loadingEPF, userInfoEPF } = state;
+//     console.log(userInfoEPF);
+//     useEffect(() => {
+//         dispatch(EPFGetRequest(20));
+//     }, []);
+//     return <div></div>;
+// }
 export default EPFFormMain;

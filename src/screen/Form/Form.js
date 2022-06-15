@@ -165,10 +165,10 @@ const ResponsiveAppBar = () => {
                                     display: { xs: "block", md: "none" },
                                 }}
                             >
-                                {pages.map((page) => (
+                                {pages.map((page, index) => (
                                     <MenuItem
                                         key={page}
-                                        onClick={handleCloseNavMenu}
+                                        onClick={() => handleCloseNavMenu(page)}
                                     >
                                         <Typography textAlign="center">
                                             {page}
